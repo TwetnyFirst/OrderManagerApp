@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalszop - Order Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-size: 0.9rem; }
+        .container-fluid { padding: 20px; }
+        .table-container { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .table { margin-bottom: 0; }
+        .table th, .table td { padding: 8px 4px; vertical-align: middle; }
+        .status-badge { font-size: 0.75rem; }
+        select.form-select-sm { font-size: 0.8rem; padding: 2px 4px; }
+        .btn-sm { padding: 2px 8px; font-size: 0.8rem; }
+        .is-valid { border-color: #198754 !important; background-color: #d1e7dd !important; }
+        .waybill-badge { font-size: 0.8rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+        .label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+        .btn-delete { padding: 0 4px; line-height: 1; font-size: 0.7rem; color: #dc3545; cursor: pointer; border: none; background: none; }
+        .btn-delete:hover { color: #a71d2a; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark py-1">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-6" href="#">📦 Instalszop Order Manager</a>
+            <span class="navbar-text text-white small">Local App</span>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="mb-0">Lista zamówień</h4>
+            <div class="d-flex align-items-center">
+                <span id="totalCountBadge" class="badge bg-secondary me-3">...</span>
+                <button class="btn btn-primary btn-sm" onclick="loadOrders(currentPage)">🔄 Odśwież</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 8%">Nr Zam.</th>
+                        <th style="width: 12%">Klient</th>
+                        <th style="width: 16%">Adres</th>
+                        <th style="width: 10%">Dostawa / Płatność</th>
+                        <th style="width: 16%">Faktury / InPost</th>
+                        <th style="width: 13%">Nadawca / Paczki</th>
+                        <th style="width: 15%">Waybill</th>
+                        <th style="width: 10%">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div id="paginationInfo" class="small text-muted"></div>
+            <nav>
+                <ul class="pagination pagination-sm mb-0" id="paginationControls">
+                    <!-- Pagination buttons -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        let senders = [];
+        let currentPage = 1;
+        const limit = 50;
+
+        async function loadSenders() {
+            try {
+                const response = await fetch('/api/senders');
+                senders = await response.json();
+            } catch (err) {
+                console.error('Error loading senders:', err);
+            }
+        }
+
+        async function loadOrders(page = 1) {
+            currentPage = page;
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Ładowanie...</td></tr>';
+
+            try {
+                const response = await fetch(`/api/orders?page=${page}&limit=${limit}`);
+                const data = await response.json();
+                
+                const orders = data.orders || [];
+                document.getElementById('totalCountBadge').innerText = `Razem: ${data.totalCount || 0}`;
+                document.getElementById('paginationInfo').innerText = `Strona ${data.currentPage || 0} z ${data.totalPages || 0} (Łącznie ${data.totalCount || 0} zamówień)`;
+                
+                renderPagination(data.currentPage, data.totalPages);
+
+                tbody.innerHTML = '';
+                if (orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4">Brak zamówień.</td></tr>';
+                    return;
+                }
+
+                orders.forEach(order => {
+                    const isInPost = order.delivery_method && order.delivery_method.toLowerCase().includes('inpost');
+                    const shipments = order.shipments || [];
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${order.order_number}</strong><br><small class="text-muted">${new Date(order.created_at).toLocaleString()}</small></td>
+                        <td>${order.customer_name}<br><small>${order.email}</small></td>
+                        <td>${order.street}<br>${order.zip_code} ${order.city}</td>
+                        <td>
+                            <span class="badge bg-secondary mb-1">${order.delivery_method || 'N/A'}</span><br>
+                            <span class="badge ${order.payment_method.toLowerCase().includes('pobranie') ? 'bg-warning text-dark' : 'bg-info text-dark'} mb-1">
+                                ${order.payment_method}
+                            </span>
+                            ${order.payment_method.toLowerCase().includes('pobranie') ? `<br><strong class="text-danger">${Number(order.total_price).toFixed(2)} PLN</strong>` : ''}
+                        </td>
+                        <td>
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text">NIP</span>
+                                <input type="text" class="form-control" placeholder="Nr faktury" id="inv-${order.id}" value="${order.invoice_number || ''}">
+                                <button class="btn btn-outline-secondary" type="button" onclick="updateInvoice(${order.id})">💾</button>
+                            </div>
+                            <div class="small text-muted mb-1">NIP: ${order.nip || 'Paragon'}</div>
+                            ${isInPost ? `
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" placeholder="Kod Paczkomatu" id="pId-${order.id}" value="${order.paczkomat_id || ''}">
+                                <select class="form-select" id="pSize-${order.id}" style="max-width: 65px;">
+                                    <option value="A" ${order.parcel_size === 'A' ? 'selected' : ''}>A</option>
+                                    <option value="B" ${order.parcel_size === 'B' ? 'selected' : ''}>B</option>
+                                    <option value="C" ${order.parcel_size === 'C' || !order.parcel_size ? 'selected' : ''}>C</option>
+                                </select>
+                                <button class="btn btn-outline-warning" type="button" onclick="updateInPost(${order.id})">💾</button>
+                            </div>
+                            ` : ''}
+                        </td>
+                        <td>
+                            <select class="form-select form-select-sm mb-1" id="sender-${order.id}">
+                                ${senders.map(s => `<option value="${s.id}" ${s.id === 1 ? 'selected' : ''}>${s.company || s.name}</option>`).join('')}
+                            </select>
+                            <select class="form-select form-select-sm" id="pkg-${order.id}">
+                                <option value="1">1 paczka</option>
+                                <option value="2">2 paczki</option>
+                                <option value="3">3 paczki</option>
+                                <option value="4">4 paczki</option>
+                            </select>
+                        </td>
+                        <td id="waybill-container-${order.id}">
+                            ${shipments.filter(s => s.waybill).map(s => `
+                                <div class="waybill-badge">
+                                    <span class="badge bg-dark">${s.waybill}</span>
+                                    <button class="btn-delete" onclick="deleteShipment(${s.id})" title="Usuń numer">❌</button>
+                                </div>
+                            `).join('') || '<span class="text-muted small">Brak listu</span>'}
+                        </td>
+                        <td>
+                            <div class="d-grid gap-1">
+                                ${isInPost
+                                    ? `<button class="btn btn-warning btn-sm" onclick="generateAPaczkaLabel(${order.id}, event)">📦 APaczka</button>`
+                                    : `<button class="btn btn-primary btn-sm" onclick="generateLabel(${order.id}, event)">🚛 DPD</button>`
+                                }
+                                <div class="mt-1 border-top pt-1" id="labels-container-${order.id}">
+                                    ${shipments.filter(s => s.label_path).map((s, idx) => `
+                                        <div class="label-row">
+                                            <a href="${s.label_path}" target="_blank" class="btn btn-success btn-sm flex-grow-1 me-1" style="font-size: 0.7rem">📄 Etykieta ${idx + 1}</a>
+                                            <button class="btn-delete" onclick="deleteShipment(${s.id})" title="Usuń etykietę">❌</button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger py-4">Błąd ładowania: ${err.message}</td></tr>`;
+            }
+        }
+
+        async function deleteShipment(shipmentId) {
+            if (!confirm('Czy na pewno chcesz usunąć ten numer listu i etykietę z systemu?')) return;
+            try {
+                const response = await fetch(`/api/shipments/${shipmentId}`, { method: 'DELETE' });
+                const result = await response.json();
+                if (result.success) {
+                    loadOrders(currentPage);
+                } else {
+                    alert('Błąd podczas usuwania');
+                }
+            } catch (err) {
+                alert('Błąd sieci');
+            }
+        }
+
+        async function updateInPost(orderId) {
+            const paczkomatId = document.getElementById(`pId-${orderId}`).value;
+            const parcelSize = document.getElementById(`pSize-${orderId}`).value;
+            try {
+                const response = await fetch(`/api/update-inpost/${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ paczkomatId, parcelSize })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    const input = document.getElementById(`pId-${orderId}`);
+                    input.classList.add('is-valid');
+                    setTimeout(() => input.classList.remove('is-valid'), 2000);
+                } else {
+                    alert('Błąd zapisu danych InPost');
+                }
+            } catch (err) {
+                alert('Błąd sieci');
+            }
+        }
+
+        async function updateInvoice(orderId) {
+            const invoiceNumber = document.getElementById(`inv-${orderId}`).value;
+            try {
+                const response = await fetch(`/api/update-invoice/${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ invoiceNumber })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    const input = document.getElementById(`inv-${orderId}`);
+                    input.classList.add('is-valid');
+                    setTimeout(() => input.classList.remove('is-valid'), 2000);
+                } else {
+                    alert('Błąd zapisu faktury');
+                }
+            } catch (err) {
+                alert('Błąd sieci');
+            }
+        }
+
+        async function generateAPaczkaLabel(orderId, event) {
+            const senderId = document.getElementById(`sender-${orderId}`).value;
+            
+            const btn = event.target;
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+            try {
+                const response = await fetch(`/api/generate-apaczka-label/${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ senderId })
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    loadOrders(currentPage);
+                } else {
+                    alert('Błąd: ' + result.error);
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                }
+            } catch (err) {
+                alert('Błąd sieci: ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
+        }
+
+        function renderPagination(current, total) {
+            const controls = document.getElementById('paginationControls');
+            controls.innerHTML = '';
+            if (!total || total <= 1) return;
+
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${current === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" onclick="loadOrders(${current - 1})">Poprzednia</a>`;
+            controls.appendChild(prevLi);
+
+            // Page numbers
+            const range = 2;
+            for (let i = 1; i <= total; i++) {
+                if (i === 1 || i === total || (i >= current - range && i <= current + range)) {
+                    const li = document.createElement('li');
+                    li.className = `page-item ${i === current ? 'active' : ''}`;
+                    li.innerHTML = `<a class="page-link" href="#" onclick="loadOrders(${i})">${i}</a>`;
+                    controls.appendChild(li);
+                } else if (i === current - range - 1 || i === current + range + 1) {
+                    const li = document.createElement('li');
+                    li.className = 'page-item disabled';
+                    li.innerHTML = '<span class="page-link">...</span>';
+                    controls.appendChild(li);
+                }
+            }
+
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${current === total ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" onclick="loadOrders(${current + 1})">Następna</a>`;
+            controls.appendChild(nextLi);
+        }
+
+        async function generateLabel(orderId, event) {
+            const senderId = document.getElementById(`sender-${orderId}`).value;
+            const packageCount = document.getElementById(`pkg-${orderId}`).value;
+            
+            const btn = event.target;
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+            try {
+                const response = await fetch(`/api/generate-label/${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ senderId, packageCount })
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    loadOrders(currentPage);
+                } else {
+                    alert('Błąd: ' + result.error);
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                }
+            } catch (err) {
+                alert('Błąd sieci: ' + err.message);
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
+        }
+
+        // Initial Load
+        (async () => {
+            await loadSenders();
+            await loadOrders();
+        })();
+    </script>
+</body>
+</html>
