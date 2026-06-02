@@ -5,6 +5,7 @@ const path = require('path');
 const { initDb } = require('./src/models/db');
 const { importSenders } = require('./src/utils/excelImporter');
 const { startEmailListener } = require('./src/services/emailListener');
+const { startPrestaShopListener } = require('./src/services/prestaShopListener');
 const apiRouter = require('./src/services/api');
 
 const app = express();
@@ -31,6 +32,7 @@ const startServer = async () => {
     await importSenders();
     
     startEmailListener();
+    startPrestaShopListener();
     
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

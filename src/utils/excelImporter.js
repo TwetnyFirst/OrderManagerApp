@@ -11,30 +11,39 @@ const importSenders = async () => {
     const sheetName = workbook.SheetNames[0];
     const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
+    let importedCount = 0;
+
     return new Promise((resolve, reject) => {
       db.serialize(() => {
         const stmt = db.prepare(`INSERT OR REPLACE INTO senders 
-          (id, name, company, street, city, zip_code, phone, email, fid) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+          (fid, name, company, street, city, zip_code, phone, email) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
 
-        data.forEach((row, index) => {
+        data.forEach((row) => {
+          const fid = row['Numer'] ? String(row['Numer']) : null;
+
+          if (!fid) {
+            console.warn('Skipping sender row: "Numer" (FID) column is missing or empty.');
+            return;
+          }
+
           stmt.run(
-            index + 1,
+            fid,
             row['Imię Nazwisko'] || '',
             row['Firma'] || '',
             row['Ulica'] || '',
             row['Miasto'] || '',
             row['Kod pocztowy'] || '',
             row['Telefon'] ? String(row['Telefon']) : '',
-            '', // Email is not in Excel
-            row['Numer'] ? String(row['Numer']) : ''
+            row['Email'] || '' // Get email from excel if it exists
           );
+          importedCount++;
         });
 
         stmt.finalize((err) => {
           if (err) reject(err);
           else {
-            console.log(`Successfully imported ${data.length} senders.`);
+            console.log(`Successfully imported or updated ${importedCount} senders.`);
             resolve();
           }
         });

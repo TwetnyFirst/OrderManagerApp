@@ -11,41 +11,43 @@ const config = {
         host: process.env.IMAP_HOST,
         port: parseInt(process.env.IMAP_PORT) || 993,
         tls: process.env.IMAP_TLS === 'true',
-        authTimeout: 10000, // Увеличим таймаут до 10 секунд
-        tlsOptions: { rejectUnauthorized: false }, // Игнорировать проблемы с самоподписанными сертификатами
-        debug: console.log // Включаем детальный лог протокола IMAP
+        authTimeout: 10000,
+        tlsOptions: { rejectUnauthorized: false },
     }
 };
 
-const saveOrderToDb = (order) => {
+const saveOrderToDb = (orderData, parsing_status, raw_email_body) => {
     return new Promise((resolve, reject) => {
         // First check if order already exists to avoid unnecessary processing
-        db.get('SELECT id FROM orders WHERE order_number = ?', [order.order_number], (err, row) => {
+        db.get('SELECT id FROM orders WHERE order_number = ?', [orderData.order_number], (err, row) => {
             if (err) return reject(err);
             if (row) {
-                return resolve(false); // Order already exists
+                return resolve({ isNew: false }); // Order already exists
             }
 
             const stmt = db.prepare(`INSERT INTO orders 
-                (order_number, customer_name, company_name, nip, email, phone, street, city, zip_code, delivery_method, payment_method, total_price) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+                (order_number, customer_name, company_name, nip, email, phone, street, city, zip_code, delivery_method, payment_method, total_price, source, parsing_status, raw_email_body) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
             
             stmt.run(
-                order.order_number,
-                order.customer_name,
-                order.company_name,
-                order.nip,
-                order.email,
-                order.phone,
-                order.street,
-                order.city,
-                order.zip_code,
-                order.delivery_method,
-                order.payment_method,
-                order.total_price,
+                orderData.order_number,
+                orderData.customer_name,
+                orderData.company_name,
+                orderData.nip,
+                orderData.email,
+                orderData.phone,
+                orderData.street,
+                orderData.city,
+                orderData.zip_code,
+                orderData.delivery_method,
+                orderData.payment_method,
+                orderData.total_price,
+                'Email', // Set source
+                parsing_status,
+                raw_email_body,
                 function(err) {
                     if (err) reject(err);
-                    else resolve(true); // New order saved
+                    else resolve({ isNew: true, status: parsing_status }); // New order saved
                 }
             );
             stmt.finalize();
@@ -56,50 +58,59 @@ const saveOrderToDb = (order) => {
 const processEmails = async () => {
     let connection;
     try {
-        console.log(`Checking for orders...`);
+        console.log(`Checking for email orders...`);
         connection = await imaps.connect(config);
         await connection.openBox('INBOX');
 
         // Limit search to last 3 days to prevent long startup times
         const delay = 3 * 24 * 3600 * 1000; // 3 days in ms
-        const yesterday = new Date(Date.now() - delay).toISOString();
+        const sinceDate = new Date(Date.now() - delay).toISOString();
         
-        const searchCriteria = [['SUBJECT', 'Zamówienie nr'], ['SINCE', yesterday]]; 
+        const searchCriteria = [['SUBJECT', 'Zamówienie nr'], ['SINCE', sinceDate]]; 
         const fetchOptions = {
             bodies: ['HEADER', 'TEXT', ''],
             markSeen: false 
         };
 
         const messages = await connection.search(searchCriteria, fetchOptions);
-        console.log(`Found ${messages.length} messages in the last 3 days.`);
+        if (messages.length > 0) {
+            console.log(`Found ${messages.length} potential order emails from the last 3 days.`);
+        }
 
         for (const item of messages) {
             try {
                 const id = item.attributes.uid;
                 
                 // Quick check: Extract order number from subject before full parsing
-                const subject = item.parts.find(p => p.which === 'HEADER').body.subject[0];
-                const orderNumberMatch = subject.match(/Zamówienie nr\s*\b(\d{4,6})\b/i);
+                const subjectHeader = item.parts.find(p => p.which === 'HEADER').body.subject[0];
+                const orderNumberMatch = subjectHeader.match(/Zamówienie nr\s*\b(\d{4,6})\b/i);
                 
                 if (orderNumberMatch) {
                     const orderNo = orderNumberMatch[1];
-                    // Check if exists in DB before heavy parsing
                     const exists = await new Promise(res => {
                         db.get('SELECT id FROM orders WHERE order_number = ?', [orderNo], (err, row) => res(!!row));
                     });
-                    if (exists) continue;
+                    if (exists) continue; // Skip if order number is already in DB
                 }
 
                 const all = item.parts.find(part => part.which === '');
                 const idHeader = `Imap-Id: ${id}\r\n`;
                 
                 const mail = await simpleParser(idHeader + all.body);
-                const parsedOrder = parseOrderEmail(mail.text, mail.subject);
+                const { orderData, parsing_status, parsing_warnings } = parseOrderEmail(mail.text, mail.subject);
 
-                if (parsedOrder) {
-                    const isNew = await saveOrderToDb(parsedOrder);
+                if (parsing_status === 'FAILED') {
+                    console.warn(`Skipping email UID ${id}: parsing failed. Reason: ${parsing_warnings.join(', ')}`);
+                    continue;
+                }
+
+                if (orderData) {
+                    const { isNew, status } = await saveOrderToDb(orderData, parsing_status, mail.text);
                     if (isNew) {
-                        console.log(`+ New order saved: ${parsedOrder.order_number}`);
+                        console.log(`+ New order saved: ${orderData.order_number} | Status: ${status}`);
+                        if (parsing_warnings.length > 0) {
+                            console.warn(`  - Warnings for ${orderData.order_number}: ${parsing_warnings.join('; ')}`);
+                        }
                     }
                 }
             } catch (innerError) {
@@ -108,11 +119,9 @@ const processEmails = async () => {
         }
 
     } catch (error) {
-        console.error('--- IMAP CONNECTION ERROR DETAILS ---');
-        console.error('Message:', error.message);
-        if (error.source) console.error('Source:', error.source);
-        if (error.textCode) console.error('Code:', error.textCode);
-        console.error('-------------------------------------');
+        console.error('--- IMAP CONNECTION ERROR ---');
+        console.error('An error occurred during the email check process. Please verify IMAP credentials and server details.');
+        console.error('Error details:', error.message);
     } finally {
         if (connection) connection.end();
     }
@@ -120,8 +129,8 @@ const processEmails = async () => {
 
 // Polling interval (e.g., every 5 minutes)
 const startEmailListener = () => {
-    console.log('Email listener started...');
-    processEmails(); // Run immediately on start
+    console.log('Email listener started. First check in 10 seconds...');
+    setTimeout(processEmails, 10000); // Run after a short delay on start
     setInterval(processEmails, 5 * 60 * 1000); 
 };
 

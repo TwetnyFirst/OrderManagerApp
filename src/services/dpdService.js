@@ -26,7 +26,7 @@ class DpdService {
     async generatePackagesNumbers(order, sender, packageCount) {
         const isCod = order.payment_method.toLowerCase().includes('pobranie');
         const now = new Date().getTime();
-        const pkgRef = `REF_${now}`;
+        const pkgRef = `PKG_${now}`;
         
         const payload = {
             generationPolicy: "STOP_ON_FIRST_ERROR",
@@ -39,7 +39,7 @@ class DpdService {
                     city: order.city,
                     countryCode: "PL",
                     postalCode: order.zip_code.replace('-', ''),
-                    phone: order.phone,
+                    phone: order.phone.replace(/[^0-9]/g, ''),
                     email: order.email
                 },
                 sender: {
@@ -49,21 +49,28 @@ class DpdService {
                     city: sender.city,
                     countryCode: "PL",
                     postalCode: sender.zip_code.replace('-', ''),
-                    phone: sender.phone,
+                    phone: sender.phone.replace(/[^0-9]/g, ''),
                     email: sender.email || "sklep@instalszop.pl"
                 },
-                payerFID: parseInt(this.fid),
-                parcels: Array.from({ length: packageCount }).map((_, i) => ({
-                    reference: `PARCEL_${now}_${i + 1}`,
-                    weight: 4,
-                    content: "Produkty wentylacyjne"
-                })),
-                services: isCod ? {
-                    cod: {
-                        amount: parseFloat(order.total_price.toFixed(2)),
-                        currency: "PLN"
+                payerFID: parseInt(sender.fid),
+                parcels: Array.from({ length: packageCount }).map((_, i) => {
+                    const parcel = {
+                        reference: `PARCEL_${now}_${i + 1}`,
+                        weight: 4,
+                        content: "Produkty wentylacyjne"
+                    };
+
+                    // Move COD to parcel level for DPD REST API
+                    if (isCod) {
+                        parcel.services = {
+                            COD: {
+                                amount: parseFloat(order.total_price.toFixed(2)),
+                                currency: "PLN"
+                            }
+                        };
                     }
-                } : undefined
+                    return parcel;
+                })
             }]
         };
 
@@ -73,12 +80,12 @@ class DpdService {
             });
 
             if (response.data && response.data.packages && response.data.packages[0].parcels) {
+                const pkg = response.data.packages[0];
                 return {
-                    waybill: response.data.packages[0].parcels[0].waybill,
+                    waybill: pkg.parcels[0].waybill,
                     sessionId: response.data.sessionId,
-                    // n8n uses parcels[0].reference as the package reference in labels
-                    packageReference: response.data.packages[0].parcels[0].reference,
-                    parcelReference: "string" // n8n uses hardcoded "string" for parcel reference in labels
+                    packageReference: pkg.reference,
+                    parcelReference: pkg.parcels[0].reference
                 };
             }
             
@@ -104,8 +111,7 @@ class DpdService {
                         }]
                     }],
                     type: "DOMESTIC"
-                },
-                documentId: "string"
+                }
             },
             outputDocFormat: "PDF",
             format: "A4",
@@ -118,14 +124,19 @@ class DpdService {
                 headers: this.getHeaders()
             });
 
-            // Robust search for Base64 content (mimicking n8n logic)
             let base64Content = null;
             if (response.data) {
-                // Check common fields first
-                if (response.data.content) base64Content = response.data.content;
-                else if (response.data.fileData) base64Content = response.data.fileData;
-                else {
-                    // Search all fields for a long string (> 100 chars)
+                // Priority list of fields for label data
+                const contentFields = ['documentData', 'content', 'fileData'];
+                for (const field of contentFields) {
+                    if (response.data[field]) {
+                        base64Content = response.data[field];
+                        break;
+                    }
+                }
+
+                if (!base64Content) {
+                    // Search all fields for a long string (> 100 chars) as fallback
                     for (const key in response.data) {
                         const val = response.data[key];
                         if (typeof val === 'string' && val.length > 100) {

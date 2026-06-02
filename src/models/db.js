@@ -9,15 +9,14 @@ const initDb = () => {
     db.serialize(() => {
       // Senders Table
       db.run(`CREATE TABLE IF NOT EXISTS senders (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fid TEXT PRIMARY KEY NOT NULL,
         name TEXT NOT NULL,
         company TEXT,
         street TEXT,
         city TEXT,
         zip_code TEXT,
         phone TEXT,
-        email TEXT,
-        fid TEXT
+        email TEXT
       )`, (err) => {
         if (err) reject(err);
       });
@@ -54,31 +53,32 @@ const initDb = () => {
         status TEXT DEFAULT 'New',
         dpd_waybill TEXT,
         label_path TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        source TEXT DEFAULT 'Email'
       )`, (err) => {
         if (err) {
           reject(err);
         } else {
-          // 1. Migration: Move existing data from orders to shipments
-          db.all("SELECT id, dpd_waybill, label_path FROM orders WHERE dpd_waybill IS NOT NULL", (selErr, rows) => {
-            if (!selErr && rows.length > 0) {
-              const stmt = db.prepare("INSERT INTO shipments (order_id, waybill, label_path, provider) SELECT ?, ?, ?, 'DPD' WHERE NOT EXISTS (SELECT 1 FROM shipments WHERE order_id = ? AND waybill = ?)");
-              rows.forEach(row => {
-                stmt.run(row.id, row.dpd_waybill, row.label_path, row.id, row.dpd_waybill);
-              });
-              stmt.finalize();
-            }
-          });
-
-          // 2. Migration: Add columns
-          db.run("ALTER TABLE orders ADD COLUMN delivery_method TEXT", (alterErr) => {
-            db.run("ALTER TABLE orders ADD COLUMN invoice_number TEXT", (invErr) => {
-              db.run("ALTER TABLE orders ADD COLUMN paczkomat_id TEXT", (pIdErr) => {
-                db.run("ALTER TABLE orders ADD COLUMN parcel_size TEXT DEFAULT 'C'", (sizeErr) => {
-                  resolve();
-                });
+          // Migration for older columns if they don't exist
+          const columns_to_add = [
+            "ALTER TABLE orders ADD COLUMN delivery_method TEXT",
+            "ALTER TABLE orders ADD COLUMN invoice_number TEXT",
+            "ALTER TABLE orders ADD COLUMN paczkomat_id TEXT",
+            "ALTER TABLE orders ADD COLUMN parcel_size TEXT DEFAULT 'C'",
+            "ALTER TABLE orders ADD COLUMN source TEXT DEFAULT 'Email'",
+            "ALTER TABLE orders ADD COLUMN parsing_status TEXT",
+            "ALTER TABLE orders ADD COLUMN raw_email_body TEXT"
+          ];
+          
+          db.serialize(() => {
+            columns_to_add.forEach(addColumn => {
+              db.run(addColumn, (err) => {
+                if (err && !err.message.includes('duplicate column')) {
+                  console.error(`Migration error: ${err.message}`);
+                }
               });
             });
+            resolve();
           });
         }
       });

@@ -1,0 +1,1336 @@
+2026-05-27T13:22:15.069Z - WARNING: PrestaShop API key or URL not set. Listener will not start.
+2026-05-27T13:22:40.532Z - WARNING: PrestaShop API key or URL not set. Listener will not start.
+2026-05-27T13:23:09.045Z - WARNING: PrestaShop API key or URL not set. Listener will not start.
+2026-05-28T06:50:03.084Z - WARNING: PrestaShop API key or URL not set. Listener will not start.
+2026-05-28T10:42:31.191Z - Listener starting...
+2026-05-28T10:42:31.192Z - Checking for new PrestaShop orders...
+2026-05-28T10:42:31.365Z - FATAL: Failed to poll PrestaShop orders: Failed to fetch orders: This filter does not exist. Did you mean: "total_paid"? The full list is: "id", "id_address_delivery", "id_address_invoice", "id_cart", "id_currency", "id_lang", "id_customer", "id_carrier", "current_state", "module", "invoice_number", "invoice_date", "delivery_number", "delivery_date", "valid", "shipping_number", "note", "inpost_point", "id_shop_group", "id_shop", "secure_key", "payment", "recyclable", "gift", "gift_message", "mobile_theme", "total_discounts", "total_discounts_tax_incl", "total_discounts_tax_excl", "total_paid", "total_paid_tax_incl", "total_paid_tax_excl", "total_paid_real", "total_products", "total_products_wt", "total_shipping", "total_shipping_tax_incl", "total_shipping_tax_excl", "carrier_tax_rate", "total_wrapping", "total_wrapping_tax_incl", "total_wrapping_tax_excl", "round_mode", "round_type", "conversion_rate", "reference"
+2026-05-28T10:44:32.983Z - Listener starting...
+2026-05-28T10:44:32.984Z - Checking for new PrestaShop orders...
+2026-05-28T10:44:33.159Z - Found 16 new order(s). Fetching details...
+2026-05-28T10:44:34.148Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.176Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.201Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.214Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.214Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.233Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.237Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.257Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.271Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.272Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.274Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.302Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.302Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.303Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.333Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:44:34.334Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:32.999Z - Checking for new PrestaShop orders...
+2026-05-28T10:49:33.162Z - Found 16 new order(s). Fetching details...
+2026-05-28T10:49:33.686Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.743Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.750Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.778Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.781Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.782Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.782Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.787Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.811Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.814Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.820Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.831Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.841Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.842Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.843Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T10:49:33.850Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:03.351Z - Listener starting...
+2026-05-28T11:48:03.354Z - Checking for new PrestaShop orders...
+2026-05-28T11:48:03.599Z - Found 16 new order(s). Fetching details...
+2026-05-28T11:48:04.495Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.599Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.679Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.693Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.694Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.695Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.816Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.844Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.861Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.888Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.890Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.939Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.946Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.947Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.973Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T11:48:04.974Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:08.205Z - Checking for new PrestaShop orders...
+2026-05-28T18:10:11.178Z - Found 16 new order(s). Fetching details...
+2026-05-28T18:10:14.869Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.286Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.385Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.386Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.423Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.424Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.491Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.492Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.558Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.558Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.581Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.582Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.629Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.630Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.673Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T18:10:15.697Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:36.007Z - Checking for new PrestaShop orders...
+2026-05-28T22:11:38.478Z - Found 16 new order(s). Fetching details...
+2026-05-28T22:11:39.596Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:39.769Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:39.857Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:39.859Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:39.930Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:39.931Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:39.943Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.026Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.032Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.034Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.051Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.060Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.087Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.102Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.178Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T22:11:40.246Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:30.790Z - Checking for new PrestaShop orders...
+2026-05-28T23:15:31.431Z - Found 16 new order(s). Fetching details...
+2026-05-28T23:15:32.403Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.584Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.593Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.595Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.596Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.597Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.598Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.602Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.876Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.877Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.879Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.881Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.882Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:32.883Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:33.538Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-28T23:15:33.744Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:32.281Z - Checking for new PrestaShop orders...
+2026-05-29T01:00:32.808Z - Found 16 new order(s). Fetching details...
+2026-05-29T01:00:33.467Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.897Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.899Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.900Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.901Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.902Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.908Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.909Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.910Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:33.912Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:34.350Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:34.357Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:34.381Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:34.384Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:34.423Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T01:00:34.462Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:52.668Z - Listener starting...
+2026-05-29T07:10:52.669Z - Checking for new PrestaShop orders...
+2026-05-29T07:10:53.130Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:10:53.805Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.811Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.839Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.928Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.929Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.930Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.931Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.934Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.937Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.944Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.945Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.946Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.953Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:53.953Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:54.106Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:10:54.159Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:52.690Z - Checking for new PrestaShop orders...
+2026-05-29T07:15:52.950Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:15:53.454Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.504Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.504Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.507Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.522Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.566Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.567Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.568Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.570Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.581Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.639Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.646Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.782Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.786Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.788Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:15:53.799Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:52.690Z - Checking for new PrestaShop orders...
+2026-05-29T07:20:52.818Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:20:53.212Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.297Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.302Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.322Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.328Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.341Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.342Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.343Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.347Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.370Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.370Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.373Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.374Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.376Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.403Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:20:53.408Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:52.699Z - Checking for new PrestaShop orders...
+2026-05-29T07:25:52.879Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:25:53.512Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.576Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.577Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.577Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.584Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.623Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.625Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.671Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.672Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.672Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.674Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.675Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.696Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.723Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.735Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:25:53.743Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:52.710Z - Checking for new PrestaShop orders...
+2026-05-29T07:30:52.894Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:30:53.475Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.631Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.655Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.682Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.717Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.754Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.762Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.798Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.810Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.811Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.842Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.843Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.844Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.866Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.883Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:30:53.898Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:52.709Z - Checking for new PrestaShop orders...
+2026-05-29T07:35:52.876Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:35:53.318Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.362Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.363Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.379Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.379Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.385Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.397Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.398Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.410Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.412Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.415Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.449Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.449Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.455Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.463Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:35:53.464Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:52.728Z - Checking for new PrestaShop orders...
+2026-05-29T07:40:52.932Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:40:53.496Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.565Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.571Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.595Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.598Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.604Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.616Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.626Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.627Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.643Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.655Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.655Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.656Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.664Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.672Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:40:53.708Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:52.741Z - Checking for new PrestaShop orders...
+2026-05-29T07:45:52.882Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:45:53.371Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.444Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.445Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.462Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.463Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.476Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.476Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.479Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.504Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.508Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.512Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.518Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.523Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.536Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.539Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:45:53.541Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:52.743Z - Checking for new PrestaShop orders...
+2026-05-29T07:50:52.952Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:50:53.397Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.593Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.604Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.610Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.624Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.635Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.636Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.666Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.677Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.682Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.686Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.767Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.768Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.769Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.769Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:50:53.771Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:52.752Z - Checking for new PrestaShop orders...
+2026-05-29T07:55:52.910Z - Found 16 new order(s). Fetching details...
+2026-05-29T07:55:53.583Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.584Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.624Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.629Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.630Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.641Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.655Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.658Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.659Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.659Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.679Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.687Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.705Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.714Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.716Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T07:55:53.727Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:52.763Z - Checking for new PrestaShop orders...
+2026-05-29T08:00:52.937Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:00:53.419Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.420Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.433Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.474Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.507Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.546Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.554Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.587Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.628Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.629Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.630Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.673Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.674Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.679Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.711Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:00:53.727Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:52.775Z - Checking for new PrestaShop orders...
+2026-05-29T08:05:52.912Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:05:53.319Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.351Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.370Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.374Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.377Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.384Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.395Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.396Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.424Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.431Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.437Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.441Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.458Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.463Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.494Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:05:53.505Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:52.774Z - Checking for new PrestaShop orders...
+2026-05-29T08:10:52.942Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:10:53.473Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.482Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.555Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.558Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.573Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.587Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.592Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.602Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.611Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.612Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.622Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.635Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.635Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.638Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.649Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:10:53.654Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:52.785Z - Checking for new PrestaShop orders...
+2026-05-29T08:15:52.974Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:15:53.535Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.537Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.570Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.587Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.599Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.600Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.601Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.634Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.639Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.639Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.640Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.699Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.702Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.703Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.704Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:15:53.707Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:52.787Z - Checking for new PrestaShop orders...
+2026-05-29T08:20:52.967Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:20:53.488Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.505Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.507Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.508Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.524Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.525Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.526Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.526Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.541Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.557Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.558Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.560Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.567Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.643Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.644Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:20:53.650Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:52.802Z - Checking for new PrestaShop orders...
+2026-05-29T08:25:52.944Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:25:53.360Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.461Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.464Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.467Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.482Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.495Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.496Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.502Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.508Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.521Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.653Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.673Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.699Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.703Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.715Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:25:53.736Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:52.805Z - Checking for new PrestaShop orders...
+2026-05-29T08:30:53.015Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:30:53.402Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.528Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.539Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.592Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.604Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.605Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.615Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.628Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.629Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.657Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.660Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.661Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.661Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.663Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.692Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:30:53.696Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:52.810Z - Checking for new PrestaShop orders...
+2026-05-29T08:35:52.952Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:35:53.404Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.453Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.512Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.519Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.532Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.532Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.536Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.548Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.722Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.725Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.727Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.729Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.745Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.746Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.747Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:35:53.789Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:52.819Z - Checking for new PrestaShop orders...
+2026-05-29T08:40:52.971Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:40:53.372Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.480Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.505Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.524Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.525Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.526Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.526Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.528Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.557Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.559Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.560Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.560Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.561Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.580Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.595Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:40:53.596Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:52.824Z - Checking for new PrestaShop orders...
+2026-05-29T08:45:53.082Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:45:53.690Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.693Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.694Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.703Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.711Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.731Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.732Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.759Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.767Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.776Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.777Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.793Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.793Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.829Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.829Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:45:53.833Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:52.830Z - Checking for new PrestaShop orders...
+2026-05-29T08:50:52.995Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:50:53.391Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.556Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.570Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.577Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.593Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.607Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.610Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.611Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.627Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.646Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.647Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.648Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.708Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.709Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.710Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:50:53.711Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:52.833Z - Checking for new PrestaShop orders...
+2026-05-29T08:55:52.995Z - Found 16 new order(s). Fetching details...
+2026-05-29T08:55:53.467Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.558Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.559Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.560Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.591Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.607Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.608Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.609Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.631Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.636Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.650Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.662Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.663Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.821Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.839Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T08:55:53.856Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:52.842Z - Checking for new PrestaShop orders...
+2026-05-29T09:00:52.964Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:00:53.288Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.383Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.433Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.434Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.436Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.441Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.442Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.443Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.464Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.479Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.482Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.483Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.497Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.498Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.521Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:00:53.542Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:52.844Z - Checking for new PrestaShop orders...
+2026-05-29T09:05:52.996Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:05:53.319Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.386Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.408Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.409Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.414Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.421Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.433Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.434Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.434Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.450Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.450Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.451Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.476Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.480Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.482Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:05:53.483Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:52.849Z - Checking for new PrestaShop orders...
+2026-05-29T09:10:52.986Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:10:53.401Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.534Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.570Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.592Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.593Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.597Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.598Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.598Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.646Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.647Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.647Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.648Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.649Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.698Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.699Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:10:53.700Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:52.861Z - Checking for new PrestaShop orders...
+2026-05-29T09:15:53.042Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:15:53.553Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.644Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.692Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.693Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.698Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.770Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.771Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.772Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.773Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.794Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.794Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.795Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.795Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.798Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.801Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:15:53.824Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:52.868Z - Checking for new PrestaShop orders...
+2026-05-29T09:20:53.043Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:20:53.476Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.505Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.506Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.514Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.549Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.565Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.565Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.570Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.571Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.572Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.572Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.576Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.584Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.585Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.598Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:20:53.621Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:52.875Z - Checking for new PrestaShop orders...
+2026-05-29T09:25:53.033Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:25:53.513Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.537Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.605Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.632Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.633Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.634Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.642Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.652Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.669Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.670Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.672Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.678Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.723Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.727Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.727Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:25:53.728Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:52.884Z - Checking for new PrestaShop orders...
+2026-05-29T09:30:53.055Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:30:53.464Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.475Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.540Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.606Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.634Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.639Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.640Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.742Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.744Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.767Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.768Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.768Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.769Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.845Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.848Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:30:53.849Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:52.896Z - Checking for new PrestaShop orders...
+2026-05-29T09:35:53.076Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:35:53.426Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.553Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.559Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.566Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.594Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.599Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.635Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.635Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.638Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.639Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.644Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.710Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.713Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.714Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.715Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:35:53.715Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:52.900Z - Checking for new PrestaShop orders...
+2026-05-29T09:40:53.029Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:40:53.502Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.567Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.568Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.569Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.574Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.590Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.603Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.605Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.606Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.627Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.629Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.631Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.634Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.643Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.664Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:40:53.667Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:52.906Z - Checking for new PrestaShop orders...
+2026-05-29T09:45:53.021Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:45:53.434Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.476Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.500Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.506Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.506Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.516Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.529Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.535Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.536Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.539Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.539Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.562Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.563Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.578Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.581Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:45:53.581Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:52.908Z - Checking for new PrestaShop orders...
+2026-05-29T09:50:53.115Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:50:53.564Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.602Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.611Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.634Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.635Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.645Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.647Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.678Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.682Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.692Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.692Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.693Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.712Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.722Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.723Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:50:53.723Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:52.911Z - Checking for new PrestaShop orders...
+2026-05-29T09:55:53.070Z - Found 16 new order(s). Fetching details...
+2026-05-29T09:55:53.641Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.679Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.712Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.723Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.725Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.738Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.741Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.753Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.765Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.779Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.789Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.809Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.809Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.825Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.826Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T09:55:53.854Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:52.924Z - Checking for new PrestaShop orders...
+2026-05-29T10:00:53.208Z - Found 16 new order(s). Fetching details...
+2026-05-29T10:00:53.992Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:53.996Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.000Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.060Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.061Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.062Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.062Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.063Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.064Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.068Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.075Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.145Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.379Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.448Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:54.613Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:00:55.162Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:52.939Z - Checking for new PrestaShop orders...
+2026-05-29T10:05:53.117Z - Found 16 new order(s). Fetching details...
+2026-05-29T10:05:53.606Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.810Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.811Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.849Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.865Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.866Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.911Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.924Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.954Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.961Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.962Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.963Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.991Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:53.997Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:54.001Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:05:54.061Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:52.951Z - Checking for new PrestaShop orders...
+2026-05-29T10:10:53.094Z - Found 16 new order(s). Fetching details...
+2026-05-29T10:10:53.536Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.560Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.576Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.577Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.578Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.633Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.639Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.640Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.642Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.643Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.668Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.669Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.670Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.672Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.681Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-05-29T10:10:53.692Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:35.697Z - Listener starting...
+2026-06-01T13:17:35.698Z - Checking for new PrestaShop orders...
+2026-06-01T13:17:36.003Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:17:36.559Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.661Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.681Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.705Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.709Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.715Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.720Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.744Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.745Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.745Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.747Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.775Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.777Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.780Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.780Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:17:36.815Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:35.715Z - Checking for new PrestaShop orders...
+2026-06-01T13:22:35.867Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:22:36.362Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.384Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.418Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.421Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.430Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.431Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.433Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.453Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.456Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.461Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.480Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.493Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.496Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.497Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.498Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:22:36.510Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:35.720Z - Checking for new PrestaShop orders...
+2026-06-01T13:27:35.966Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:27:36.452Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.460Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.512Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.552Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.555Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.586Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.588Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.589Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.590Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.633Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.634Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.637Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.638Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.639Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.672Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:27:36.675Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:35.729Z - Checking for new PrestaShop orders...
+2026-06-01T13:32:35.852Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:32:36.286Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.307Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.312Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.332Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.355Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.362Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.363Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.364Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.411Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.414Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.415Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.447Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.448Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.450Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.451Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:32:36.481Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:35.737Z - Checking for new PrestaShop orders...
+2026-06-01T13:37:36.026Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:37:36.559Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.594Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.611Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.629Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.634Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.638Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.644Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.651Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.660Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.666Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.674Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.678Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.700Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.702Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.704Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:37:36.704Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.239Z - Listener starting...
+2026-06-01T13:41:23.239Z - Checking for new PrestaShop orders...
+2026-06-01T13:41:23.451Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:41:23.821Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.914Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.944Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.945Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.945Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.946Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.947Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.969Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.977Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.978Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.981Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:23.982Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:24.000Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:24.007Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:24.008Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:41:24.012Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:23.276Z - Checking for new PrestaShop orders...
+2026-06-01T13:46:23.422Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:46:24.020Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.045Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.087Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.094Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.095Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.110Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.113Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.122Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.124Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.137Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.155Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.157Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.158Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.172Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.178Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:46:24.189Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.278Z - Checking for new PrestaShop orders...
+2026-06-01T13:51:23.392Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:51:23.777Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.930Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.930Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.935Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.966Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.968Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.970Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.989Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:23.990Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.002Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.003Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.020Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.024Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.031Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.037Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:24.057Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:42.465Z - Listener starting...
+2026-06-01T13:51:42.466Z - Checking for new PrestaShop orders...
+2026-06-01T13:51:42.673Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:51:43.080Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.081Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.112Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.184Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.185Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.196Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.226Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.229Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.238Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.242Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.267Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.286Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.304Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.307Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.316Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:51:43.318Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:23.559Z - Listener starting...
+2026-06-01T13:54:23.560Z - Checking for new PrestaShop orders...
+2026-06-01T13:54:23.736Z - Found 16 new order(s). Fetching details...
+2026-06-01T13:54:24.188Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.247Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.250Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.255Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.280Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.281Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.284Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.307Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.309Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.310Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.312Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.339Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.341Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.342Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.344Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-01T13:54:24.364Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:20.407Z - Listener starting...
+2026-06-02T06:57:20.408Z - Checking for new PrestaShop orders...
+2026-06-02T06:57:20.628Z - Found 16 new order(s). Fetching details...
+2026-06-02T06:57:21.229Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.283Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.286Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.359Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.361Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.361Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.363Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.433Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.434Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.436Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.437Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.438Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.476Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.479Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.488Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T06:57:21.495Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:20.439Z - Checking for new PrestaShop orders...
+2026-06-02T07:02:20.568Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:02:20.988Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.054Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.131Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.133Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.134Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.233Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.234Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.236Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.237Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.237Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.266Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.275Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.275Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.277Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.277Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:02:21.293Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:50.906Z - Listener starting...
+2026-06-02T07:03:50.907Z - Checking for new PrestaShop orders...
+2026-06-02T07:03:51.091Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:03:51.528Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.640Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.653Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.668Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.671Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.678Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.681Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.705Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.708Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.711Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.716Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.738Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.739Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.741Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.743Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:03:51.773Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:42.271Z - Listener starting...
+2026-06-02T07:04:42.272Z - Checking for new PrestaShop orders...
+2026-06-02T07:04:42.462Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:04:42.905Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:42.931Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:42.958Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:42.996Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:42.998Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.003Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.020Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.026Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.028Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.048Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.050Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.051Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.061Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.064Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.077Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:04:43.095Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:05.491Z - Listener starting...
+2026-06-02T07:05:05.491Z - Checking for new PrestaShop orders...
+2026-06-02T07:05:05.663Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:05:06.103Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.170Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.191Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.193Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.194Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.212Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.225Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.226Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.227Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.230Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.244Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.254Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.257Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.259Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.261Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:05:06.275Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:11.854Z - Listener starting...
+2026-06-02T07:09:11.855Z - Checking for new PrestaShop orders...
+2026-06-02T07:09:12.096Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:09:12.581Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.610Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.617Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.639Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.655Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.687Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.688Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.701Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.708Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.721Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.726Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.748Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.755Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.760Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.776Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:09:12.844Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:07.942Z - Listener starting...
+2026-06-02T07:13:07.942Z - Checking for new PrestaShop orders...
+2026-06-02T07:13:08.189Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:13:08.721Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.724Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.790Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.823Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.834Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.890Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.891Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.892Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.894Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.896Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.921Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.923Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.929Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.950Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.955Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:13:08.960Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:07.978Z - Checking for new PrestaShop orders...
+2026-06-02T07:18:08.201Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:18:09.191Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.438Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.483Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.485Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.516Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.524Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.527Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.529Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.582Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.586Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.589Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.590Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.591Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.615Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.636Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:18:09.653Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:07.986Z - Checking for new PrestaShop orders...
+2026-06-02T07:23:08.116Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:23:08.897Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:08.971Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:08.994Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.000Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.024Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.027Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.038Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.038Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.057Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.112Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.115Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.115Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.116Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.143Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.144Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:23:09.152Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:37.715Z - Listener starting...
+2026-06-02T07:26:37.716Z - Checking for new PrestaShop orders...
+2026-06-02T07:26:37.884Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:26:38.331Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.372Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.384Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.389Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.394Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.398Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.414Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.417Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.426Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.429Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.446Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.454Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.460Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.462Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.476Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:26:38.481Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:37.757Z - Checking for new PrestaShop orders...
+2026-06-02T07:31:37.905Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:31:38.603Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.652Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.655Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.685Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.687Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.689Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.708Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.723Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.732Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.733Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.733Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.746Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.762Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.764Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.765Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:31:38.770Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:37.758Z - Checking for new PrestaShop orders...
+2026-06-02T07:36:37.959Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:36:38.523Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.601Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.605Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.625Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.626Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.628Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.629Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.630Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.631Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.646Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.649Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.650Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.655Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.672Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.681Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:36:38.685Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:37.782Z - Checking for new PrestaShop orders...
+2026-06-02T07:41:38.135Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:41:38.850Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.902Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.933Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.934Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.936Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.939Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.970Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.971Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.973Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.975Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.976Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:38.996Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:39.002Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:39.004Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:39.005Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:41:39.014Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:37.805Z - Checking for new PrestaShop orders...
+2026-06-02T07:46:37.943Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:46:38.555Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.666Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.668Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.681Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.692Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.693Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.696Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.792Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.796Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.796Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.816Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.817Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.817Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.818Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.849Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:46:38.862Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:37.838Z - Checking for new PrestaShop orders...
+2026-06-02T07:51:38.021Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:51:38.505Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.609Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.612Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.612Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.660Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.661Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.663Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.686Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.687Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.696Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.698Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.699Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.711Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.720Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.729Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:51:38.731Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:37.873Z - Checking for new PrestaShop orders...
+2026-06-02T07:56:38.256Z - Found 16 new order(s). Fetching details...
+2026-06-02T07:56:38.873Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.876Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.901Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.903Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.954Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.955Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.957Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.982Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:38.996Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.017Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.020Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.023Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.024Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.027Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.077Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T07:56:39.079Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:37.894Z - Checking for new PrestaShop orders...
+2026-06-02T08:01:38.075Z - Found 16 new order(s). Fetching details...
+2026-06-02T08:01:38.593Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.599Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.613Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.633Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.661Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.669Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.675Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.684Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.685Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.697Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.698Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.720Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.722Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.723Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.724Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:01:38.725Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:37.913Z - Checking for new PrestaShop orders...
+2026-06-02T08:06:38.074Z - Found 16 new order(s). Fetching details...
+2026-06-02T08:06:38.669Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.747Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.847Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.911Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.912Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.949Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.950Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.951Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.962Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.971Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.981Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.984Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:38.986Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:39.020Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:39.126Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:06:39.129Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:02.603Z - Listener starting...
+2026-06-02T08:09:02.604Z - Checking for new PrestaShop orders...
+2026-06-02T08:09:02.785Z - Found 16 new order(s). Fetching details...
+2026-06-02T08:09:03.479Z - Failed to process order 179: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.487Z - Failed to process order 204: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.505Z - Failed to process order 75: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.517Z - Failed to process order 330: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.526Z - Failed to process order 235: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.584Z - Failed to process order 360: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.588Z - Failed to process order 401: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.589Z - Failed to process order 259: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.589Z - Failed to process order 331: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.641Z - Failed to process order 406: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.642Z - Failed to process order 402: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.644Z - Failed to process order 653: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.644Z - Failed to process order 414: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.645Z - Failed to process order 562: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.674Z - Failed to process order 460: SQLITE_MISUSE: Statement is already finalized
+2026-06-02T08:09:03.677Z - Failed to process order 655: SQLITE_MISUSE: Statement is already finalized
