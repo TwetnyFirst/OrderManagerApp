@@ -46,54 +46,74 @@ class PrestaShopService {
 
     /**
      * Fetches IDs of new orders since the last check.
-     * PrestaShop state for "Payment accepted" is typically 2.
      */
     async getNewOrderIds() {
-        const now = new Date();
-        const sinceDate = this.lastCheck.toISOString().replace('T', ' ').slice(0, 19);
-        this.lastCheck = now; // Update last check time immediately
-
-        const data = await this._get('orders', {
-            'filter[current_state]': '2', // Payment accepted
-            display: '[id]',
-        });
-        return data.orders ? data.orders.map(o => o.id) : [];
+        try {
+            // Fetch recent orders without the problematic date_add filter
+            // Using sorting by ID and a limit instead
+            const data = await this._get('orders', {
+                'filter[current_state]': '[2|3|4|5|12|13|28]',
+                display: '[id]',
+                sort: '[id_DESC]',
+                limit: '100'
+            });
+            
+            if (data && data.orders) {
+                const ids = data.orders.map(o => o.id);
+                console.log(`[PrestaShop] Found ${ids.length} orders matching status filters.`);
+                return ids;
+            }
+            return [];
+        } catch (e) {
+            console.error('Failed to get new order IDs:', e.message);
+            return [];
+        }
     }
 
     /**
      * Fetches full details for a single order and maps it to our schema.
      */
     async getOrderDetails(orderId) {
-        const orderData = await this._get(`orders/${orderId}`);
-        if (!orderData || !orderData.order) return null;
+        try {
+            const orderData = await this._get(`orders/${orderId}`);
+            if (!orderData || !orderData.order) return null;
 
-        const order = orderData.order;
+            const order = orderData.order;
 
-        const customer = (await this._get(`customers/${order.id_customer}`)).customer;
-        const address = (await this._get(`addresses/${order.id_address_delivery}`)).address;
-        const carrier = (await this._get(`carriers/${order.id_carrier}`)).carrier;
+            const customerData = await this._get(`customers/${order.id_customer}`);
+            const customer = customerData ? customerData.customer : { firstname: 'Unknown', lastname: '' };
 
-        const street = [address.address1, address.address2].filter(Boolean).join(' ');
+            const addressData = await this._get(`addresses/${order.id_address_delivery}`);
+            const address = addressData ? addressData.address : { address1: '', city: '', postcode: '' };
 
-        return {
-            order_number: order.reference, // Use reference for order number
-            customer_name: `${customer.firstname} ${customer.lastname}`,
-            company_name: address.company || null,
-            nip: address.dni || null,
-            email: customer.email,
-            phone: address.phone || address.phone_mobile,
-            street: street,
-            city: address.city,
-            zip_code: address.postcode,
-            payment_method: order.payment,
-            total_price: parseFloat(order.total_paid),
-            delivery_method: carrier.name,
-            status: 'New', 
-            created_at: order.date_add,
-            paczkomat_id: null, 
-            parcel_size: 'C',
-            source: 'PrestaShop'
-        };
+            const carrierData = await this._get(`carriers/${order.id_carrier}`);
+            const carrier = carrierData ? carrierData.carrier : { name: 'PrestaShop' };
+
+            const street = [address.address1, address.address2].filter(Boolean).join(' ');
+
+            return {
+                order_number: String(order.id), // Prefer numeric ID as reference per user's examples (4295, 4294)
+                customer_name: `${customer.firstname} ${customer.lastname}`.trim(),
+                company_name: address.company || null,
+                nip: address.dni || address.vat_number || null,
+                email: customer.email,
+                phone: address.phone || address.phone_mobile || "",
+                street: street,
+                city: address.city,
+                zip_code: address.postcode,
+                payment_method: order.payment,
+                total_price: parseFloat(order.total_paid),
+                delivery_method: carrier.name,
+                status: 'New', 
+                created_at: order.date_add,
+                paczkomat_id: null, 
+                parcel_size: 'C',
+                source: 'PrestaShop'
+            };
+        } catch (e) {
+            console.error(`Error fetching details for PrestaShop order ${orderId}:`, e.message);
+            return null;
+        }
     }
 }
 

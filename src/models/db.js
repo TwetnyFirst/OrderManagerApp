@@ -4,6 +4,9 @@ const path = require('path');
 const dbPath = path.resolve(__dirname, '../../database.sqlite');
 const db = new sqlite3.Database(dbPath);
 
+// Enable WAL mode for better concurrency
+db.run('PRAGMA journal_mode = WAL');
+
 const initDb = () => {
   return new Promise((resolve, reject) => {
     db.serialize(() => {

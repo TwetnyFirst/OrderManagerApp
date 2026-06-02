@@ -49,6 +49,7 @@ class ApaczkaService {
 
     async createShipment(order, sender) {
         const isCod = order.payment_method.toLowerCase().includes('pobranie');
+        const paczkomatId = (order.paczkomat_id || "").trim();
         
         // Map parcel size to dimensions (Approximate based on InPost standards)
         const sizeMap = {
@@ -60,26 +61,32 @@ class ApaczkaService {
 
         const payload = {
             order: {
-                service_id: 41, // InPost Paczkomat (Verified from service_structure)
-                content: 'Wentylator', // TOP LEVEL: Required by APaczka documentation
+                service_id: 41, // InPost Paczkomat
+                content: 'Wentylator',
+                externalId: order.order_number || order.id,
                 address: {
                     sender: {
-                        name: sender.name,
-                        company: sender.company,
-                        street: sender.street,
+                        name: sender.company || sender.name,
+                        line1: sender.street,
+                        line2: "",
                         city: sender.city,
-                        postal_code: sender.zip_code.replace('-', ''),
+                        postal_code: sender.zip_code,
                         country_code: 'PL',
-                        phone: sender.phone,
-                        email: sender.email || 'sklep@instalszop.pl'
+                        phone: sender.phone.replace(/[^0-9]/g, ''),
+                        email: sender.email || 'sklep@instalszop.pl',
+                        contact_person: sender.name
                     },
                     receiver: {
-                        name: order.customer_name,
-                        company: order.company_name || "",
+                        name: order.company_name || order.customer_name,
+                        line1: order.street || "Paczkomat " + paczkomatId,
+                        line2: "",
+                        city: order.city,
+                        postal_code: order.zip_code,
                         country_code: 'PL',
-                        phone: order.phone,
+                        phone: order.phone.replace(/[^0-9]/g, ''),
                         email: order.email,
-                        foreign_address_id: order.paczkomat_id,
+                        contact_person: order.customer_name,
+                        foreign_address_id: paczkomatId,
                         foreign_address_subtype: 'INPOST'
                     }
                 },
@@ -110,8 +117,9 @@ class ApaczkaService {
         console.log(JSON.stringify(result, null, 2));
 
         // Robust extraction of orderId and waybill
-        const orderId = result.order_id || result.id || (result.order && result.order.id);
-        const waybill = result.waybill || (result.order && result.order.waybill) || (result.shipment && result.shipment[0].waybill);
+        const orderData = result.order || result;
+        const orderId = orderData.id || result.order_id;
+        const waybill = orderData.waybill_number || orderData.waybill || (result.shipment && result.shipment[0].waybill);
 
         if (!orderId) {
             throw new Error('APaczka order_id not found in response');

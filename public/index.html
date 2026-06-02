@@ -67,7 +67,10 @@
             </div>
             <div class="tab-pane fade" id="prestashop-orders" role="tabpanel">
                 <div class="d-flex justify-content-between align-items-center my-2">
-                    <h4 class="mb-0">Zamówienia z PrestaShop</h4>
+                    <div class="d-flex align-items-center">
+                        <h4 class="mb-0 me-3">Zamówienia z PrestaShop</h4>
+                        <button class="btn btn-outline-primary btn-sm" id="btnSyncPresta" onclick="syncPrestaShop()">🔄 Synchronizuj teraz</button>
+                    </div>
                      <div id="prestashop-pagination-info" class="small text-muted"></div>
                 </div>
                 <div class="table-container">
@@ -98,6 +101,7 @@
     <script>
         let senders = [];
         let currentPages = { 'Email': 1, 'PrestaShop': 1 };
+        let isPrestaFirstLoad = true;
         const limit = 50;
 
         async function loadSenders() {
@@ -109,8 +113,32 @@
             }
         }
         
-        function loadOrdersForSource(source) {
-            loadOrders(currentPages[source], source);
+        async function syncPrestaShop() {
+            const btn = document.getElementById('btnSyncPresta');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Synchronizacja...';
+            
+            try {
+                const res = await fetch('/api/sync-prestashop', { method: 'POST' });
+                const data = await res.json();
+                console.log(`Synced: ${data.count} new orders.`);
+                await loadOrders(1, 'PrestaShop');
+            } catch (err) {
+                alert('Błąd synchronizacji: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        async function loadOrdersForSource(source) {
+            if (source === 'PrestaShop' && isPrestaFirstLoad) {
+                isPrestaFirstLoad = false;
+                await syncPrestaShop(); // Auto-sync ONLY on very first click
+            } else {
+                loadOrders(currentPages[source], source);
+            }
         }
 
         async function loadOrders(page = 1, source = 'Email') {
@@ -121,6 +149,10 @@
                 console.error(`Table body with id ${tableBodyId} not found!`);
                 return;
             }
+            
+            // If it's PrestaShop and it's the first load or a refresh, we might want to sync
+            // For now, we'll trigger sync ONLY when specifically called from the tab click
+            
             tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Ładowanie...</td></tr>';
 
             try {
@@ -131,11 +163,13 @@
                 
                 renderPagination(data.currentPage, data.totalPages, source);
 
-                tbody.innerHTML = '';
                 if (data.orders.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4">Brak zamówień.</td></tr>';
                     return;
                 }
+
+                // Optimization: Use DocumentFragment to batch DOM updates
+                const fragment = document.createDocumentFragment();
 
                 data.orders.forEach(order => {
                     const isInPost = order.delivery_method && order.delivery_method.toLowerCase().includes('inpost');
@@ -193,7 +227,7 @@
                         </td>
                         <td>
                             <div class="d-grid gap-1">
-                                 ${(isInPost || (order.delivery_method && order.delivery_method.toLowerCase().includes('paczkomat')))
+                                 ${(order.delivery_method && order.delivery_method.toLowerCase().includes('paczkomat'))
                                     ? `<button class="btn btn-warning btn-sm" onclick="generateAPaczkaLabel(${order.id}, event, '${source}')">📦 APaczka</button>`
                                     : `<button class="btn btn-primary btn-sm" onclick="generateLabel(${order.id}, event, '${source}')">🚛 DPD</button>`
                                 }
@@ -208,8 +242,11 @@
                             </div>
                         </td>
                     `;
-                    tbody.appendChild(tr);
+                    fragment.appendChild(tr);
                 });
+                
+                tbody.innerHTML = '';
+                tbody.appendChild(fragment);
             } catch (err) {
                 console.error(err);
                 tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger py-4">Błąd ładowania: ${err.message}</td></tr>`;

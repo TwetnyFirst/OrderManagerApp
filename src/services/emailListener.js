@@ -62,57 +62,64 @@ const processEmails = async () => {
         connection = await imaps.connect(config);
         await connection.openBox('INBOX');
 
-        // Limit search to last 3 days to prevent long startup times
-        const delay = 3 * 24 * 3600 * 1000; // 3 days in ms
+        const delay = 3 * 24 * 3600 * 1000;
         const sinceDate = new Date(Date.now() - delay).toISOString();
         
+        // Step 1: Search only for UIDs and Headers to minimize initial download
         const searchCriteria = [['SUBJECT', 'Zamówienie nr'], ['SINCE', sinceDate]]; 
         const fetchOptions = {
-            bodies: ['HEADER', 'TEXT', ''],
+            bodies: ['HEADER'],
             markSeen: false 
         };
 
         const messages = await connection.search(searchCriteria, fetchOptions);
-        if (messages.length > 0) {
-            console.log(`Found ${messages.length} potential order emails from the last 3 days.`);
-        }
+        if (messages.length === 0) return;
+
+        console.log(`Found ${messages.length} potential order emails. Filtering...`);
+
+        // Step 2: Get all existing order numbers in one go for O(1) lookup
+        const existingOrders = await new Promise((res, rej) => {
+            db.all('SELECT order_number FROM orders WHERE source = "Email"', (err, rows) => {
+                if (err) rej(err); else res(new Set(rows.map(r => r.order_number)));
+            });
+        });
 
         for (const item of messages) {
             try {
                 const id = item.attributes.uid;
-                
-                // Quick check: Extract order number from subject before full parsing
                 const subjectHeader = item.parts.find(p => p.which === 'HEADER').body.subject[0];
                 const orderNumberMatch = subjectHeader.match(/Zamówienie nr\s*\b(\d{4,6})\b/i);
                 
                 if (orderNumberMatch) {
                     const orderNo = orderNumberMatch[1];
-                    const exists = await new Promise(res => {
-                        db.get('SELECT id FROM orders WHERE order_number = ?', [orderNo], (err, row) => res(!!row));
-                    });
-                    if (exists) continue; // Skip if order number is already in DB
+                    if (existingOrders.has(orderNo)) continue; 
                 }
 
-                const all = item.parts.find(part => part.which === '');
-                const idHeader = `Imap-Id: ${id}\r\n`;
+                // Step 3: Only download full body if it's a new order
+                const fullFetchOptions = {
+                    bodies: [''],
+                    markSeen: false
+                };
                 
-                const mail = await simpleParser(idHeader + all.body);
+                // Fetch the single message body
+                const fullMessages = await connection.fetch(id, fullFetchOptions);
+                const fullItem = fullMessages[0];
+                const all = fullItem.parts.find(part => part.which === '');
+                
+                const mail = await simpleParser(all.body);
                 const { orderData, parsing_status, parsing_warnings } = parseOrderEmail(mail.text, mail.subject);
 
-                if (parsing_status === 'FAILED') {
-                    console.warn(`Skipping email UID ${id}: parsing failed. Reason: ${parsing_warnings.join(', ')}`);
-                    continue;
-                }
-
-                if (orderData) {
+                if (orderData && !existingOrders.has(orderData.order_number)) {
                     const { isNew, status } = await saveOrderToDb(orderData, parsing_status, mail.text);
                     if (isNew) {
                         console.log(`+ New order saved: ${orderData.order_number} | Status: ${status}`);
-                        if (parsing_warnings.length > 0) {
-                            console.warn(`  - Warnings for ${orderData.order_number}: ${parsing_warnings.join('; ')}`);
-                        }
+                        existingOrders.add(orderData.order_number);
                     }
                 }
+
+                // Yield to event loop to keep API responsive
+                await new Promise(resolve => setImmediate(resolve));
+
             } catch (innerError) {
                 console.error(`Error processing UID ${item.attributes.uid}:`, innerError.message);
             }

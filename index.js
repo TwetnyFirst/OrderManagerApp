@@ -29,10 +29,16 @@ const startServer = async () => {
     await initDb();
     console.log('Database initialized.');
     
-    await importSenders();
-    
-    startEmailListener();
-    startPrestaShopListener();
+    // Non-blocking initialization
+    (async () => {
+        try {
+            await importSenders();
+            startEmailListener();
+            startPrestaShopListener();
+        } catch (e) {
+            console.error('Background initialization error:', e);
+        }
+    })();
     
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

@@ -1,11 +1,31 @@
 const xlsx = require('xlsx');
 const { db } = require('../models/db');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 const importSenders = async () => {
   const filePath = process.env.SENDERS_EXCEL_PATH || path.resolve(__dirname, '../../Senders.xlsx');
   
+  if (!fs.existsSync(filePath)) {
+    console.warn(`Senders file not found at ${filePath}, skipping import.`);
+    return;
+  }
+
+  // Simple optimization: check if file has changed since last import
+  const stats = fs.statSync(filePath);
+  const lastModified = stats.mtimeMs;
+  
+  // Track last modified in a small file
+  const cachePath = path.resolve(__dirname, '../../.senders_cache');
+  if (fs.existsSync(cachePath)) {
+    const cachedTime = parseFloat(fs.readFileSync(cachePath, 'utf8'));
+    if (cachedTime === lastModified) {
+      console.log('Senders file not changed, skipping import.');
+      return;
+    }
+  }
+
   try {
     const workbook = xlsx.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
@@ -13,7 +33,7 @@ const importSenders = async () => {
 
     let importedCount = 0;
 
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       db.serialize(() => {
         const stmt = db.prepare(`INSERT OR REPLACE INTO senders 
           (fid, name, company, street, city, zip_code, phone, email) 
@@ -21,11 +41,7 @@ const importSenders = async () => {
 
         data.forEach((row) => {
           const fid = row['Numer'] ? String(row['Numer']) : null;
-
-          if (!fid) {
-            console.warn('Skipping sender row: "Numer" (FID) column is missing or empty.');
-            return;
-          }
+          if (!fid) return;
 
           stmt.run(
             fid,
@@ -35,7 +51,7 @@ const importSenders = async () => {
             row['Miasto'] || '',
             row['Kod pocztowy'] || '',
             row['Telefon'] ? String(row['Telefon']) : '',
-            row['Email'] || '' // Get email from excel if it exists
+            row['Email'] || ''
           );
           importedCount++;
         });
@@ -44,6 +60,7 @@ const importSenders = async () => {
           if (err) reject(err);
           else {
             console.log(`Successfully imported or updated ${importedCount} senders.`);
+            fs.writeFileSync(cachePath, lastModified.toString());
             resolve();
           }
         });
@@ -51,7 +68,6 @@ const importSenders = async () => {
     });
   } catch (error) {
     console.error('Error importing senders:', error);
-    throw error;
   }
 };
 

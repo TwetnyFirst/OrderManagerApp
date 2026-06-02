@@ -6,6 +6,9 @@ const { db } = require('../models/db');
 const dpdService = require('../services/dpdService');
 const apaczkaService = require('../services/apaczkaService');
 
+const { startEmailListener } = require('./emailListener');
+const { syncPrestaShopOrders } = require('./prestaShopListener');
+
 // Helper to make db calls cleaner
 const p = {
     get: (sql, params) => new Promise((resolve, reject) => {
@@ -25,8 +28,19 @@ const p = {
     })
 };
 
+// Manual PrestaShop Sync
+router.post('/sync-prestashop', async (req, res) => {
+    try {
+        const result = await syncPrestaShopOrders();
+        res.json({ success: true, ...result });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get orders with pagination and associated shipments
 router.get('/orders', async (req, res) => {
+    const start = Date.now();
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 50;
     const offset = (page - 1) * limit;
@@ -41,27 +55,46 @@ router.get('/orders', async (req, res) => {
         }
 
         const { count } = await p.get(countSql, params);
+        const tCount = Date.now() - start;
 
-        let sql = `
-            SELECT o.*, 
-            (SELECT json_group_array(json_object(
-                'id', s.id, 'waybill', s.waybill, 'label_path', s.label_path, 'provider', s.provider, 'created_at', s.created_at
-            )) FROM shipments s WHERE s.order_id = o.id) as shipments
-            FROM orders o 
-        `;
-
+        let sql = 'SELECT * FROM orders';
         const queryParams = [...params];
         if (source) {
-            sql += ' WHERE o.source = ?';
+            sql += ' WHERE source = ?';
         }
-        sql += ' ORDER BY CAST(o.order_number AS INTEGER) DESC LIMIT ? OFFSET ?';
+        // Sorting by numeric order_number DESC for Email and PrestaShop
+        sql += ' ORDER BY CAST(order_number AS INTEGER) DESC LIMIT ? OFFSET ?'; 
         queryParams.push(limit, offset);
 
-        const rows = await p.all(sql, queryParams);
-        const processedRows = rows.map(row => ({ ...row, shipments: JSON.parse(row.shipments || '[]') }));
+        const orders = await p.all(sql, queryParams);
+        const tOrders = Date.now() - start - tCount;
+
+        if (orders.length > 0) {
+            const orderIds = orders.map(o => o.id);
+            // Optimization: select only needed columns
+            const shipments = await p.all(
+                `SELECT id, order_id, waybill, label_path, provider, created_at FROM shipments WHERE order_id IN (${orderIds.map(() => '?').join(',')})`,
+                orderIds
+            );
+
+            // Optimization: Use a map for O(1) lookup instead of filter() inside loop
+            const shipmentsMap = {};
+            shipments.forEach(s => {
+                if (!shipmentsMap[s.order_id]) shipmentsMap[s.order_id] = [];
+                shipmentsMap[s.order_id].push(s);
+            });
+
+            orders.forEach(order => {
+                order.shipments = shipmentsMap[order.id] || [];
+            });
+        }
+        const tShipments = Date.now() - start - tCount - tOrders;
+        
+        const total = Date.now() - start;
+        console.log(`[PERF] /orders (${source}): total=${total}ms (count=${tCount}ms, orders=${tOrders}ms, shipments=${tShipments}ms)`);
 
         res.json({
-            orders: processedRows,
+            orders,
             totalCount: count,
             totalPages: Math.ceil(count / limit),
             currentPage: page,
