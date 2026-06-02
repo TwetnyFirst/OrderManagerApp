@@ -168,6 +168,38 @@ class DpdService {
             throw error;
         }
     }
+
+    async deletePackage(waybill) {
+        // DPD REST API uses POST for deletion with a specific payload
+        const payload = {
+            waybill: waybill
+        };
+
+        try {
+            const response = await axios.post(`${this.baseUrl}/deletePackage`, payload, {
+                headers: this.getHeaders()
+            });
+
+            // If it returns 200 or 204, it's successful. 
+            // DPD often returns a status field in JSON.
+            if (response.data && response.data.status === 'OK') {
+                return true;
+            }
+            
+            // If status is not OK, but no exception was thrown
+            console.warn('DPD Deletion Warning:', JSON.stringify(response.data));
+            return true; 
+        } catch (error) {
+            // If DPD returns 404 for a waybill that doesn't exist in their system anymore, we consider it deleted locally
+            if (error.response && error.response.status === 404) {
+                console.warn(`DPD Waybill ${waybill} not found in their system, proceeding with local deletion.`);
+                return true;
+            }
+            
+            console.error('DPD Deletion Error:', error.response ? JSON.stringify(error.response.data) : error.message);
+            throw error;
+        }
+    }
 }
 
 module.exports = new DpdService();
