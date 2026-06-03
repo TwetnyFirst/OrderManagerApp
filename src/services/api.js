@@ -2,6 +2,14 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
+
+// MiddleWare to ensure fast response and avoid lingering connections
+router.use((req, res, next) => {
+    res.setHeader('Connection', 'close'); 
+    // Small artificial gap to let event loop breathe if needed, but keeping it responsive
+    setTimeout(next, 5); 
+});
+
 const { db } = require('../models/db');
 const dpdService = require('../services/dpdService');
 const apaczkaService = require('../services/apaczkaService');
@@ -295,23 +303,6 @@ router.delete('/shipments/:id', async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         console.error('Shipment Deletion Error:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// Delete Shipment by Waybill (keeping legacy route for safety)
-router.delete('/shipments/waybill/:waybill', async (req, res) => {
-    const { waybill } = req.params;
-    try {
-        const shipment = await p.get('SELECT id FROM shipments WHERE waybill = ?', [waybill]);
-        if (shipment) {
-            // Forward to the ID-based route logic or replicate it
-            // For brevity, we'll just delete from DB here as it was before, 
-            // but the UI should use the ID-based route.
-            await p.run('DELETE FROM shipments WHERE waybill = ?', [waybill]);
-        }
-        res.json({ success: true });
-    } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });

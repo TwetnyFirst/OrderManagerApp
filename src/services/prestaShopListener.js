@@ -3,13 +3,11 @@ const path = require('path');
 const { db } = require('../models/db');
 const prestaShopService = require('./prestaShopService');
 
-let pollInterval;
 const logFile = path.resolve(__dirname, '../../prestashop.log');
 
 const log = (message) => {
     const timestamp = new Date().toISOString();
-    fs.appendFileSync(logFile, `${timestamp} - ${message}
-`);
+    fs.appendFileSync(logFile, `${timestamp} - ${message}\n`);
 };
 
 const syncPrestaShopOrders = async () => {
@@ -61,18 +59,7 @@ const syncPrestaShopOrders = async () => {
 };
 
 const startPrestaShopListener = () => {
-    // We no longer use an interval. We keep the function for export compatibility 
-    // but it will only run once at startup if needed.
     log('PrestaShop manual sync mode initialized.');
 };
 
 module.exports = { startPrestaShopListener, syncPrestaShopOrders };
-
-const stopPrestaShopListener = () => {
-    if (pollInterval) {
-        clearInterval(pollInterval);
-    }
-    log('Listener stopped.');
-};
-
-module.exports = { startPrestaShopListener, stopPrestaShopListener };

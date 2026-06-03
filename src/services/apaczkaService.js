@@ -48,7 +48,8 @@ class ApaczkaService {
     }
 
     async createShipment(order, sender) {
-        const isCod = order.payment_method.toLowerCase().includes('pobranie');
+        const lowerPayment = order.payment_method.toLowerCase();
+        const isCod = lowerPayment.includes('pobranie') || lowerPayment.includes('odbiorze') || lowerPayment.includes('cod');
         const paczkomatId = (order.paczkomat_id || "").trim();
         
         // Map parcel size to dimensions (Approximate based on InPost standards)
@@ -58,6 +59,7 @@ class ApaczkaService {
             'C': { d1: 41, d2: 38, d3: 64 }
         };
         const dims = sizeMap[order.parcel_size || 'C'];
+        const codAmount = order.total_price.toFixed(2);
 
         const payload = {
             order: {
@@ -101,10 +103,16 @@ class ApaczkaService {
                     shipment_type_code: 'PACZKA',
                     content: 'Wentylator'
                 }],
+                // New: dedicated COD object for API v2
+                cod: isCod ? {
+                    amount: codAmount,
+                    currency: 'PLN'
+                } : undefined,
+                // Keep services array for compatibility
                 services: isCod ? [{
                     service_code: 'COD',
                     params: {
-                        amount: order.total_price.toFixed(2),
+                        amount: codAmount,
                         currency: 'PLN'
                     }
                 }] : []

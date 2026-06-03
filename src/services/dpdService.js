@@ -24,7 +24,8 @@ class DpdService {
     }
 
     async generatePackagesNumbers(order, sender, packageCount) {
-        const isCod = order.payment_method.toLowerCase().includes('pobranie');
+        const lowerPayment = order.payment_method.toLowerCase();
+        const isCod = lowerPayment.includes('pobranie') || lowerPayment.includes('odbiorze') || lowerPayment.includes('cod');
         const now = new Date().getTime();
         const pkgRef = `PKG_${now}`;
         
@@ -53,24 +54,18 @@ class DpdService {
                     email: sender.email || "sklep@instalszop.pl"
                 },
                 payerFID: parseInt(sender.fid),
-                parcels: Array.from({ length: packageCount }).map((_, i) => {
-                    const parcel = {
-                        reference: `PARCEL_${now}_${i + 1}`,
-                        weight: 4,
-                        content: "Produkty wentylacyjne"
-                    };
-
-                    // Move COD to parcel level for DPD REST API
-                    if (isCod) {
-                        parcel.services = {
-                            COD: {
-                                amount: parseFloat(order.total_price.toFixed(2)),
-                                currency: "PLN"
-                            }
-                        };
-                    }
-                    return parcel;
-                })
+                services: isCod ? [{
+                    code: "COD",
+                    attributes: [
+                        { code: "AMOUNT", value: order.total_price.toFixed(2) },
+                        { code: "CURRENCY", value: "PLN" }
+                    ]
+                }] : [],
+                parcels: Array.from({ length: packageCount }).map((_, i) => ({
+                    reference: `PARCEL_${now}_${i + 1}`,
+                    weight: 4,
+                    content: "Produkty wentylacyjne"
+                }))
             }]
         };
 

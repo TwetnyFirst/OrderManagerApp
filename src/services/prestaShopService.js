@@ -15,8 +15,6 @@ class PrestaShopService {
     constructor() {
         this.apiKey = process.env.PRESTASHOP_API_KEY;
         this.shopUrl = process.env.PRESTASHOP_SHOP_URL;
-        // Set a date in the past to fetch historical orders on the first run
-        this.lastCheck = new Date('2022-01-01T00:00:00Z'); 
     }
 
     /**

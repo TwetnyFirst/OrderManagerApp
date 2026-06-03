@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(morgan('dev'));
+// app.use(morgan('dev')); // Disabled for performance
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 

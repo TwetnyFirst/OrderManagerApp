@@ -8,17 +8,17 @@
     <style>
         body { background-color: #f8f9fa; font-size: 0.9rem; }
         .container-fluid { padding: 20px; }
-        .table-container { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .table-container { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); min-height: 400px; }
         .table { margin-bottom: 0; }
         .table th, .table td { padding: 8px 4px; vertical-align: middle; }
         .status-badge { font-size: 0.75rem; }
         select.form-select-sm { font-size: 0.8rem; padding: 2px 4px; }
         .btn-sm { padding: 2px 8px; font-size: 0.8rem; }
-        .is-valid { border-color: #198754 !important; background-color: #d1e7dd !important; }
         .waybill-badge { font-size: 0.8rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
         .label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
         .btn-delete { padding: 0 4px; line-height: 1; font-size: 0.7rem; color: #dc3545; cursor: pointer; border: none; background: none; }
         .btn-delete:hover { color: #a71d2a; }
+        .loading-overlay { pointer-events: none; opacity: 0.5; }
     </style>
 </head>
 <body>
@@ -30,68 +30,42 @@
 
     <div class="container-fluid">
         <ul class="nav nav-tabs" id="sourceTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-orders" type="button" role="tab" onclick="loadOrdersForSource('Email')">📦 InstalSzop (Email)</button>
+            <li class="nav-item">
+                <button class="nav-link active" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-orders" type="button" onclick="switchTab('Email')">📦 InstalSzop (Email)</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="prestashop-tab" data-bs-toggle="tab" data-bs-target="#prestashop-orders" type="button" role="tab" onclick="loadOrdersForSource('PrestaShop')">🛍️ PrestaShop</button>
+            <li class="nav-item">
+                <button class="nav-link" id="prestashop-tab" data-bs-toggle="tab" data-bs-target="#prestashop-orders" type="button" onclick="switchTab('PrestaShop')">🛍️ PrestaShop</button>
             </li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="email-orders" role="tabpanel">
+            <!-- Active Tab -->
+            <div class="tab-pane fade show active" id="main-content">
                 <div class="d-flex justify-content-between align-items-center my-2">
-                    <h4 class="mb-0">Zamówienia z Email</h4>
-                    <div id="email-pagination-info" class="small text-muted"></div>
+                    <div class="d-flex align-items-center">
+                        <h4 class="mb-0 me-3" id="tab-title">Zamówienia</h4>
+                        <button class="btn btn-outline-primary btn-sm d-none" id="btnSyncPresta" onclick="syncPrestaShop()">🔄 Synchronizuj</button>
+                    </div>
+                    <div id="pagination-info" class="small text-muted"></div>
                 </div>
-                <div class="table-container">
+                <div class="table-container" id="table-wrapper">
                     <table class="table table-sm table-hover table-bordered">
                         <thead class="table-dark">
                             <tr>
                                 <th style="width: 8%">Nr Zam.</th>
-                                <th style="width: 12%">Klient</th>
-                                <th style="width: 16%">Adres</th>
-                                <th style="width: 10%">Dostawa / Płatność</th>
-                                <th style="width: 16%">Faktury / InPost</th>
-                                <th style="width: 13%">Nadawca / Paczki</th>
-                                <th style="width: 15%">Waybill</th>
-                                <th style="width: 10%">Akcje</th>
+                                <th style="width: 15%">Klient</th>
+                                <th style="width: 20%">Adres</th>
+                                <th style="width: 15%">Dostawa / Płatność</th>
+                                <th style="width: 22%">Nadawca / Paczki / InPost</th>
+                                <th style="width: 12%">Waybill</th>
+                                <th style="width: 8%">Akcje</th>
                             </tr>
                         </thead>
-                        <tbody id="emailOrdersTableBody"></tbody>
+                        <tbody id="ordersTableBody"></tbody>
                     </table>
                 </div>
                 <div class="d-flex justify-content-center align-items-center mt-3">
-                     <nav><ul class="pagination pagination-sm mb-0" id="email-pagination-controls"></ul></nav>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="prestashop-orders" role="tabpanel">
-                <div class="d-flex justify-content-between align-items-center my-2">
-                    <div class="d-flex align-items-center">
-                        <h4 class="mb-0 me-3">Zamówienia z PrestaShop</h4>
-                        <button class="btn btn-outline-primary btn-sm" id="btnSyncPresta" onclick="syncPrestaShop()">🔄 Synchronizuj teraz</button>
-                    </div>
-                     <div id="prestashop-pagination-info" class="small text-muted"></div>
-                </div>
-                <div class="table-container">
-                    <table class="table table-sm table-hover table-bordered">
-                         <thead class="table-dark">
-                            <tr>
-                                <th style="width: 8%">Nr Zam.</th>
-                                <th style="width: 12%">Klient</th>
-                                <th style="width: 16%">Adres</th>
-                                <th style="width: 10%">Dostawa / Płatność</th>
-                                <th style="width: 16%">Faktury / InPost</th>
-                                <th style="width: 13%">Nadawca / Paczki</th>
-                                <th style="width: 15%">Waybill</th>
-                                <th style="width: 10%">Akcje</th>
-                            </tr>
-                        </thead>
-                        <tbody id="prestashopOrdersTableBody"></tbody>
-                    </table>
-                </div>
-                <div class="d-flex justify-content-center align-items-center mt-3">
-                   <nav><ul class="pagination pagination-sm mb-0" id="prestashop-pagination-controls"></ul></nav>
+                     <nav><ul class="pagination pagination-sm mb-0" id="pagination-controls"></ul></nav>
                 </div>
             </div>
         </div>
@@ -100,299 +74,159 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let senders = [];
-        let currentPages = { 'Email': 1, 'PrestaShop': 1 };
-        let isPrestaFirstLoad = true;
-        const limit = 50;
+        let sendersHtml = '';
+        let currentSource = 'Email';
+        let pages = { 'Email': 1, 'PrestaShop': 1 };
+        const LIMIT = 50;
 
-        async function loadSenders() {
-            try {
-                const response = await fetch('/api/senders');
-                senders = await response.json();
-            } catch (err) {
-                console.error('Error loading senders:', err);
-            }
+        // Optimized Global Event Listener
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('button');
+            if (!btn || !btn.dataset.id) return;
+            
+            const id = btn.dataset.id;
+            const action = btn.dataset.action;
+
+            if (action === 'delete') deleteShipment(id);
+            if (action === 'saveInPost') updateOrder(id, { paczkomat_id: document.getElementById(`pId-${id}`).value, parcel_size: document.getElementById(`pSize-${id}`).value });
+            if (action === 'genAPaczka') generateAPaczka(id, btn);
+            if (action === 'genDPD') generateDPD(id, btn);
+        });
+
+        async function switchTab(source) {
+            currentSource = source;
+            document.getElementById('tab-title').innerText = source === 'Email' ? 'Zamówienia z Email' : 'Zamówienia z PrestaShop';
+            document.getElementById('btnSyncPresta').classList.toggle('d-none', source !== 'PrestaShop');
+            loadOrders(pages[source]);
         }
-        
-        async function syncPrestaShop() {
-            const btn = document.getElementById('btnSyncPresta');
-            const originalText = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Synchronizacja...';
+
+        async function loadOrders(page = 1) {
+            pages[currentSource] = page;
+            const tbody = document.getElementById('ordersTableBody');
+            const wrapper = document.getElementById('table-wrapper');
+            
+            wrapper.classList.add('loading-overlay');
             
             try {
-                const res = await fetch('/api/sync-prestashop', { method: 'POST' });
+                const res = await fetch(`/api/orders?page=${page}&limit=${LIMIT}&source=${currentSource}`);
                 const data = await res.json();
-                console.log(`Synced: ${data.count} new orders.`);
-                await loadOrders(1, 'PrestaShop');
-            } catch (err) {
-                alert('Błąd synchronizacji: ' + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-            }
-        }
-
-        async function loadOrdersForSource(source) {
-            if (source === 'PrestaShop' && isPrestaFirstLoad) {
-                isPrestaFirstLoad = false;
-                await syncPrestaShop(); // Auto-sync ONLY on very first click
-            } else {
-                loadOrders(currentPages[source], source);
-            }
-        }
-
-        async function loadOrders(page = 1, source = 'Email') {
-            currentPages[source] = page;
-            const tableBodyId = `${source.toLowerCase()}OrdersTableBody`;
-            const tbody = document.getElementById(tableBodyId);
-            if (!tbody) {
-                console.error(`Table body with id ${tableBodyId} not found!`);
-                return;
-            }
-            
-            // If it's PrestaShop and it's the first load or a refresh, we might want to sync
-            // For now, we'll trigger sync ONLY when specifically called from the tab click
-            
-            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4"><span class="spinner-border spinner-border-sm"></span> Ładowanie...</td></tr>';
-
-            try {
-                const response = await fetch(`/api/orders?page=${page}&limit=${limit}&source=${source}`);
-                const data = await response.json();
                 
-                document.getElementById(`${source.toLowerCase()}-pagination-info`).innerText = `Strona ${data.currentPage || 0} z ${data.totalPages || 0} (Łącznie ${data.totalCount || 0} zamówień)`;
-                
-                renderPagination(data.currentPage, data.totalPages, source);
+                document.getElementById('pagination-info').innerText = `Strona ${data.currentPage} z ${data.totalPages} (${data.totalCount} zamówień)`;
+                renderPagination(data.currentPage, data.totalPages);
 
-                if (data.orders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4">Brak zamówień.</td></tr>';
-                    return;
-                }
-
-                // Optimization: Use DocumentFragment to batch DOM updates
                 const fragment = document.createDocumentFragment();
-
                 data.orders.forEach(order => {
-                    const isInPost = order.delivery_method && order.delivery_method.toLowerCase().includes('inpost');
-                    const shipments = order.shipments || [];
-                    
                     const tr = document.createElement('tr');
+                    const shipments = order.shipments || [];
+                    const isPaczkomat = order.delivery_method?.toLowerCase().includes('paczkomat');
+
                     tr.innerHTML = `
                         <td><strong>${order.order_number}</strong><br><small class="text-muted">${new Date(order.created_at).toLocaleString()}</small></td>
                         <td>${order.customer_name}<br><small>${order.email}</small></td>
                         <td>${order.street}<br>${order.zip_code} ${order.city}</td>
                         <td>
                             <span class="badge bg-secondary mb-1">${order.delivery_method || 'N/A'}</span><br>
-                            <span class="badge ${order.payment_method.toLowerCase().includes('pobranie') ? 'bg-warning text-dark' : 'bg-info text-dark'} mb-1">
-                                ${order.payment_method}
-                            </span>
+                            <span class="badge ${order.payment_method.toLowerCase().includes('pobranie') ? 'bg-warning text-dark' : 'bg-info text-dark'} mb-1">${order.payment_method}</span>
                             ${order.payment_method.toLowerCase().includes('pobranie') ? `<br><strong class="text-danger">${Number(order.total_price).toFixed(2)} PLN</strong>` : ''}
+                            <div class="mt-1 small text-muted">NIP: ${order.nip || 'Paragon'}</div>
                         </td>
                         <td>
-                            <div class="input-group input-group-sm mb-1">
-                                <span class="input-group-text">NIP</span>
-                                <input type="text" class="form-control" placeholder="Nr faktury" id="inv-${order.id}" value="${order.invoice_number || ''}">
-                                <button class="btn btn-outline-secondary" type="button" onclick="updateInvoice(${order.id})">💾</button>
+                            <div class="mb-1">
+                                <select class="form-select form-select-sm mb-1" id="sender-${order.id}">${sendersHtml}</select>
+                                <select class="form-select form-select-sm" id="pkg-${order.id}">
+                                    <option value="1">1 paczka</option><option value="2">2 paczki</option><option value="3">3 paczki</option>
+                                </select>
                             </div>
-                            <div class="small text-muted mb-1">NIP: ${order.nip || 'Paragon'}</div>
-                            ${(isInPost || (order.delivery_method && order.delivery_method.toLowerCase().includes('paczkomat'))) ? `
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" placeholder="Kod Paczkomatu" id="pId-${order.id}" value="${order.paczkomat_id || ''}">
-                                <select class="form-select" id="pSize-${order.id}" style="max-width: 65px;">
+                            ${isPaczkomat ? `
+                            <div class="input-group input-group-sm mt-1">
+                                <input type="text" class="form-control" placeholder="Kod" id="pId-${order.id}" value="${order.paczkomat_id || ''}">
+                                <select class="form-select" id="pSize-${order.id}" style="max-width: 60px;">
                                     <option value="A" ${order.parcel_size === 'A' ? 'selected' : ''}>A</option>
                                     <option value="B" ${order.parcel_size === 'B' ? 'selected' : ''}>B</option>
                                     <option value="C" ${order.parcel_size === 'C' || !order.parcel_size ? 'selected' : ''}>C</option>
                                 </select>
-                                <button class="btn btn-outline-warning" type="button" onclick="updateInPost(${order.id})">💾</button>
-                            </div>
-                            ` : ''}
+                                <button class="btn btn-outline-warning" data-action="saveInPost" data-id="${order.id}">💾</button>
+                            </div>` : ''}
                         </td>
                         <td>
-                            <select class="form-select form-select-sm mb-1" id="sender-${order.id}">
-                                ${senders.map(s => `<option value="${s.id}" ${s.id === 1 ? 'selected' : ''}>${s.company || s.name}</option>`).join('')}
-                            </select>
-                            <select class="form-select form-select-sm" id="pkg-${order.id}">
-                                <option value="1">1 paczka</option>
-                                <option value="2">2 paczki</option>
-                                <option value="3">3 paczki</option>
-                                <option value="4">4 paczki</option>
-                            </select>
-                        </td>
-                        <td id="waybill-container-${order.id}">
-                             ${shipments.filter(s => s.waybill).map(s => `
-                                <div class="waybill-badge">
-                                    <span class="badge bg-dark">${s.waybill}</span>
-                                    <button class="btn-delete" onclick="deleteShipment(${s.id}, '${source}')" title="Usuń numer">❌</button>
-                                </div>
-                            `).join('') || '<span class="text-muted small">Brak listu</span>'}
+                            ${shipments.map(s => `
+                                <div class="waybill-badge"><span class="badge bg-dark">${s.waybill}</span><button class="btn-delete" data-action="delete" data-id="${s.id}">❌</button></div>
+                            `).join('') || '<span class="text-muted small">Brak</span>'}
                         </td>
                         <td>
                             <div class="d-grid gap-1">
-                                 ${(order.delivery_method && order.delivery_method.toLowerCase().includes('paczkomat'))
-                                    ? `<button class="btn btn-warning btn-sm" onclick="generateAPaczkaLabel(${order.id}, event, '${source}')">📦 APaczka</button>`
-                                    : `<button class="btn btn-primary btn-sm" onclick="generateLabel(${order.id}, event, '${source}')">🚛 DPD</button>`
-                                }
-                                <div class="mt-1 border-top pt-1" id="labels-container-${order.id}">
-                                     ${shipments.filter(s => s.label_path).map((s, idx) => `
-                                        <div class="label-row">
-                                            <a href="${s.label_path}" target="_blank" class="btn btn-success btn-sm flex-grow-1 me-1" style="font-size: 0.7rem">📄 Etykieta ${idx + 1}</a>
-                                            <button class="btn-delete" onclick="deleteShipment(${s.id}, '${source}')" title="Usuń etykietę">❌</button>
-                                        </div>
-                                    `).join('')}
-                                </div>
+                                ${isPaczkomat ? `<button class="btn btn-warning btn-sm" data-action="genAPaczka" data-id="${order.id}">📦 APaczka</button>` : `<button class="btn btn-primary btn-sm" data-action="genDPD" data-id="${order.id}">🚛 DPD</button>`}
+                                ${shipments.map((s, idx) => `
+                                    <div class="label-row"><a href="${s.label_path}" target="_blank" class="btn btn-success btn-xs py-0 flex-grow-1" style="font-size:0.65rem">📄 Etykieta ${idx+1}</a><button class="btn-delete" data-action="delete" data-id="${s.id}">❌</button></div>
+                                `).join('')}
                             </div>
                         </td>
                     `;
                     fragment.appendChild(tr);
                 });
-                
                 tbody.innerHTML = '';
                 tbody.appendChild(fragment);
-            } catch (err) {
-                console.error(err);
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger py-4">Błąd ładowania: ${err.message}</td></tr>`;
-            }
-        }
-        
-        async function deleteShipment(shipmentId, source) {
-            if (!confirm('Czy na pewno chcesz usunąć ten numer listu i etykietę z systemu?')) return;
-            try {
-                const response = await fetch(`/api/shipments/${shipmentId}`, { method: 'DELETE' });
-                const result = await response.json();
-                if (result.success) {
-                    loadOrders(currentPages[source], source);
-                } else {
-                    alert('Błąd podczas usuwania');
-                }
-            } catch (err) {
-                alert('Błąd sieci');
-            }
-        }
-
-        async function updateInPost(orderId) {
-            const paczkomatId = document.getElementById(`pId-${orderId}`).value;
-            const parcelSize = document.getElementById(`pSize-${orderId}`).value;
-            try {
-                const response = await fetch(`/api/update-inpost/${orderId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ paczkomatId, parcelSize })
-                });
-                if (!(await response.json()).success) alert('Błąd zapisu danych InPost');
-            } catch (err) {
-                alert('Błąd sieci');
-            }
-        }
-
-        async function updateInvoice(orderId) {
-            const invoiceNumber = document.getElementById(`inv-${orderId}`).value;
-            try {
-                const response = await fetch(`/api/update-invoice/${orderId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ invoiceNumber })
-                });
-                if (!(await response.json()).success) alert('Błąd zapisu faktury');
-            } catch (err) {
-                alert('Błąd sieci');
-            }
-        }
-
-        async function generateAPaczkaLabel(orderId, event, source) {
-            const senderId = document.getElementById(`sender-${orderId}`).value;
-            const btn = event.target;
-            const originalContent = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
-
-            try {
-                const response = await fetch(`/api/generate-apaczka-label/${orderId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ senderId })
-                });
-                if ((await response.json()).success) {
-                    loadOrders(currentPages[source], source);
-                } else {
-                    alert('Błąd generowania etykiety APaczka');
-                }
-            } catch (err) {
-                alert('Błąd sieci: ' + err.message);
             } finally {
-                 btn.disabled = false;
-                 btn.innerHTML = originalContent;
+                wrapper.classList.remove('loading-overlay');
             }
         }
 
-        function renderPagination(current, total, source) {
-            const controls = document.getElementById(`${source.toLowerCase()}-pagination-controls`);
-            if (!controls) return;
-            controls.innerHTML = '';
-            if (!total || total <= 1) return;
-            
-            const createPageItem = (page, text, isDisabled = false, isActive = false) => {
+        async function updateOrder(id, data) {
+            await fetch(`/api/update-order/${id}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
+        }
+
+        async function deleteShipment(id) {
+            if (confirm('Usunąć?')) {
+                const res = await fetch(`/api/shipments/${id}`, { method: 'DELETE' });
+                if ((await res.json()).success) loadOrders(pages[currentSource]);
+            }
+        }
+
+        async function generateDPD(id, btn) {
+            btn.disabled = true; btn.innerHTML = '...';
+            const senderId = document.getElementById(`sender-${id}`).value;
+            const packageCount = document.getElementById(`pkg-${id}`).value;
+            const res = await fetch(`/api/generate-label/${id}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ senderId, packageCount }) });
+            if ((await res.json()).success) loadOrders(pages[currentSource]);
+            btn.disabled = false; btn.innerHTML = '🚛 DPD';
+        }
+
+        async function generateAPaczka(id, btn) {
+            btn.disabled = true; btn.innerHTML = '...';
+            const senderId = document.getElementById(`sender-${id}`).value;
+            const res = await fetch(`/api/generate-apaczka-label/${id}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ senderId }) });
+            if ((await res.json()).success) loadOrders(pages[currentSource]);
+            btn.disabled = false; btn.innerHTML = '📦 APaczka';
+        }
+
+        async function syncPrestaShop() {
+            const btn = document.getElementById('btnSyncPresta');
+            btn.disabled = true;
+            await fetch('/api/sync-prestashop', { method: 'POST' });
+            await loadOrders(1);
+            btn.disabled = false;
+        }
+
+        function renderPagination(current, total) {
+            const el = document.getElementById('pagination-controls');
+            el.innerHTML = '';
+            if (total <= 1) return;
+            const add = (p, txt, active = false, dis = false) => {
                 const li = document.createElement('li');
-                li.className = `page-item ${isDisabled ? 'disabled' : ''} ${isActive ? 'active' : ''}`;
-                const safeSource = source.replace(/'/g, "'");
-                li.innerHTML = `<a class="page-link" href="#" onclick="loadOrders(${page}, '${safeSource}')">${text}</a>`;
-                return li;
+                li.className = `page-item ${active?'active':''} ${dis?'disabled':''}`;
+                li.innerHTML = `<a class="page-link" href="#" onclick="loadOrders(${p})">${txt}</a>`;
+                el.appendChild(li);
             };
-
-            controls.appendChild(createPageItem(current - 1, 'Poprzednia', current === 1));
-
-            const range = 2;
-            for (let i = 1; i <= total; i++) {
-                if (i === 1 || i === total || (i >= current - range && i <= current + range)) {
-                    controls.appendChild(createPageItem(i, i, false, i === current));
-                } else if (i === current - range - 1 || i === current + range + 1) {
-                    const li = document.createElement('li');
-                    li.className = 'page-item disabled';
-                    li.innerHTML = '<span class="page-link">...</span>';
-                    controls.appendChild(li);
-                }
-            }
-
-            controls.appendChild(createPageItem(current + 1, 'Następna', current === total));
+            add(current-1, '«', false, current===1);
+            for(let i=Math.max(1, current-2); i<=Math.min(total, current+2); i++) add(i, i, i===current);
+            add(current+1, '»', false, current===total);
         }
 
-        async function generateLabel(orderId, event, source) {
-            const senderId = document.getElementById(`sender-${orderId}`).value;
-            const packageCount = document.getElementById(`pkg-${orderId}`).value;
-            
-            const btn = event.target;
-            const originalContent = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
-
-            try {
-                const response = await fetch(`/api/generate-label/${orderId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ senderId, packageCount })
-                });
-                if ((await response.json()).success) {
-                    loadOrders(currentPages[source], source);
-                } else {
-                    alert('Błąd generowania etykiety DPD');
-                }
-            } catch (err) {
-                alert('Błąd sieci: ' + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalContent;
-            }
-        }
-        
-        // Initial Load
         (async () => {
-            await loadSenders();
-            // Load data for the default active tab
-            loadOrdersForSource('Email'); 
-            
-            // Set up listener for the other tab
-            const prestaTab = document.querySelector('#prestashop-tab');
-            if (prestaTab) {
-                prestaTab.addEventListener('shown.bs.tab', () => loadOrdersForSource('PrestaShop'), { once: true });
-            }
+            const res = await fetch('/api/senders');
+            senders = await res.json();
+            sendersHtml = senders.map(s => `<option value="${s.id}">${s.company || s.name}</option>`).join('');
+            switchTab('Email');
         })();
     </script>
 </body>

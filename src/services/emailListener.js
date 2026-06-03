@@ -62,29 +62,35 @@ const processEmails = async () => {
         connection = await imaps.connect(config);
         await connection.openBox('INBOX');
 
-        const delay = 3 * 24 * 3600 * 1000;
+        // Step 1: Search only for UNSEEN orders from the last 24 hours to keep it very light
+        const delay = 24 * 3600 * 1000;
         const sinceDate = new Date(Date.now() - delay).toISOString();
         
-        // Step 1: Search only for UIDs and Headers to minimize initial download
-        const searchCriteria = [['SUBJECT', 'Zamówienie nr'], ['SINCE', sinceDate]]; 
+        // Stricter search: must be UNSEEN and from Instalszop
+        const searchCriteria = ['UNSEEN', ['SUBJECT', 'Zamówienie nr'], ['SINCE', sinceDate]]; 
         const fetchOptions = {
             bodies: ['HEADER'],
-            markSeen: false 
+            markSeen: true 
         };
 
         const messages = await connection.search(searchCriteria, fetchOptions);
-        if (messages.length === 0) return;
+        if (messages.length === 0) {
+            console.log('No new order emails found.');
+            return;
+        }
 
-        console.log(`Found ${messages.length} potential order emails. Filtering...`);
+        // Limit to 10 emails per cycle to prevent blocking
+        const limitedMessages = messages.slice(0, 10);
+        console.log(`Processing ${limitedMessages.length} of ${messages.length} NEW emails...`);
 
-        // Step 2: Get all existing order numbers in one go for O(1) lookup
+        // ... (rest of filtering)
         const existingOrders = await new Promise((res, rej) => {
-            db.all('SELECT order_number FROM orders WHERE source = "Email"', (err, rows) => {
+            db.all('SELECT order_number FROM orders WHERE source = "Email" ORDER BY id DESC LIMIT 500', (err, rows) => {
                 if (err) rej(err); else res(new Set(rows.map(r => r.order_number)));
             });
         });
 
-        for (const item of messages) {
+        for (const item of limitedMessages) {
             try {
                 const id = item.attributes.uid;
                 const subjectHeader = item.parts.find(p => p.which === 'HEADER').body.subject[0];
