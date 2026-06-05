@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalszop - Order Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-size: 0.9rem; }
+        .container-fluid { padding: 20px; }
+        .table-container { background: white; padding: 10px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); min-height: 400px; }
+        .table { margin-bottom: 0; }
+        .table th, .table td { padding: 8px 4px; vertical-align: middle; }
+        .status-badge { font-size: 0.75rem; }
+        select.form-select-sm { font-size: 0.8rem; padding: 2px 4px; }
+        .btn-sm { padding: 2px 8px; font-size: 0.8rem; }
+        .waybill-badge { font-size: 0.8rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+        .label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+        .btn-delete { padding: 0 4px; line-height: 1; font-size: 0.7rem; color: #dc3545; cursor: pointer; border: none; background: none; }
+        .btn-delete:hover { color: #a71d2a; }
+        .loading-overlay { pointer-events: none; opacity: 0.5; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark py-1">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-6" href="#">📦 Order Manager</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <ul class="nav nav-tabs" id="sourceTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="email-tab" data-bs-toggle="tab" data-bs-target="#email-orders" type="button" onclick="switchTab('Email')">📦 InstalSzop (Email)</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="prestashop-tab" data-bs-toggle="tab" data-bs-target="#prestashop-orders" type="button" onclick="switchTab('PrestaShop')">🛍️ PrestaShop</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <!-- Active Tab -->
+            <div class="tab-pane fade show active" id="main-content">
+                <div class="d-flex justify-content-between align-items-center my-2">
+                    <div class="d-flex align-items-center">
+                        <h4 class="mb-0 me-3" id="tab-title">Zamówienia</h4>
+                        <button class="btn btn-outline-primary btn-sm d-none" id="btnSyncPresta" onclick="syncPrestaShop()">🔄 Synchronizuj</button>
+                    </div>
+                    <div id="pagination-info" class="small text-muted"></div>
+                </div>
+                <div class="table-container" id="table-wrapper">
+                    <table class="table table-sm table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 8%">Nr Zam.</th>
+                                <th style="width: 15%">Klient</th>
+                                <th style="width: 20%">Adres</th>
+                                <th style="width: 15%">Dostawa / Płatność</th>
+                                <th style="width: 22%">Nadawca / Paczki / InPost</th>
+                                <th style="width: 12%">Waybill</th>
+                                <th style="width: 8%">Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                     <nav><ul class="pagination pagination-sm mb-0" id="pagination-controls"></ul></nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let senders = [];
+        let sendersHtml = '';
+        let currentSource = 'Email';
+        let pages = { 'Email': 1, 'PrestaShop': 1 };
+        const LIMIT = 50;
+
+        // Optimized Global Event Listener
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('button');
+            if (!btn || !btn.dataset.id) return;
+            
+            const id = btn.dataset.id;
+            const action = btn.dataset.action;
+
+            if (action === 'delete') deleteShipment(id);
+            if (action === 'saveInPost') updateOrder(id, { paczkomat_id: document.getElementById(`pId-${id}`).value, parcel_size: document.getElementById(`pSize-${id}`).value });
+            if (action === 'genAPaczka') generateAPaczka(id, btn);
+            if (action === 'genDPD') generateDPD(id, btn);
+        });
+
+        async function switchTab(source) {
+            currentSource = source;
+            document.getElementById('tab-title').innerText = source === 'Email' ? 'Zamówienia z Email' : 'Zamówienia z PrestaShop';
+            document.getElementById('btnSyncPresta').classList.toggle('d-none', source !== 'PrestaShop');
+            loadOrders(pages[source]);
+        }
+
+        async function loadOrders(page = 1) {
+            pages[currentSource] = page;
+            const tbody = document.getElementById('ordersTableBody');
+            const wrapper = document.getElementById('table-wrapper');
+            
+            wrapper.classList.add('loading-overlay');
+            
+            try {
+                const res = await fetch(`/api/orders?page=${page}&limit=${LIMIT}&source=${currentSource}`);
+                const data = await res.json();
+                
+                document.getElementById('pagination-info').innerText = `Strona ${data.currentPage} z ${data.totalPages} (${data.totalCount} zamówień)`;
+                renderPagination(data.currentPage, data.totalPages);
+
+                const fragment = document.createDocumentFragment();
+                data.orders.forEach(order => {
+                    const tr = document.createElement('tr');
+                    const shipments = order.shipments || [];
+                    const isPaczkomat = order.delivery_method?.toLowerCase().includes('paczkomat');
+
+                    tr.innerHTML = `
+                        <td><strong>${order.order_number}</strong><br><small class="text-muted">${new Date(order.created_at).toLocaleString()}</small></td>
+                        <td>${order.customer_name}<br><small>${order.email}</small></td>
+                        <td>${order.street}<br>${order.zip_code} ${order.city}</td>
+                        <td>
+                            <span class="badge bg-secondary mb-1">${order.delivery_method || 'N/A'}</span><br>
+                            <span class="badge ${order.payment_method.toLowerCase().includes('pobranie') ? 'bg-warning text-dark' : 'bg-info text-dark'} mb-1">${order.payment_method}</span>
+                            ${order.payment_method.toLowerCase().includes('pobranie') ? `<br><strong class="text-danger">${Number(order.total_price).toFixed(2)} PLN</strong>` : ''}
+                            <div class="mt-1 small text-muted">NIP: ${order.nip || 'Paragon'}</div>
+                        </td>
+                        <td>
+                            <div class="mb-1">
+                                <select class="form-select form-select-sm mb-1" id="sender-${order.id}">${sendersHtml}</select>
+                                <select class="form-select form-select-sm" id="pkg-${order.id}">
+                                    <option value="1">1 paczka</option><option value="2">2 paczki</option><option value="3">3 paczki</option>
+                                </select>
+                            </div>
+                            ${isPaczkomat ? `
+                            <div class="input-group input-group-sm mt-1">
+                                <input type="text" class="form-control" placeholder="Kod" id="pId-${order.id}" value="${order.paczkomat_id || ''}">
+                                <select class="form-select" id="pSize-${order.id}" style="max-width: 60px;">
+                                    <option value="A" ${order.parcel_size === 'A' ? 'selected' : ''}>A</option>
+                                    <option value="B" ${order.parcel_size === 'B' ? 'selected' : ''}>B</option>
+                                    <option value="C" ${order.parcel_size === 'C' || !order.parcel_size ? 'selected' : ''}>C</option>
+                                </select>
+                                <button class="btn btn-outline-warning" data-action="saveInPost" data-id="${order.id}">💾</button>
+                            </div>` : ''}
+                        </td>
+                        <td>
+                            ${shipments.map(s => `
+                                <div class="waybill-badge"><span class="badge bg-dark">${s.waybill}</span><button class="btn-delete" data-action="delete" data-id="${s.id}">❌</button></div>
+                            `).join('') || '<span class="text-muted small">Brak</span>'}
+                        </td>
+                        <td>
+                            <div class="d-grid gap-1">
+                                ${isPaczkomat ? `<button class="btn btn-warning btn-sm" data-action="genAPaczka" data-id="${order.id}">📦 APaczka</button>` : `<button class="btn btn-primary btn-sm" data-action="genDPD" data-id="${order.id}">🚛 DPD</button>`}
+                                ${shipments.map((s, idx) => `
+                                    <div class="label-row"><a href="${s.label_path}" target="_blank" class="btn btn-success btn-xs py-0 flex-grow-1" style="font-size:0.65rem">📄 Etykieta ${idx+1}</a><button class="btn-delete" data-action="delete" data-id="${s.id}">❌</button></div>
+                                `).join('')}
+                            </div>
+                        </td>
+                    `;
+                    fragment.appendChild(tr);
+                });
+                tbody.innerHTML = '';
+                tbody.appendChild(fragment);
+            } finally {
+                wrapper.classList.remove('loading-overlay');
+            }
+        }
+
+        async function updateOrder(id, data) {
+            await fetch(`/api/update-order/${id}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
+        }
+
+        async function deleteShipment(id) {
+            if (confirm('Usunąć?')) {
+                const res = await fetch(`/api/shipments/${id}`, { method: 'DELETE' });
+                if ((await res.json()).success) loadOrders(pages[currentSource]);
+            }
+        }
+
+        async function generateDPD(id, btn) {
+            btn.disabled = true; btn.innerHTML = '...';
+            const senderId = document.getElementById(`sender-${id}`).value;
+            const packageCount = document.getElementById(`pkg-${id}`).value;
+            const res = await fetch(`/api/generate-label/${id}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ senderId, packageCount }) });
+            if ((await res.json()).success) loadOrders(pages[currentSource]);
+            btn.disabled = false; btn.innerHTML = '🚛 DPD';
+        }
+
+        async function generateAPaczka(id, btn) {
+            btn.disabled = true; btn.innerHTML = '...';
+            const senderId = document.getElementById(`sender-${id}`).value;
+            const res = await fetch(`/api/generate-apaczka-label/${id}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ senderId }) });
+            if ((await res.json()).success) loadOrders(pages[currentSource]);
+            btn.disabled = false; btn.innerHTML = '📦 APaczka';
+        }
+
+        async function syncPrestaShop() {
+            const btn = document.getElementById('btnSyncPresta');
+            btn.disabled = true;
+            await fetch('/api/sync-prestashop', { method: 'POST' });
+            await loadOrders(1);
+            btn.disabled = false;
+        }
+
+        function renderPagination(current, total) {
+            const el = document.getElementById('pagination-controls');
+            el.innerHTML = '';
+            if (total <= 1) return;
+            const add = (p, txt, active = false, dis = false) => {
+                const li = document.createElement('li');
+                li.className = `page-item ${active?'active':''} ${dis?'disabled':''}`;
+                li.innerHTML = `<a class="page-link" href="#" onclick="loadOrders(${p})">${txt}</a>`;
+                el.appendChild(li);
+            };
+            add(current-1, '«', false, current===1);
+            for(let i=Math.max(1, current-2); i<=Math.min(total, current+2); i++) add(i, i, i===current);
+            add(current+1, '»', false, current===total);
+        }
+
+        (async () => {
+            const res = await fetch('/api/senders');
+            senders = await res.json();
+            sendersHtml = senders.map(s => `<option value="${s.id}">${s.company || s.name}</option>`).join('');
+            switchTab('Email');
+        })();
+    </script>
+</body>
+</html>

@@ -3,18 +3,16 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 
-// MiddleWare to ensure fast response and avoid lingering connections
+// MiddleWare to ensure fast response
 router.use((req, res, next) => {
-    res.setHeader('Connection', 'close'); 
-    // Small artificial gap to let event loop breathe if needed, but keeping it responsive
-    setTimeout(next, 5); 
+    next(); 
 });
 
 const { db } = require('../models/db');
 const dpdService = require('../services/dpdService');
 const apaczkaService = require('../services/apaczkaService');
 
-const { startEmailListener } = require('./emailListener');
+const { startEmailListener, processEmails } = require('./emailListener');
 const { syncPrestaShopOrders } = require('./prestaShopListener');
 
 // Helper to make db calls cleaner
@@ -46,6 +44,16 @@ router.post('/sync-prestashop', async (req, res) => {
     }
 });
 
+// Manual Email Sync
+router.post('/sync-email', async (req, res) => {
+    try {
+        const result = await processEmails();
+        res.json({ success: true, count: result?.count || 0 });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get orders with pagination and associated shipments
 router.get('/orders', async (req, res) => {
     const start = Date.now();
@@ -53,23 +61,36 @@ router.get('/orders', async (req, res) => {
     const limit = parseInt(req.query.limit) || 50;
     const offset = (page - 1) * limit;
     const source = req.query.source;
+    const search = req.query.search;
 
     try {
         const params = [];
-        let countSql = 'SELECT COUNT(*) as count FROM orders';
+        let countSql = 'SELECT COUNT(*) as count FROM orders WHERE 1=1';
+        
         if (source) {
-            countSql += ' WHERE source = ?';
+            countSql += ' AND source = ?';
             params.push(source);
+        }
+        
+        if (search) {
+            countSql += ' AND (order_number LIKE ? OR customer_name LIKE ? OR email LIKE ? OR city LIKE ?)';
+            const searchPattern = `%${search}%`;
+            params.push(searchPattern, searchPattern, searchPattern, searchPattern);
         }
 
         const { count } = await p.get(countSql, params);
         const tCount = Date.now() - start;
 
-        let sql = 'SELECT * FROM orders';
+        let sql = 'SELECT * FROM orders WHERE 1=1';
         const queryParams = [...params];
+        
         if (source) {
-            sql += ' WHERE source = ?';
+            sql += ' AND source = ?';
         }
+        if (search) {
+            sql += ' AND (order_number LIKE ? OR customer_name LIKE ? OR email LIKE ? OR city LIKE ?)';
+        }
+        
         // Sorting by numeric order_number DESC for Email and PrestaShop
         sql += ' ORDER BY CAST(order_number AS INTEGER) DESC LIMIT ? OFFSET ?'; 
         queryParams.push(limit, offset);

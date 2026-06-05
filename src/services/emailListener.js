@@ -62,65 +62,93 @@ const processEmails = async () => {
         connection = await imaps.connect(config);
         await connection.openBox('INBOX');
 
-        // Step 1: Search only for UNSEEN orders from the last 24 hours to keep it very light
-        const delay = 24 * 3600 * 1000;
-        const sinceDate = new Date(Date.now() - delay).toISOString();
+        // Step 1: Search for orders from the last 3 days
+        // IMAP SINCE expects a date in "DD-Mon-YYYY" format
+        const daysToLookBack = 3;
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() - daysToLookBack);
         
-        // Stricter search: must be UNSEEN and from Instalszop
-        const searchCriteria = ['UNSEEN', ['SUBJECT', 'Zamówienie nr'], ['SINCE', sinceDate]]; 
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const imapDate = `${targetDate.getDate()}-${months[targetDate.getMonth()]}-${targetDate.getFullYear()}`;
+        
+        // Removed UNSEEN to catch orders read by other devices
+        const searchCriteria = [['SUBJECT', 'Zamówienie nr'], ['SINCE', imapDate]]; 
         const fetchOptions = {
             bodies: ['HEADER'],
-            markSeen: true 
+            markSeen: false // Don't mark as seen here, only if we actually process it? 
+            // Actually, markSeen: true in search is only for the header.
         };
 
         const messages = await connection.search(searchCriteria, fetchOptions);
         if (messages.length === 0) {
-            console.log('No new order emails found.');
+            console.log('No order emails found in the last 3 days.');
             return;
         }
 
-        // Limit to 10 emails per cycle to prevent blocking
-        const limitedMessages = messages.slice(0, 10);
-        console.log(`Processing ${limitedMessages.length} of ${messages.length} NEW emails...`);
+        // Increase limit to 50 to catch up faster
+        const limitedMessages = messages.slice(-50); // Take the latest 50
+        console.log(`Checking ${limitedMessages.length} latest emails (out of ${messages.length} found)...`);
 
-        // ... (rest of filtering)
+        // Get last 1000 orders to prevent duplicates
         const existingOrders = await new Promise((res, rej) => {
-            db.all('SELECT order_number FROM orders WHERE source = "Email" ORDER BY id DESC LIMIT 500', (err, rows) => {
-                if (err) rej(err); else res(new Set(rows.map(r => r.order_number)));
+            db.all('SELECT order_number FROM orders WHERE source = "Email" ORDER BY id DESC LIMIT 1000', (err, rows) => {
+                if (err) rej(err); else res(new Set(rows.map(r => String(r.order_number))));
             });
         });
 
+        let newOrdersCount = 0;
         for (const item of limitedMessages) {
             try {
                 const id = item.attributes.uid;
                 const subjectHeader = item.parts.find(p => p.which === 'HEADER').body.subject[0];
                 const orderNumberMatch = subjectHeader.match(/Zamówienie nr\s*\b(\d{4,6})\b/i);
                 
+                let orderNo = "Unknown";
                 if (orderNumberMatch) {
-                    const orderNo = orderNumberMatch[1];
-                    if (existingOrders.has(orderNo)) continue; 
+                    orderNo = orderNumberMatch[1];
+                    if (existingOrders.has(String(orderNo))) {
+                        // Optional: console.log(`Skipping duplicate order #${orderNo} (from header)`);
+                        continue; 
+                    }
                 }
 
                 // Step 3: Only download full body if it's a new order
                 const fullFetchOptions = {
                     bodies: [''],
-                    markSeen: false
+                    markSeen: true 
                 };
                 
-                // Fetch the single message body
-                const fullMessages = await connection.fetch(id, fullFetchOptions);
-                const fullItem = fullMessages[0];
+                // Fix: Use search with UID as fetch/getMessage are not part of imap-simple API
+                const fullResults = await connection.search([['UID', id]], fullFetchOptions);
+                const fullItem = fullResults[0];
+                
+                if (!fullItem) {
+                    console.warn(`! Could not fetch full content for UID ${id}`);
+                    continue;
+                }
+                
                 const all = fullItem.parts.find(part => part.which === '');
+                if (!all || !all.body) {
+                    console.warn(`! Empty body for UID ${id}`);
+                    continue;
+                }
                 
                 const mail = await simpleParser(all.body);
                 const { orderData, parsing_status, parsing_warnings } = parseOrderEmail(mail.text, mail.subject);
 
-                if (orderData && !existingOrders.has(orderData.order_number)) {
+                if (orderData) {
+                    if (existingOrders.has(String(orderData.order_number))) {
+                        continue;
+                    }
+                    
                     const { isNew, status } = await saveOrderToDb(orderData, parsing_status, mail.text);
                     if (isNew) {
                         console.log(`+ New order saved: ${orderData.order_number} | Status: ${status}`);
-                        existingOrders.add(orderData.order_number);
+                        existingOrders.add(String(orderData.order_number));
+                        newOrdersCount++;
                     }
+                } else {
+                    console.warn(`! Failed to parse order data from email UID ${id} | Subject: ${mail.subject}`);
                 }
 
                 // Yield to event loop to keep API responsive
@@ -130,21 +158,22 @@ const processEmails = async () => {
                 console.error(`Error processing UID ${item.attributes.uid}:`, innerError.message);
             }
         }
+        
+        return { count: newOrdersCount };
 
     } catch (error) {
         console.error('--- IMAP CONNECTION ERROR ---');
         console.error('An error occurred during the email check process. Please verify IMAP credentials and server details.');
         console.error('Error details:', error.message);
+        throw error;
     } finally {
         if (connection) connection.end();
     }
 };
 
-// Polling interval (e.g., every 5 minutes)
+// Polling interval (disabled as requested, now via button)
 const startEmailListener = () => {
-    console.log('Email listener started. First check in 10 seconds...');
-    setTimeout(processEmails, 10000); // Run after a short delay on start
-    setInterval(processEmails, 5 * 60 * 1000); 
+    console.log('Email manual sync mode initialized.');
 };
 
-module.exports = { startEmailListener };
+module.exports = { startEmailListener, processEmails };
