@@ -50,7 +50,15 @@ export const OrderTable: React.FC<OrderTableProps> = ({
                 )}>
                   <td className="px-5 py-5 whitespace-nowrap">
                     <div className="flex flex-col">
-                      <span className="text-sm font-black text-slate-900 leading-tight">#{order.order_number}</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm font-black text-slate-900 leading-tight">#{order.order_number}</span>
+                        {order.unread_notifications && order.unread_notifications > 0 ? (
+                          <span className="flex h-2.5 w-2.5 relative">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500 shadow-sm shadow-rose-500/50"></span>
+                          </span>
+                        ) : null}
+                      </div>
                       <span className="text-[11px] font-medium text-slate-400 mt-1">{formatDate(order.created_at)}</span>
                       <div className="mt-2">
                         <span className={cn(

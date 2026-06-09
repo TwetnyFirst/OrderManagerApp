@@ -27,6 +27,7 @@ export interface Order {
   source: 'Email' | 'PrestaShop';
   paczkomat_id: string | null;
   parcel_size: string;
+  unread_notifications?: number;
   shipments: Shipment[];
 }
 

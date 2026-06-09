@@ -28,6 +28,20 @@ class DpdService {
         const isCod = lowerPayment.includes('pobranie') || lowerPayment.includes('odbiorze') || lowerPayment.includes('cod');
         const now = new Date().getTime();
         const pkgRef = `PKG_${now}`;
+
+        const formatPhone = (phone) => {
+            if (!phone) return "";
+            let clean = phone.replace(/[^0-9]/g, '');
+            if (clean.length === 9) {
+                clean = "48" + clean;
+            }
+            return clean;
+        };
+
+        const formatPostalCode = (zip) => {
+            if (!zip) return "";
+            return zip.replace(/[-\s]/g, '');
+        };
         
         const payload = {
             generationPolicy: "STOP_ON_FIRST_ERROR",
@@ -39,8 +53,8 @@ class DpdService {
                     address: order.street,
                     city: order.city,
                     countryCode: "PL",
-                    postalCode: order.zip_code.replace('-', ''),
-                    phone: order.phone.replace(/[^0-9]/g, ''),
+                    postalCode: formatPostalCode(order.zip_code),
+                    phone: formatPhone(order.phone),
                     email: order.email
                 },
                 sender: {
@@ -49,8 +63,8 @@ class DpdService {
                     address: sender.street,
                     city: sender.city,
                     countryCode: "PL",
-                    postalCode: sender.zip_code.replace('-', ''),
-                    phone: sender.phone.replace(/[^0-9]/g, ''),
+                    postalCode: formatPostalCode(sender.zip_code),
+                    phone: formatPhone(sender.phone),
                     email: sender.email || "sklep@instalszop.pl"
                 },
                 payerFID: parseInt(sender.fid),

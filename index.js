@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 // app.use(morgan('dev')); // Disabled for performance
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // Serve labels from LABELS_DIR if defined, otherwise from local 'labels' folder
 const labelsPath = process.env.LABELS_DIR || path.join(__dirname, 'labels');
@@ -28,6 +28,16 @@ const startServer = async () => {
   try {
     await initDb();
     console.log('Database initialized.');
+
+    // Automatically build frontend on start to ensure latest changes are live
+    console.log('Building frontend assets...');
+    const { execSync } = require('child_process');
+    try {
+      execSync('npm run build', { cwd: path.join(__dirname, 'client'), stdio: 'inherit' });
+      console.log('Frontend build successful.');
+    } catch (buildError) {
+      console.error('Frontend build failed, serving existing assets:', buildError.message);
+    }
     
     // Non-blocking initialization
     (async () => {

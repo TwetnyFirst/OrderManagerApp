@@ -5,6 +5,10 @@
 const parseOrderEmail = (textContent, subject = "") => {
     const warnings = [];
     
+    // Ensure inputs are strings
+    textContent = textContent || "";
+    subject = subject || "";
+    
     // Helper to safely get a value and log a warning if it's missing
     const get_field = (value, field_name) => {
         if (!value || (typeof value === 'string' && value.trim() === '')) {

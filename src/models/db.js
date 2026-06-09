@@ -12,7 +12,8 @@ const initDb = () => {
     db.serialize(() => {
       // Senders Table
       db.run(`CREATE TABLE IF NOT EXISTS senders (
-        fid TEXT PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fid TEXT UNIQUE NOT NULL,
         name TEXT NOT NULL,
         company TEXT,
         street TEXT,
@@ -62,6 +63,33 @@ const initDb = () => {
         if (err) {
           reject(err);
         } else {
+          // Add Index for order_number
+          db.run(`CREATE INDEX IF NOT EXISTS idx_order_number ON orders(order_number)`);
+
+          // Table for tracking sent emails (Message-IDs)
+          db.run(`CREATE TABLE IF NOT EXISTS sent_emails (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_id INTEGER,
+            message_id TEXT UNIQUE NOT NULL,
+            subject TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (order_id) REFERENCES orders(id)
+          )`);
+
+          // Table for notifications/replies
+          db.run(`CREATE TABLE IF NOT EXISTS order_notifications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_id INTEGER,
+            type TEXT NOT NULL, -- 'REPLY' or 'INITIATIVE'
+            from_email TEXT,
+            subject TEXT,
+            body TEXT,
+            message_id TEXT UNIQUE,
+            is_read INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (order_id) REFERENCES orders(id)
+          )`);
+
           // Migration for older columns if they don't exist
           const columns_to_add = [
             "ALTER TABLE orders ADD COLUMN delivery_method TEXT",
@@ -70,7 +98,8 @@ const initDb = () => {
             "ALTER TABLE orders ADD COLUMN parcel_size TEXT DEFAULT 'C'",
             "ALTER TABLE orders ADD COLUMN source TEXT DEFAULT 'Email'",
             "ALTER TABLE orders ADD COLUMN parsing_status TEXT",
-            "ALTER TABLE orders ADD COLUMN raw_email_body TEXT"
+            "ALTER TABLE orders ADD COLUMN raw_email_body TEXT",
+            "ALTER TABLE order_notifications ADD COLUMN message_id TEXT"
           ];
           
           db.serialize(() => {

@@ -57,4 +57,19 @@ export const sendEmail = async (payload: any) => {
   return data;
 };
 
+export const getOrderNotifications = async (orderId: number) => {
+  const { data } = await api.get(`/notifications/order/${orderId}`);
+  return data;
+};
+
+export const getUnreadNotifications = async () => {
+  const { data } = await api.get('/notifications/unread');
+  return data;
+};
+
+export const markNotificationAsRead = async (id: number) => {
+  const { data } = await api.post(`/notifications/${id}/read`);
+  return data;
+};
+
 export default api;

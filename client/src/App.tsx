@@ -10,7 +10,8 @@ import {
   generateAPaczkaLabel, 
   deleteShipment, 
   updateOrder,
-  sendEmail
+  sendEmail,
+  getUnreadNotifications
 } from './lib/api';
 import { Header } from './components/Header';
 import { OrderTable } from './components/OrderTable';
@@ -32,6 +33,12 @@ function App() {
   const limit = 50;
 
   // Queries
+  const { data: unreadNotifications = [] } = useQuery({
+    queryKey: ['unread-notifications'],
+    queryFn: getUnreadNotifications,
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
+
   const { data: senders = [] } = useQuery<Sender[]>({
     queryKey: ['senders'],
     queryFn: getSenders,
@@ -48,6 +55,7 @@ function App() {
     queryKey: ['orders', source, page, search],
     queryFn: () => getOrders(page, limit, source, search),
     placeholderData: (previousData) => previousData,
+    refetchInterval: 10000, // Refresh every 10 seconds
   });
 
   // Mutations
@@ -158,6 +166,7 @@ function App() {
         search={search}
         onSearchChange={(val) => { setSearch(val); setPage(1); }}
         currentSource={source}
+        unreadNotifications={unreadNotifications}
       />
 
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">

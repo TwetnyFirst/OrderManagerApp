@@ -91,6 +91,20 @@ const CORPORATE_SIGNATURE = `
 `;
 
 /**
+ * Helper to strip HTML tags for plain-text fallback
+ */
+const stripHtml = (html) => {
+  if (!html) return '';
+  return html
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
+/**
  * Send an email
  */
 const sendEmail = async ({ to, subject, text, html }) => {
@@ -98,7 +112,7 @@ const sendEmail = async ({ to, subject, text, html }) => {
     from: `"InstalSzop" <${process.env.SMTP_USER || process.env.IMAP_USER}>`,
     to,
     subject,
-    text,
+    text: text || stripHtml(html),
     html,
   };
 
@@ -128,6 +142,7 @@ const templates = {
     }),
     custom: (subject, body) => ({
       subject,
+      text: body,
       html: `${body.replace(/\n/g, '<br>')}${CORPORATE_SIGNATURE}`,
     })
   },

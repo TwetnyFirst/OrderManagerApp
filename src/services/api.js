@@ -107,15 +107,32 @@ router.get('/orders', async (req, res) => {
                 orderIds
             );
 
-            // Optimization: Use a map for O(1) lookup instead of filter() inside loop
+            // Fetch unread notification counts
+            const unreadCounts = await p.all(
+                `SELECT order_id, COUNT(*) as unread_count 
+                 FROM order_notifications 
+                 WHERE is_read = 0 AND order_id IN (${orderIds.map(() => '?').join(',')})
+                 GROUP BY order_id`,
+                orderIds
+            );
+
+            // Optimization: Use maps for O(1) lookup
             const shipmentsMap = {};
             shipments.forEach(s => {
                 if (!shipmentsMap[s.order_id]) shipmentsMap[s.order_id] = [];
                 shipmentsMap[s.order_id].push(s);
             });
 
+            const unreadMap = {};
+            unreadCounts.forEach(c => {
+                unreadMap[c.order_id] = c.unread_count;
+            });
+
+            console.log(`[API DEBUG] Found unread notifications for orders:`, JSON.stringify(unreadMap));
+
             orders.forEach(order => {
                 order.shipments = shipmentsMap[order.id] || [];
+                order.unread_notifications = unreadMap[order.id] || 0;
             });
         }
         const tShipments = Date.now() - start - tCount - tOrders;
@@ -314,6 +331,19 @@ router.post('/send-email', async (req, res) => {
             html: emailData.html
         });
 
+        // Save Message-ID for reply tracking
+        if (result.success && result.messageId) {
+            try {
+                await p.run(
+                    'INSERT INTO sent_emails (order_id, message_id, subject) VALUES (?, ?, ?)',
+                    [orderId, result.messageId, emailData.subject]
+                );
+            } catch (saveError) {
+                console.error('Failed to save sent email ID:', saveError.message);
+                // We don't fail the whole request if tracking save fails
+            }
+        }
+
         res.json({ success: true, ...result });
     } catch (error) {
         console.error('Email API Error:', error);
@@ -321,6 +351,72 @@ router.post('/send-email', async (req, res) => {
     }
 });
 
+// Get all unread notifications across all orders (both INITIATIVE and REPLY)
+router.get('/notifications/unread', async (req, res) => {
+    try {
+        const rows = await p.all(
+            `SELECT n.*, o.order_number, o.customer_name
+             FROM order_notifications n 
+             JOIN orders o ON n.order_id = o.id 
+             WHERE n.is_read = 0 
+             ORDER BY n.created_at DESC`
+        );
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get general notifications (Legacy endpoint, keep for compatibility but fix to include all)
+router.get('/notifications/general', async (req, res) => {
+    try {
+        const rows = await p.all(
+            `SELECT n.*, o.order_number 
+             FROM order_notifications n 
+             JOIN orders o ON n.order_id = o.id 
+             WHERE n.is_read = 0 
+             ORDER BY n.created_at DESC`
+        );
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get notifications for a specific order
+router.get('/notifications/order/:orderId', async (req, res) => {
+    const orderId = parseInt(req.params.orderId);
+    try {
+        const rows = await p.all(
+            'SELECT * FROM order_notifications WHERE order_id = ? ORDER BY created_at DESC',
+            [orderId]
+        );
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Mark notification as read
+router.post('/notifications/:id/read', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await p.run('UPDATE order_notifications SET is_read = 1 WHERE id = ?', [id]);
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Mark all notifications as read
+router.post('/notifications/read-all', async (req, res) => {
+    try {
+        await p.run('UPDATE order_notifications SET is_read = 1 WHERE is_read = 0');
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 // Delete Shipment
 router.delete('/shipments/:id', async (req, res) => {
