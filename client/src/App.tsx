@@ -9,10 +9,12 @@ import {
   generateDPDLabel, 
   generateAPaczkaLabel, 
   deleteShipment, 
-  updateOrder 
+  updateOrder,
+  sendEmail
 } from './lib/api';
 import { Header } from './components/Header';
 import { OrderTable } from './components/OrderTable';
+import { EmailModal } from './components/EmailModal';
 import { ShoppingBag, Mail, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from './lib/utils';
 import type { Order, Sender, OrdersResponse } from './types';
@@ -24,6 +26,8 @@ function App() {
   const [search, setSearch] = useState('');
   const [selectedSenderId, setSelectedSenderId] = useState<number | null>(null);
   const [generatingIds, setGeneratingIds] = useState<Record<number, boolean>>({});
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const limit = 50;
 
@@ -82,7 +86,7 @@ function App() {
   });
 
   const generateDPD = async (orderId: number, packageCount: number) => {
-    if (!selectedSenderId) return toast.error('Wybierz nadawcę w nagłówku!');
+    if (!selectedSenderId) return toast.error('Wybierz nadawcę в nagłówku!');
     
     setGeneratingIds(prev => ({ ...prev, [orderId]: true }));
     try {
@@ -113,6 +117,15 @@ function App() {
     }
   };
 
+  const handleSendEmail = async (data: any) => {
+    try {
+      await sendEmail(data);
+      toast.success('Wiadomość została wysłana');
+    } catch (error: any) {
+      toast.error(`Błąd wysyłania email: ${error.response?.data?.error || error.message}`);
+    }
+  };
+
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= (ordersData?.totalPages || 1)) {
       setPage(newPage);
@@ -124,6 +137,14 @@ function App() {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Toaster position="top-right" />
       
+      <EmailModal 
+        isOpen={isEmailModalOpen}
+        onClose={() => setIsEmailModalOpen(false)}
+        order={selectedOrder}
+        onSend={handleSendEmail}
+        selectedSender={senders.find(s => s.id === selectedSenderId) || null}
+      />
+
       <Header 
         senders={senders}
         selectedSenderId={selectedSenderId}
@@ -136,34 +157,35 @@ function App() {
         showSync={true}
         search={search}
         onSearchChange={(val) => { setSearch(val); setPage(1); }}
+        currentSource={source}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6 border-b border-gray-200">
-          <nav className="-mb-px flex space-x-8">
+      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mb-8 border-b border-slate-200">
+          <nav className="-mb-px flex space-x-12">
             <button
               onClick={() => { setSource('Email'); setPage(1); }}
               className={cn(
-                "group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-all",
+                "group inline-flex items-center py-5 px-1 border-b-4 font-black text-xs uppercase tracking-[0.15em] transition-all",
                 source === 'Email'
-                  ? "border-primary-500 text-primary-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  ? "border-primary-600 text-slate-900"
+                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-300"
               )}
             >
-              <Mail className={cn("mr-2 h-5 w-5", source === 'Email' ? "text-primary-500" : "text-gray-400 group-hover:text-gray-500")} />
+              <Mail className={cn("mr-3 h-5 w-5", source === 'Email' ? "text-primary-600" : "text-slate-400 group-hover:text-slate-500")} />
               <span>InstalSzop (Email)</span>
             </button>
             <button
               onClick={() => { setSource('PrestaShop'); setPage(1); }}
               className={cn(
-                "group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-all",
+                "group inline-flex items-center py-5 px-1 border-b-4 font-black text-xs uppercase tracking-[0.15em] transition-all",
                 source === 'PrestaShop'
-                  ? "border-primary-500 text-primary-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  ? "border-primary-600 text-slate-900"
+                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-300"
               )}
             >
-              <ShoppingBag className={cn("mr-2 h-5 w-5", source === 'PrestaShop' ? "text-primary-500" : "text-gray-400 group-hover:text-gray-500")} />
-              <span>PrestaShop</span>
+              <ShoppingBag className={cn("mr-3 h-5 w-5", source === 'PrestaShop' ? "text-primary-600" : "text-slate-400 group-hover:text-gray-500")} />
+              <span>PrestaShop API</span>
             </button>
           </nav>
         </div>
@@ -182,6 +204,10 @@ function App() {
                 onGenerateAPaczka={(order: Order) => generateAPaczka(order.id)}
                 onDeleteShipment={(id: number) => deleteMutation.mutate(id)}
                 onUpdateOrder={(id: number, data: any) => updateMutation.mutate({ id, data })}
+                onOpenEmail={(order: Order) => {
+                  setSelectedOrder(order);
+                  setIsEmailModalOpen(true);
+                }}
                 isGenerating={generatingIds}
               />
             </div>

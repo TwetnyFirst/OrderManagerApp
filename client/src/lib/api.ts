@@ -52,4 +52,9 @@ export const deleteShipment = async (shipmentId: number) => {
   return data;
 };
 
+export const sendEmail = async (payload: any) => {
+  const { data } = await api.post('/send-email', payload);
+  return data;
+};
+
 export default api;

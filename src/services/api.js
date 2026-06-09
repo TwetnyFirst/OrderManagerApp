@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 
-// MiddleWare to ensure fast response
+// MiddleWare to ensure fast response and logging
 router.use((req, res, next) => {
+    console.log(`[API] ${req.method} ${req.url}`);
     next(); 
 });
 
@@ -273,6 +274,53 @@ router.post('/update-order/:orderId', async (req, res) => {
     }
 });
 
+const { sendEmail, templates } = require('./emailService');
+
+// Send Email to Customer or Sender
+router.post('/send-email', async (req, res) => {
+    const { orderId, target, template, customSubject, customBody, senderId, productName } = req.body;
+
+    try {
+        const order = await p.get('SELECT * FROM orders WHERE id = ?', [orderId]);
+        if (!order) return res.status(404).json({ error: 'Order not found' });
+
+        let to = "";
+        let emailData = { subject: "", text: "", html: "" };
+
+        if (target === 'customer') {
+            to = order.email;
+            if (template === 'custom') {
+                emailData = templates.customer.custom(customSubject, customBody);
+            } else if (template === 'out_of_stock') {
+                emailData = templates.customer.out_of_stock(order, productName);
+            } else if (templates.customer[template]) {
+                // For order_shipped, we might need a waybill
+                const shipment = await p.get('SELECT waybill FROM shipments WHERE order_id = ? ORDER BY id DESC', [orderId]);
+                emailData = templates.customer[template](order, shipment ? shipment.waybill : 'Wkrótce zostanie podany');
+            }
+        } else if (target === 'sender') {
+            const sender = await p.get('SELECT * FROM senders WHERE id = ?', [senderId]);
+            if (!sender || !sender.email) return res.status(400).json({ error: 'Sender email not found' });
+            to = sender.email;
+            emailData = templates.sender.new_order(sender, order);
+        }
+
+        if (!to) return res.status(400).json({ error: 'Recipient email address is missing' });
+
+        const result = await sendEmail({
+            to,
+            subject: emailData.subject,
+            text: emailData.text,
+            html: emailData.html
+        });
+
+        res.json({ success: true, ...result });
+    } catch (error) {
+        console.error('Email API Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 // Delete Shipment
 router.delete('/shipments/:id', async (req, res) => {
@@ -326,6 +374,12 @@ router.delete('/shipments/:id', async (req, res) => {
         console.error('Shipment Deletion Error:', error);
         res.status(500).json({ error: error.message });
     }
+});
+
+// Catch-all for unmatched API routes
+router.use((req, res) => {
+    console.warn(`[API] 404 - Unmatched route: ${req.method} ${req.url}`);
+    res.status(404).json({ error: `Route ${req.method} ${req.url} not found` });
 });
 
 module.exports = router;

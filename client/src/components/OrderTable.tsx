@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Order } from '../types';
 import { formatDate, formatCurrency, cn } from '../lib/utils';
-import { FileText, Trash2, Truck, Box } from 'lucide-react';
+import { FileText, Trash2, Truck, Box, Mail, ExternalLink, ChevronRight } from 'lucide-react';
 
 interface OrderTableProps {
   orders: Order[];
@@ -9,6 +9,7 @@ interface OrderTableProps {
   onGenerateAPaczka: (order: Order) => void;
   onDeleteShipment: (id: number) => void;
   onUpdateOrder: (id: number, data: any) => void;
+  onOpenEmail: (order: Order) => void;
   isGenerating: Record<number, boolean>;
 }
 
@@ -18,171 +19,231 @@ export const OrderTable: React.FC<OrderTableProps> = ({
   onGenerateAPaczka,
   onDeleteShipment,
   onUpdateOrder,
+  onOpenEmail,
   isGenerating,
 }) => {
   return (
-    <div className="overflow-x-auto bg-white rounded-lg shadow">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Zamówienie</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klient</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adres</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dostawa / Płatność</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">InPost / Paczki</th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Etykiety</th>
-            <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Akcje</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {orders.map((order) => {
-            const isPaczkomat = order.delivery_method?.toLowerCase().includes('paczkomat');
-            const isCod = order.payment_method?.toLowerCase().includes('pobranie') || order.payment_method?.toLowerCase().includes('cod');
-            
-            return (
-              <tr key={order.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <div className="text-sm font-bold text-gray-900">{order.order_number}</div>
-                  <div className="text-xs text-gray-500">{formatDate(order.created_at)}</div>
-                  <div className="mt-1">
-                    <span className={cn(
-                      "px-2 inline-flex text-xs leading-5 font-semibold rounded-full",
-                      order.status === 'Label Created' ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800"
-                    )}>
-                      {order.status}
-                    </span>
-                  </div>
-                </td>
-                <td className="px-4 py-4">
-                  <div className="text-sm font-medium text-gray-900">{order.customer_name}</div>
-                  <div className="text-xs text-gray-500 truncate max-w-[150px]">{order.email}</div>
-                  {order.nip && <div className="text-xs text-gray-400 mt-1">NIP: {order.nip}</div>}
-                </td>
-                <td className="px-4 py-4">
-                  <div className="text-sm text-gray-900">{order.street}</div>
-                  <div className="text-sm text-gray-500">{order.zip_code} {order.city}</div>
-                </td>
-                <td className="px-4 py-4">
-                  <div className="flex flex-col space-y-1">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                      {order.delivery_method}
-                    </span>
-                    <span className={cn(
-                      "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium",
-                      isCod ? "bg-amber-100 text-amber-800" : "bg-cyan-100 text-cyan-800"
-                    )}>
-                      {order.payment_method}
-                    </span>
-                    {isCod && (
-                      <div className="text-sm font-bold text-red-600">
-                        {formatCurrency(order.total_price)}
+    <div className="overflow-hidden bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200">
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-slate-200 border-collapse">
+          <thead>
+            <tr className="bg-slate-50/80">
+              <th className="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">Zamówienie</th>
+              <th className="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">Klient</th>
+              <th className="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">Adres / Dostawa</th>
+              <th className="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">Metoda / Płatność</th>
+              <th className="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">Paczki / Kod</th>
+              <th className="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">Etykiety</th>
+              <th className="px-5 py-4 text-right text-[11px] font-bold text-slate-500 uppercase tracking-wider">Akcje</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-slate-100">
+            {orders.map((order) => {
+              const isPaczkomat = order.delivery_method?.toLowerCase().includes('paczkomat');
+              const isCod = order.payment_method?.toLowerCase().includes('pobranie') || order.payment_method?.toLowerCase().includes('cod');
+              const hasLabels = order.shipments.length > 0;
+              
+              return (
+                <tr key={order.id} className={cn(
+                  "group transition-all duration-200 hover:bg-slate-50/50",
+                  hasLabels && "bg-emerald-50/10"
+                )}>
+                  <td className="px-5 py-5 whitespace-nowrap">
+                    <div className="flex flex-col">
+                      <span className="text-sm font-black text-slate-900 leading-tight">#{order.order_number}</span>
+                      <span className="text-[11px] font-medium text-slate-400 mt-1">{formatDate(order.created_at)}</span>
+                      <div className="mt-2">
+                        <span className={cn(
+                          "inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide ring-1 ring-inset",
+                          order.status === 'Label Created' 
+                            ? "bg-emerald-100 text-emerald-700 ring-emerald-600/20" 
+                            : "bg-blue-100 text-blue-700 ring-blue-600/20"
+                        )}>
+                          {order.status}
+                        </span>
                       </div>
-                    )}
-                  </div>
-                </td>
-                <td className="px-4 py-4">
-                  {isPaczkomat ? (
+                    </div>
+                  </td>
+
+                  <td className="px-5 py-5">
+                    <div className="flex flex-col max-w-[180px]">
+                      <span className="text-sm font-bold text-slate-800 truncate" title={order.customer_name}>{order.customer_name}</span>
+                      <span className="text-xs text-slate-500 truncate mt-0.5">{order.email}</span>
+                      {order.nip && (
+                        <span className="inline-flex items-center mt-1.5 text-[10px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded w-fit">
+                          NIP: {order.nip}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+
+                  <td className="px-5 py-5">
+                    <div className="flex flex-col text-xs font-medium text-slate-600 space-y-1">
+                      <div className="flex items-center text-slate-900 font-bold">
+                        <span className="truncate">{order.street}</span>
+                      </div>
+                      <span className="text-slate-500">{order.zip_code} {order.city}</span>
+                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-tight truncate max-w-[140px]">
+                        {order.delivery_method}
+                      </span>
+                    </div>
+                  </td>
+
+                  <td className="px-5 py-5">
                     <div className="flex flex-col space-y-2">
-                      <div className="flex items-center space-x-1">
-                        <input
-                          type="text"
-                          className="w-20 px-2 py-1 text-xs border border-gray-300 rounded focus:ring-primary-500 focus:border-primary-500"
-                          defaultValue={order.paczkomat_id || ''}
-                          onBlur={(e) => onUpdateOrder(order.id, { paczkomat_id: e.target.value })}
-                          placeholder="KOD"
-                        />
-                        <select
-                          className="px-1 py-1 text-xs border border-gray-300 rounded focus:ring-primary-500 focus:border-primary-500"
-                          defaultValue={order.parcel_size || 'C'}
-                          onChange={(e) => onUpdateOrder(order.id, { parcel_size: e.target.value })}
-                        >
-                          <option value="A">A</option>
-                          <option value="B">B</option>
-                          <option value="C">C</option>
-                        </select>
-                      </div>
+                      <span className={cn(
+                        "inline-flex items-center px-2 py-1 rounded-md text-[10px] font-black uppercase w-fit tracking-tighter",
+                        isCod ? "bg-amber-100 text-amber-700 ring-1 ring-amber-600/20" : "bg-cyan-100 text-cyan-700 ring-1 ring-cyan-600/20"
+                      )}>
+                        {order.payment_method}
+                      </span>
+                      {isCod ? (
+                        <span className="text-sm font-black text-rose-600 tabular-nums">
+                          {formatCurrency(order.total_price)}
+                        </span>
+                      ) : (
+                        <span className="text-xs font-bold text-slate-400 tabular-nums">
+                          {formatCurrency(order.total_price)}
+                        </span>
+                      )}
                     </div>
-                  ) : (
-                    <select
-                      id={`pkg-${order.id}`}
-                      className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-primary-500 focus:border-primary-500"
-                      defaultValue={order.packages_count || 1}
-                    >
-                      <option value="1">1 paczka</option>
-                      <option value="2">2 paczki</option>
-                      <option value="3">3 paczki</option>
-                    </select>
-                  )}
-                </td>
-                <td className="px-4 py-4">
-                  <div className="flex flex-col space-y-1">
-                    {order.shipments.map((s) => (
-                      <div key={s.id} className="group flex items-center justify-between bg-gray-50 px-2 py-1 rounded border border-gray-200">
-                        <a
-                          href={s.label_path}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-[10px] font-mono font-bold text-primary-700 hover:underline truncate mr-2"
-                        >
-                          {s.waybill}
-                        </a>
-                        <button
-                          onClick={() => onDeleteShipment(s.id)}
-                          className="text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </button>
-                      </div>
-                    ))}
-                    {order.shipments.length === 0 && <span className="text-xs text-gray-400 italic">Brak etykiet</span>}
-                  </div>
-                </td>
-                <td className="px-4 py-4 text-right">
-                  <div className="flex flex-col space-y-2 items-end">
-                    {isPaczkomat ? (
-                      <button
-                        onClick={() => onGenerateAPaczka(order)}
-                        disabled={isGenerating[order.id]}
-                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 disabled:opacity-50"
-                      >
-                        <Box className={cn("h-3.5 w-3.5 mr-1", isGenerating[order.id] && "animate-pulse")} />
-                        APaczka
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          const pkgSelect = document.getElementById(`pkg-${order.id}`) as HTMLSelectElement;
-                          onGenerateDPD(order, parseInt(pkgSelect?.value || '1'));
-                        }}
-                        disabled={isGenerating[order.id]}
-                        className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                      >
-                        <Truck className={cn("h-3.5 w-3.5 mr-1", isGenerating[order.id] && "animate-pulse")} />
-                        DPD
-                      </button>
-                    )}
-                    
-                    <div className="flex space-x-1">
-                      {order.shipments.map((s, idx) => (
-                        <a
-                          key={s.id}
-                          href={s.label_path}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center p-1.5 border border-gray-300 rounded shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none"
-                          title={`Etykieta ${idx + 1}`}
-                        >
-                          <FileText className="h-3.5 w-3.5" />
-                        </a>
+                  </td>
+
+                  <td className="px-5 py-5">
+                    <div className="flex flex-col space-y-2">
+                      {isPaczkomat ? (
+                        <div className="flex flex-col space-y-1.5">
+                          <div className="flex items-center space-x-1">
+                            <input
+                              type="text"
+                              className="w-16 px-2 py-1 text-[11px] font-bold border border-slate-200 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white shadow-sm transition-all"
+                              defaultValue={order.paczkomat_id || ''}
+                              onBlur={(e) => onUpdateOrder(order.id, { paczkomat_id: e.target.value })}
+                              placeholder="KOD"
+                            />
+                            <select
+                              className="px-1 py-1 text-[11px] font-bold border border-slate-200 rounded-md focus:ring-2 focus:ring-primary-500 bg-white shadow-sm"
+                              defaultValue={order.parcel_size || 'C'}
+                              onChange={(e) => onUpdateOrder(order.id, { parcel_size: e.target.value })}
+                            >
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                              <option value="C">C</option>
+                            </select>
+                          </div>
+                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">InPost API</span>
+                        </div>
+                      ) : (
+                        <div className="relative group/sel">
+                          <select
+                            id={`pkg-${order.id}`}
+                            className="w-full px-2 py-1 text-[11px] font-bold border border-slate-200 rounded-md focus:ring-2 focus:ring-primary-500 bg-white shadow-sm cursor-pointer appearance-none pr-6"
+                            defaultValue={order.packages_count || 1}
+                          >
+                            <option value="1">1 PACZKA</option>
+                            <option value="2">2 PACZKI</option>
+                            <option value="3">3 PACZKI</option>
+                          </select>
+                          <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none text-slate-400">
+                             <ChevronRight className="h-3 w-3 rotate-90" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+
+                  <td className="px-5 py-5">
+                    <div className="flex flex-col space-y-1.5 min-w-[120px]">
+                      {order.shipments.map((s) => (
+                        <div key={s.id} className="group/item flex items-center justify-between bg-slate-100 hover:bg-primary-50 px-2 py-1 rounded-lg border border-slate-200 transition-colors">
+                          <a
+                            href={s.label_path}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-[10px] font-black font-mono text-primary-700 hover:text-primary-900 truncate mr-2 flex items-center"
+                          >
+                            {s.waybill}
+                            <ExternalLink className="h-2.5 w-2.5 ml-1 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                          </a>
+                          <button
+                            onClick={() => onDeleteShipment(s.id)}
+                            className="text-slate-400 hover:text-rose-500 transition-all active:scale-90"
+                            title="Usuń etykietę"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       ))}
+                      {order.shipments.length === 0 && (
+                        <span className="text-[10px] font-bold text-slate-300 italic tracking-wide uppercase">Brak etykiet</span>
+                      )}
                     </div>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  </td>
+
+                  <td className="px-5 py-5 text-right whitespace-nowrap">
+                    <div className="flex flex-col space-y-2 items-end">
+                      <div className="flex space-x-1.5">
+                        <button
+                          onClick={() => onOpenEmail(order)}
+                          className="inline-flex items-center px-3 py-1.5 bg-slate-100 hover:bg-primary-100 text-slate-700 hover:text-primary-700 text-[11px] font-bold rounded-lg border border-slate-200 transition-all active:scale-95"
+                        >
+                          <Mail className="h-3.5 w-3.5 mr-1.5" />
+                          EMAIL
+                        </button>
+                        
+                        {order.shipments.length > 0 && (
+                          <a
+                            href={order.shipments[0].label_path}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center p-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded-lg border border-emerald-200 transition-all active:scale-95 shadow-sm shadow-emerald-600/10"
+                            title="Pobierz PDF"
+                          >
+                            <FileText className="h-4 w-4" />
+                          </a>
+                        )}
+                      </div>
+
+                      {isPaczkomat ? (
+                        <button
+                          onClick={() => onGenerateAPaczka(order)}
+                          disabled={isGenerating[order.id]}
+                          className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-[11px] font-black rounded-lg shadow-lg shadow-amber-500/20 text-white bg-amber-500 hover:bg-amber-600 transition-all active:scale-[0.98] disabled:opacity-50 tracking-wider"
+                        >
+                          <Box className={cn("h-4 w-4 mr-2", isGenerating[order.id] && "animate-pulse")} />
+                          APaczka (InPost)
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            const pkgSelect = document.getElementById(`pkg-${order.id}`) as HTMLSelectElement;
+                            onGenerateDPD(order, parseInt(pkgSelect?.value || '1'));
+                          }}
+                          disabled={isGenerating[order.id]}
+                          className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-[11px] font-black rounded-lg shadow-lg shadow-primary-600/20 text-white bg-primary-600 hover:bg-primary-700 transition-all active:scale-[0.98] disabled:opacity-50 tracking-wider"
+                        >
+                          <Truck className={cn("h-4 w-4 mr-2", isGenerating[order.id] && "animate-pulse")} />
+                          GENERUJ DPD
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      
+      {orders.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-20 bg-white">
+          <div className="p-4 bg-slate-50 rounded-full mb-4">
+            <Box className="h-10 w-10 text-slate-300" />
+          </div>
+          <p className="text-slate-500 font-bold tracking-tight">Nie znaleziono żadnych zamówień</p>
+          <p className="text-slate-400 text-xs mt-1">Zmień filtry lub słowo kluczowe</p>
+        </div>
+      )}
     </div>
   );
 };

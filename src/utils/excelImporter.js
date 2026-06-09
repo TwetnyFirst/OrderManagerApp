@@ -43,6 +43,9 @@ const importSenders = async () => {
           const fid = row['Numer'] ? String(row['Numer']) : null;
           if (!fid) return;
 
+          // Mapping column names from Excel to DB fields
+          const email = row['Email'] || row['E-mail'] || row['email'] || '';
+
           stmt.run(
             fid,
             row['Imię Nazwisko'] || '',
@@ -51,7 +54,7 @@ const importSenders = async () => {
             row['Miasto'] || '',
             row['Kod pocztowy'] || '',
             row['Telefon'] ? String(row['Telefon']) : '',
-            row['Email'] || ''
+            email
           );
           importedCount++;
         });

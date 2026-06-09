@@ -17,6 +17,7 @@
     "imap-simple": "^5.1.0",
     "mailparser": "^3.9.8",
     "morgan": "^1.10.1",
+    "nodemailer": "^8.0.10",
     "sqlite3": "^6.0.1",
     "xlsx": "^0.18.5"
   }
