@@ -11,7 +11,8 @@ import {
   deleteShipment, 
   updateOrder,
   sendEmail,
-  getUnreadNotifications
+  getUnreadNotifications,
+  getOrderById
 } from './lib/api';
 import { Header } from './components/Header';
 import { OrderTable } from './components/OrderTable';
@@ -134,6 +135,21 @@ function App() {
     }
   };
 
+  const handleOpenEmailHistoryForOrderId = async (orderId: number) => {
+    try {
+      let order = ordersData?.orders.find(o => o.id === orderId);
+      if (!order) {
+        order = await getOrderById(orderId);
+      }
+      if (order) {
+        setSelectedOrder(order);
+        setIsEmailModalOpen(true);
+      }
+    } catch (err) {
+      toast.error('Nie udało się załadować danych zamówienia');
+    }
+  };
+
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= (ordersData?.totalPages || 1)) {
       setPage(newPage);
@@ -142,7 +158,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-[#f8f9fa] flex flex-col">
       <Toaster position="top-right" />
       
       <EmailModal 
@@ -167,33 +183,34 @@ function App() {
         onSearchChange={(val) => { setSearch(val); setPage(1); }}
         currentSource={source}
         unreadNotifications={unreadNotifications}
+        onNotificationClick={handleOpenEmailHistoryForOrderId}
       />
 
-      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="mb-8 border-b border-slate-200">
-          <nav className="-mb-px flex space-x-12">
+      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6 border-b border-slate-100">
+          <nav className="-mb-px flex space-x-10">
             <button
               onClick={() => { setSource('Email'); setPage(1); }}
               className={cn(
-                "group inline-flex items-center py-5 px-1 border-b-4 font-black text-xs uppercase tracking-[0.15em] transition-all",
+                "group inline-flex items-center py-4 px-1 border-b-2 font-bold text-xs uppercase tracking-wider transition-all outline-none",
                 source === 'Email'
-                  ? "border-primary-600 text-slate-900"
-                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-300"
+                  ? "border-purple-600 text-purple-700"
+                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-200"
               )}
             >
-              <Mail className={cn("mr-3 h-5 w-5", source === 'Email' ? "text-primary-600" : "text-slate-400 group-hover:text-slate-500")} />
-              <span>InstalSzop (Email)</span>
+              <Mail className={cn("mr-2.5 h-4.5 w-4.5", source === 'Email' ? "text-purple-600" : "text-slate-400 group-hover:text-slate-500")} />
+              <span>Poczta (Zamówienia)</span>
             </button>
             <button
               onClick={() => { setSource('PrestaShop'); setPage(1); }}
               className={cn(
-                "group inline-flex items-center py-5 px-1 border-b-4 font-black text-xs uppercase tracking-[0.15em] transition-all",
+                "group inline-flex items-center py-4 px-1 border-b-2 font-bold text-xs uppercase tracking-wider transition-all outline-none",
                 source === 'PrestaShop'
-                  ? "border-primary-600 text-slate-900"
-                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-300"
+                  ? "border-purple-600 text-purple-700"
+                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-200"
               )}
             >
-              <ShoppingBag className={cn("mr-3 h-5 w-5", source === 'PrestaShop' ? "text-primary-600" : "text-slate-400 group-hover:text-gray-500")} />
+              <ShoppingBag className={cn("mr-2.5 h-4.5 w-4.5", source === 'PrestaShop' ? "text-purple-600" : "text-slate-400 group-hover:text-slate-500")} />
               <span>PrestaShop API</span>
             </button>
           </nav>
@@ -201,12 +218,12 @@ function App() {
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-            <p className="mt-4 text-gray-500 font-medium">Ładowanie zamówień...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-800"></div>
+            <p className="mt-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Ładowanie zamówień...</p>
           </div>
         ) : (
           <>
-            <div className={cn("transition-opacity duration-200", isFetching ? "opacity-50" : "opacity-100")}>
+            <div className={cn("transition-opacity duration-150", isFetching ? "opacity-50" : "opacity-100")}>
               <OrderTable 
                 orders={ordersData?.orders || []}
                 onGenerateDPD={(order: Order, count: number) => generateDPD(order.id, count)}
@@ -223,42 +240,40 @@ function App() {
 
             {/* Pagination */}
             {ordersData && ordersData.totalPages > 1 && (
-              <div className="mt-8 flex items-center justify-between bg-white px-4 py-3 sm:px-6 rounded-lg shadow">
+              <div className="mt-6 flex items-center justify-between bg-white border border-slate-100 px-4 py-3 sm:px-6 rounded-xl shadow-sm">
                 <div className="flex flex-1 justify-between sm:hidden">
                   <button
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
-                    className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    className="relative inline-flex items-center rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-medium text-slate-605 hover:bg-slate-50 disabled:opacity-50"
                   >
                     Poprzednia
                   </button>
                   <button
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === ordersData.totalPages}
-                    className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    className="relative ml-3 inline-flex items-center rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-medium text-slate-605 hover:bg-slate-50 disabled:opacity-50"
                   >
                     Następna
                   </button>
                 </div>
                 <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-sm text-gray-700">
-                      Pokazywanie <span className="font-medium">{(page - 1) * limit + 1}</span> do <span className="font-medium">{Math.min(page * limit, ordersData.totalCount)}</span> z{' '}
-                      <span className="font-medium">{ordersData.totalCount}</span> zamówień
+                    <p className="text-xs text-slate-500 font-medium">
+                      Pozycje <span className="font-semibold text-slate-800">{(page - 1) * limit + 1}</span> - <span className="font-semibold text-slate-800">{Math.min(page * limit, ordersData.totalCount)}</span> z <span className="font-semibold text-slate-800">{ordersData.totalCount}</span> zamówień
                     </p>
                   </div>
                   <div>
-                    <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                    <nav className="isolate inline-flex space-x-1.5" aria-label="Pagination">
                       <button
                         onClick={() => handlePageChange(page - 1)}
                         disabled={page === 1}
-                        className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
+                        className="relative inline-flex items-center rounded-lg px-2 py-1.5 text-slate-400 hover:bg-slate-50 disabled:opacity-50 transition-colors"
                       >
-                        <ChevronLeft className="h-5 w-5" />
+                        <ChevronLeft className="h-4 w-4" />
                       </button>
                       
                       {[...Array(Math.min(5, ordersData.totalPages))].map((_, i) => {
-                        // Simple sliding window for pagination
                         let pageNum = page;
                         if (page <= 3) pageNum = i + 1;
                         else if (page >= ordersData.totalPages - 2) pageNum = ordersData.totalPages - 4 + i;
@@ -271,10 +286,10 @@ function App() {
                             key={pageNum}
                             onClick={() => handlePageChange(pageNum)}
                             className={cn(
-                              "relative inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20",
+                              "relative inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg transition-all",
                               page === pageNum
-                                ? "z-10 bg-primary-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-                                : "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+                                ? "z-10 bg-slate-900 text-white shadow-sm"
+                                : "text-slate-600 hover:bg-slate-50"
                             )}
                           >
                             {pageNum}
@@ -285,9 +300,9 @@ function App() {
                       <button
                         onClick={() => handlePageChange(page + 1)}
                         disabled={page === ordersData.totalPages}
-                        className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
+                        className="relative inline-flex items-center rounded-lg px-2 py-1.5 text-slate-400 hover:bg-slate-50 disabled:opacity-50 transition-colors"
                       >
-                        <ChevronRight className="h-5 w-5" />
+                        <ChevronRight className="h-4 w-4" />
                       </button>
                     </nav>
                   </div>

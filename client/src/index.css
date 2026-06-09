@@ -10,8 +10,8 @@
 
 body {
   margin: 0;
-  background-color: #f8fafc;
-  color: #1e293b;
+  background-color: #f8f9fa;
+  color: #212529;
 }
 
 #root {
@@ -66,3 +66,84 @@ select {
 .fade-in { animation-name: fade-in; }
 .zoom-in-95 { animation-name: zoom-in-95; }
 .slide-in-from-bottom-4 { animation-name: slide-in-from-bottom-4; }
+
+/* Custom Senders/Orders Layout Styles matching mockup */
+.orders-table { width: 100%; border-collapse: separate; border-spacing: 0 16px; }
+.orders-table th { padding: 16px; text-align: left; font-size: 14px; font-weight: 600; color: #1e293b; text-transform: none; letter-spacing: normal; }
+
+.order-row { transition: all 0.2s ease-in-out; }
+.order-row td { 
+  padding: 20px 16px; 
+  vertical-align: top; 
+  font-size: 14px; 
+  background: #ffffff; 
+  border-top: 1px solid #f1f5f9; 
+  border-bottom: 1px solid #f1f5f9; 
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.025); 
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+}
+.order-row td:first-child { border-left: 1px solid #f1f5f9; border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+.order-row td:last-child { border-right: 1px solid #f1f5f9; border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+
+.order-row:hover td {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+  background-color: #ffffff;
+}
+
+.order-id { font-weight: 600; color: #0f172a; margin-bottom: 4px; font-size: 15px; }
+.order-date { font-size: 12px; color: #94a3b8; }
+
+.client-name { font-weight: 600; color: #0f172a; margin-bottom: 2px; }
+.client-email { font-size: 13px; color: #475569; }
+.client-nip { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+.address-text { color: #334155; line-height: 1.45; font-size: 14px; }
+.courier-tag { display: inline-block; font-size: 11px; font-weight: 600; color: #475569; background: #e2e8f0; padding: 3px 8px; border-radius: 6px; margin-top: 8px; letter-spacing: 0.2px; text-transform: uppercase; }
+
+.price-amount { font-weight: 700; color: #0f172a; margin-bottom: 4px; font-size: 15px; }
+.payment-method { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #64748b; background: #f1f5f9; border: 1px solid #e2e8f0; padding: 3px 8px; border-radius: 6px; display: inline-block; }
+
+.status-badge { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; text-align: center; }
+.status-new { background-color: #e0f2fe; color: #0369a1; }
+.status-ready { background-color: #dcfce7; color: #15803d; }
+
+.tracking-link { 
+  color: #6b21a8; 
+  text-decoration: none; 
+  font-weight: 600; 
+  font-size: 13px; 
+  background: #ddd6fe; 
+  padding: 0 14px; 
+  height: 38px; 
+  border-radius: 8px; 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  transition: all 0.2s;
+}
+.tracking-link:hover {
+  background: #c7d2fe;
+  color: #3730a3;
+}
+.tracking-none { color: #94a3b8; font-style: italic; font-size: 13px; }
+
+.actions-cell { display: flex; gap: 8px; align-items: center; height: 100%; flex-wrap: nowrap; }
+.btn { border: none; padding: 0 14px; font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; height: 38px; }
+.btn-secondary { background: #f1f5f9; color: #475569; width: 38px; justify-content: center; padding: 0; }
+.btn-secondary:hover { background: #e2e8f0; color: #1e293b; }
+.btn-primary { background: #fec22a; color: #452a00; border: none; }
+.btn-primary:hover { background: #e5af22; }
+.btn-danger { background: #ef4444; color: #ffffff; width: 38px; justify-content: center; padding: 0; }
+.btn-danger:hover { background: #dc2626; }
+
+/* InPost/Paczkomat styling overrides */
+.paczkomat-tag { background: #fef3c7; color: #b45309; }
+.paczkomat-btn { background: #fec22a; color: #452a00; }
+.paczkomat-btn:hover { background: #e5af22; }
+
+/* Custom Inputs to blend with .btn style */
+.input-field { border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 8px; font-size: 13px; outline: none; background: #fff; height: 38px; transition: border-color 0.2s; }
+.input-field:focus { border-color: #a855f7; }
+
+

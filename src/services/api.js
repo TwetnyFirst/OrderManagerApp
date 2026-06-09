@@ -152,6 +152,29 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+// Get single order by ID
+router.get('/orders/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const order = await p.get('SELECT * FROM orders WHERE id = ?', [id]);
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        const shipments = await p.all('SELECT * FROM shipments WHERE order_id = ?', [id]);
+        order.shipments = shipments || [];
+
+        const unreadCount = await p.get(
+            'SELECT COUNT(*) as count FROM order_notifications WHERE is_read = 0 AND order_id = ?',
+            [id]
+        );
+        order.unread_notifications = unreadCount?.count || 0;
+
+        res.json(order);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Get all senders
 router.get('/senders', async (req, res) => {
     try {

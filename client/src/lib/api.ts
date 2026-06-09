@@ -12,6 +12,11 @@ export const getOrders = async (page: number, limit: number, source: string, sea
   return data;
 };
 
+export const getOrderById = async (id: number): Promise<Order> => {
+  const { data } = await api.get<Order>(`/orders/${id}`);
+  return data;
+};
+
 export const getSenders = async () => {
   const { data } = await api.get<Sender[]>('/senders');
   return data;
