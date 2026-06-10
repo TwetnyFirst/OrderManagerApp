@@ -62,6 +62,11 @@ export const sendEmail = async (payload: any) => {
   return data;
 };
 
+export const getOrderItems = async (orderId: number) => {
+  const { data } = await api.get(`/orders/${orderId}/items`);
+  return data;
+};
+
 export const getOrderNotifications = async (orderId: number) => {
   const { data } = await api.get(`/notifications/order/${orderId}`);
   return data;
@@ -74,6 +79,11 @@ export const getUnreadNotifications = async () => {
 
 export const markNotificationAsRead = async (id: number) => {
   const { data } = await api.post(`/notifications/${id}/read`);
+  return data;
+};
+
+export const markAllNotificationsAsRead = async () => {
+  const { data } = await api.post('/notifications/read-all');
   return data;
 };
 

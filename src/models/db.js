@@ -58,7 +58,8 @@ const initDb = () => {
         dpd_waybill TEXT,
         label_path TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        source TEXT DEFAULT 'Email'
+        source TEXT DEFAULT 'Email',
+        items_json TEXT
       )`, (err) => {
         if (err) {
           reject(err);
@@ -99,6 +100,7 @@ const initDb = () => {
             "ALTER TABLE orders ADD COLUMN source TEXT DEFAULT 'Email'",
             "ALTER TABLE orders ADD COLUMN parsing_status TEXT",
             "ALTER TABLE orders ADD COLUMN raw_email_body TEXT",
+            "ALTER TABLE orders ADD COLUMN items_json TEXT",
             "ALTER TABLE order_notifications ADD COLUMN message_id TEXT"
           ];
           

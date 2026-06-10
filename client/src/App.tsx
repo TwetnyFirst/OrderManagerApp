@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Toaster, toast } from 'react-hot-toast';
 import { 
@@ -12,7 +12,9 @@ import {
   updateOrder,
   sendEmail,
   getUnreadNotifications,
-  getOrderById
+  getOrderById,
+  markNotificationAsRead,
+  markAllNotificationsAsRead
 } from './lib/api';
 import { Header } from './components/Header';
 import { OrderTable } from './components/OrderTable';
@@ -26,7 +28,7 @@ function App() {
   const [source, setSource] = useState<'Email' | 'PrestaShop'>('Email');
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  const [selectedSenderId, setSelectedSenderId] = useState<number | null>(null);
+  const [orderSenders, setOrderSenders] = useState<Record<number, number>>({});
   const [generatingIds, setGeneratingIds] = useState<Record<number, boolean>>({});
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -45,12 +47,7 @@ function App() {
     queryFn: getSenders,
   });
 
-  // Set initial sender
-  useEffect(() => {
-    if (senders.length > 0 && !selectedSenderId) {
-      setSelectedSenderId(senders[0].id);
-    }
-  }, [senders, selectedSenderId]);
+  // Senders are handled per-order and dynamically default to senders[0] if not selected
 
   const { data: ordersData, isLoading, isFetching } = useQuery<OrdersResponse>({
     queryKey: ['orders', source, page, search],
@@ -94,12 +91,29 @@ function App() {
     },
   });
 
-  const generateDPD = async (orderId: number, packageCount: number) => {
-    if (!selectedSenderId) return toast.error('Wybierz nadawcę в nagłówku!');
-    
+  const markAsReadMutation = useMutation({
+    mutationFn: markNotificationAsRead,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['unread-notifications'] });
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+    },
+    onError: (error: any) => toast.error(`Błąd: ${error.message}`),
+  });
+
+  const markAllAsReadMutation = useMutation({
+    mutationFn: markAllNotificationsAsRead,
+    onSuccess: () => {
+      toast.success('Wszystkie powiadomienia zostały oznaczone jako przeczytane');
+      queryClient.invalidateQueries({ queryKey: ['unread-notifications'] });
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+    },
+    onError: (error: any) => toast.error(`Błąd: ${error.message}`),
+  });
+
+  const generateDPD = async (orderId: number, senderId: number, packageCount: number) => {
     setGeneratingIds(prev => ({ ...prev, [orderId]: true }));
     try {
-      await generateDPDLabel(orderId, selectedSenderId, packageCount);
+      await generateDPDLabel(orderId, senderId, packageCount);
       toast.success(`Wygenerowano etykietę DPD dla zamówienia #${orderId}`);
       queryClient.invalidateQueries({ queryKey: ['orders'] });
     } catch (error: any) {
@@ -109,10 +123,9 @@ function App() {
     }
   };
 
-  const generateAPaczka = async (orderId: number) => {
-    if (!selectedSenderId) return toast.error('Wybierz nadawcę в nagłówku!');
-    const sender = senders.find((s: Sender) => s.id === selectedSenderId);
-    if (!sender) return;
+  const generateAPaczka = async (orderId: number, senderId: number) => {
+    const sender = senders.find((s: Sender) => s.id === senderId);
+    if (!sender) return toast.error('Brak wybranego nadawcy!');
 
     setGeneratingIds(prev => ({ ...prev, [orderId]: true }));
     try {
@@ -166,13 +179,10 @@ function App() {
         onClose={() => setIsEmailModalOpen(false)}
         order={selectedOrder}
         onSend={handleSendEmail}
-        selectedSender={senders.find(s => s.id === selectedSenderId) || null}
+        selectedSender={selectedOrder ? (senders.find(s => s.id === (orderSenders[selectedOrder.id] || senders[0]?.id)) || null) : null}
       />
 
       <Header 
-        senders={senders}
-        selectedSenderId={selectedSenderId}
-        onSenderChange={setSelectedSenderId}
         onSync={() => {
           if (source === 'PrestaShop') syncMutation.mutate();
           else syncEmailMutation.mutate();
@@ -184,6 +194,8 @@ function App() {
         currentSource={source}
         unreadNotifications={unreadNotifications}
         onNotificationClick={handleOpenEmailHistoryForOrderId}
+        onMarkAsRead={(id) => markAsReadMutation.mutate(id)}
+        onMarkAllAsRead={() => markAllAsReadMutation.mutate()}
       />
 
       <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -226,8 +238,11 @@ function App() {
             <div className={cn("transition-opacity duration-150", isFetching ? "opacity-50" : "opacity-100")}>
               <OrderTable 
                 orders={ordersData?.orders || []}
-                onGenerateDPD={(order: Order, count: number) => generateDPD(order.id, count)}
-                onGenerateAPaczka={(order: Order) => generateAPaczka(order.id)}
+                senders={senders}
+                orderSenders={orderSenders}
+                onOrderSenderChange={(orderId, senderId) => setOrderSenders(prev => ({ ...prev, [orderId]: senderId }))}
+                onGenerateDPD={(order: Order, senderId: number, count: number) => generateDPD(order.id, senderId, count)}
+                onGenerateAPaczka={(order: Order, senderId: number) => generateAPaczka(order.id, senderId)}
                 onDeleteShipment={(id: number) => deleteMutation.mutate(id)}
                 onUpdateOrder={(id: number, data: any) => updateMutation.mutate({ id, data })}
                 onOpenEmail={(order: Order) => {

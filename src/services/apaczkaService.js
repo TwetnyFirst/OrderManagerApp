@@ -61,6 +61,15 @@ class ApaczkaService {
         const dims = sizeMap[order.parcel_size || 'C'];
         const codAmount = order.total_price.toFixed(2);
 
+        const formatPostalCode = (zip) => {
+            if (!zip) return "";
+            let clean = zip.replace(/[-\s]/g, '');
+            if (clean.length === 5) {
+                return clean.substring(0, 2) + '-' + clean.substring(2);
+            }
+            return zip;
+        };
+
         const payload = {
             order: {
                 service_id: 41, // InPost Paczkomat
@@ -69,10 +78,12 @@ class ApaczkaService {
                 address: {
                     sender: {
                         name: sender.company || sender.name,
+                        company_name: sender.company || "",
+                        company: sender.company || "",
                         line1: sender.street,
                         line2: "",
                         city: sender.city,
-                        postal_code: sender.zip_code,
+                        postal_code: formatPostalCode(sender.zip_code),
                         country_code: 'PL',
                         phone: sender.phone.replace(/[^0-9]/g, ''),
                         email: sender.email || 'sklep@instalszop.pl',
@@ -80,10 +91,12 @@ class ApaczkaService {
                     },
                     receiver: {
                         name: order.company_name || order.customer_name,
+                        company_name: order.company_name || "",
+                        company: order.company_name || "",
                         line1: order.street || "Paczkomat " + paczkomatId,
                         line2: "",
                         city: order.city,
-                        postal_code: order.zip_code,
+                        postal_code: formatPostalCode(order.zip_code),
                         country_code: 'PL',
                         phone: order.phone.replace(/[^0-9]/g, ''),
                         email: order.email,

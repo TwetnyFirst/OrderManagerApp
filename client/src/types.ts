@@ -50,3 +50,11 @@ export interface OrdersResponse {
   currentPage: number;
   limit: number;
 }
+
+export interface OrderItem {
+  name: string;
+  reference: string;
+  price: number;
+  quantity: number;
+  total: number;
+}

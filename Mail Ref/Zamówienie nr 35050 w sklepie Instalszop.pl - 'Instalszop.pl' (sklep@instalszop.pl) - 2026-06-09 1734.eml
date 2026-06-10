@@ -1,0 +1,207 @@
+Return-Path: <sklep@instalszop.pl>
+Delivered-To: sklep@instalszop.pl
+Received: from mail.best.net.pl
+	by mail.best.net.pl with LMTP
+	id eAiyJ+AyKGpVpCwAga/8yw
+	(envelope-from <sklep@instalszop.pl>)
+	for <sklep@instalszop.pl>; Tue, 09 Jun 2026 17:36:00 +0200
+Received: from localhost (hst-smtp-av-in [10.51.140.5])
+	by mail.best.net.pl (SMTP) with ESMTP id A0B23645FD
+	for <sklep@instalszop.pl>; Tue,  9 Jun 2026 17:36:00 +0200 (CEST)
+X-Virus-Scanned: AV at mail.best.net.pl
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hosting.netmix.pl;
+	s=mail; t=1781019360;
+	bh=bPOEEwl0CsM7TFNeg2oSG0D495M3GHwu47XwFf+shPA=;
+	h=Date:From:To:Subject:From;
+	b=XI7Rk28xi5H6p4wRcheP9nM5bLRYZY/Taj9i/WolB3OlUU27Rz08qhH1no6SE0s4l
+	 t3nF/3/ekHk/qYLBJmd9XIuCeLwIWhYG3zkJIaBWaa6jFLI3swwwEPmF5u/AxnDJTv
+	 /6fupRN/G5W8Ng2wBf8i3dJY34hHA8pXXFXcHsAO1lZC8AklzMB6tznsM4zD1acYeR
+	 QDIu1wcbzgq4KJHl4zUrg5WPWKwxVaJCZa0AZxApS65/B1yzwTMRPSe/hSSv8YXUGG
+	 xvPCETqw8aQ+/1cUuiztB3Uf/t0VoRJehpwDiy9Tl2l1aHpPWsehT/0AxY7WFFXhXv
+	 kRaCTh4GLGxkQ==
+Received: from shops-d16.best.net.pl (shops-d16.best.net.pl [91.134.196.209])
+	(Authenticated sender: sklep@instalszop.pl)
+	by mail.best.net.pl (SMTP) with ESMTPSA id 736EC6453F
+	for <sklep@instalszop.pl>; Tue,  9 Jun 2026 17:36:00 +0200 (CEST)
+Date: Tue, 9 Jun 2026 17:34:10 +0200 (CEST)
+From: "Instalszop.pl" <sklep@instalszop.pl>
+To: "sklep@instalszop.pl" <sklep@instalszop.pl>
+Message-ID: <1184662003.491.1781019250086@shops-d16.best.net.pl>
+Subject: =?utf-8?Q?Zam=C3=B3wienie_nr_35050_w_sklepie_Instalszop.pl?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_490_1072040086.1781019250086"
+User-Agent: Extreme Commerce
+Shop-Address: https://instalszop.pl/
+
+------=_Part_490_1072040086.1781019250086
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
+
+
+
+Witaj! W sklepie Instalszop.pl zosta=C5=82o z=C5=82o=C5=BCone nowe zam=C3=
+=B3wienie.=20
+Data z=C5=82o=C5=BCenia zam=C3=B3wienia: 09.06.2026 17:34:05=20
+Numer zam=C3=B3wienia: 35050=20
+Typ dostawy: Kurier InPost
+Typ p=C5=82atno=C5=9Bci: BLIK
+
+
+Towar
+Symbol
+Cena
+(netto)
+Ilo=C5=9B=C4=87
+Warto=C5=9B=C4=87(netto)
+
+
+STR 1 35L22 =E2=80=A2 HARMANN =E2=80=A2 PROFESJONALNA WYSY=C5=81KA
+STR135L22
+681.91 PLN
+2
+1363.82 PLN
+
+
+Razem netto:
+1108.80 PLN
+
+
+Razem brutto:
+1363.82 PLN
+
+
+Adres Dostawy
+
+ Paulina Salamo=C5=84czyk Dubois 2  Gliwice, 44-100 726572963
+Dane P=C5=82atnika
+
+Paulina Salamo=C5=84czyk
+Gelato Studio Paulina Salamo=C5=84czyk
+
+NIP: 2220847981
+ Dubois 2=20
+44-100
+Gliwice
+Telefon: 726572963
+E-mail: biuro@gelatostudio.pl
+Dodatkowe informacje
+
+Link do zam=C3=B3wienia:
+https://instalszop.pl//do/orderInfo?symbol=3D35050&hash=3D805f64172a90e8ea1=
+1bd5cf6f6c11fcca0a39c9f
+
+
+Dzi=C4=99kujemy za zakupy w Instalszop.pl
+
+
+
+------=_Part_490_1072040086.1781019250086
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"/>
+</head>
+<body style=3D"font-size: 12px;font-family: Arial, sans-serif">
+<hr/>
+<h2 style=3D"font-size: 14px;font-weight: bold;margin: 4px 0 4px 0">Witaj!<=
+/h2> W sklepie Instalszop.pl zosta=C5=82o z=C5=82o=C5=BCone nowe zam=C3=B3w=
+ienie.<br/><br/>=20
+Data z=C5=82o=C5=BCenia zam=C3=B3wienia: 09.06.2026 17:34:05<br/>=20
+Numer zam=C3=B3wienia: <strong>35050</strong><br/><br/>=20
+Typ dostawy: Kurier InPost<br/>
+Typ p=C5=82atno=C5=9Bci: BLIK<br/><br/><br/>
+<table style=3D"margin: 0;padding: 0;border-collapse: collapse;border: 1px =
+solid #ccc">
+<tr>
+<th style=3D"border: 1px solid #ccc;font-weight: bold;text-align: center;pa=
+dding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif">Towa=
+r</th>
+<th style=3D"width: 125px;border: 1px solid #ccc;font-weight: bold;text-ali=
+gn: center;padding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, san=
+s-serif">Symbol</th>
+<th style=3D"width: 125px;border: 1px solid #ccc;font-weight: bold;text-ali=
+gn: center;padding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, san=
+s-serif">Cena<br/>
+<span class=3D"small" style=3D"font-size: 10px;font-weight: normal">(netto)=
+</span></th>
+<th style=3D"width: 50px;border: 1px solid #ccc;font-weight: bold;text-alig=
+n: center;padding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans=
+-serif">Ilo=C5=9B=C4=87</th>
+<th style=3D"width: 125px;border: 1px solid #ccc;font-weight: bold;text-ali=
+gn: center;padding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, san=
+s-serif">Warto=C5=9B=C4=87<br/><span class=3D"small" style=3D"font-size: 10=
+px;font-weight: normal">(netto)</span></th>
+</tr>
+<tr>
+<td style=3D"border: 1px solid #ccc;text-align: left;padding: 3px 4px 3px 4=
+px;font-size: 12px;font-family: Arial, sans-serif">STR 1 35L22 =E2=80=A2 HA=
+RMANN =E2=80=A2 PROFESJONALNA WYSY=C5=81KA</td>
+<td class=3D"center" style=3D"border: 1px solid #ccc;text-align: center;pad=
+ding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif">STR13=
+5L22</td>
+<td class=3D"right" style=3D"border: 1px solid #ccc;text-align: right;paddi=
+ng: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif">681.91 =
+PLN</td>
+<td class=3D"center" style=3D"border: 1px solid #ccc;text-align: center;pad=
+ding: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif">2</td=
+>
+<td class=3D"right" style=3D"border: 1px solid #ccc;text-align: right;paddi=
+ng: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif">1363.82=
+ PLN</td>
+</tr>
+<tr>
+<td colspan=3D"4" style=3D"border: 1px solid #ccc;text-align: right;padding=
+: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif"><strong>R=
+azem netto:</strong></td>
+<td class=3D"right" style=3D"border: 1px solid #ccc;text-align: right;paddi=
+ng: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif"><strong=
+>1108.80</strong> PLN</td>
+</tr>
+<tr>
+<td colspan=3D"4" style=3D"border: 1px solid #ccc;text-align: right;padding=
+: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif"><strong>R=
+azem brutto:</strong></td>
+<td class=3D"right" style=3D"border: 1px solid #ccc;text-align: right;paddi=
+ng: 3px 4px 3px 4px;font-size: 12px;font-family: Arial, sans-serif"><strong=
+>1363.82</strong> PLN</td>
+</tr>
+</table><br/><br/>
+<h2 style=3D"font-size: 14px;font-weight: bold;margin: 4px 0 4px 0">Adres D=
+ostawy</h2>
+<hr/>
+ Paulina Salamo=C5=84czyk<br/> Dubois 2 <br/> Gliwice, 44-100<br/> <strong>=
+726572963</strong><br/>
+<br/><br/><h2 style=3D"font-size: 14px;font-weight: bold;margin: 4px 0 4px =
+0">Dane P=C5=82atnika</h2>
+<hr/>
+Paulina Salamo=C5=84czyk<br/><br/>
+Gelato Studio Paulina Salamo=C5=84czyk
+<br/>
+NIP: 2220847981<br/>
+ Dubois 2 <br/>
+44-100
+Gliwice<br/>
+Telefon: 726572963<br/>
+E-mail: biuro@gelatostudio.pl<br/><br/>
+<h2 style=3D"font-size: 14px;font-weight: bold;margin: 4px 0 4px 0">Dodatko=
+we informacje</h2>
+<hr/>
+<p>Link do zam=C3=B3wienia:<br/>
+<a href=3D"https://instalszop.pl//do/orderInfo?symbol=3D35050&hash=3D805f64=
+172a90e8ea11bd5cf6f6c11fcca0a39c9f">https://instalszop.pl//do/orderInfo?sym=
+bol=3D35050&hash=3D805f64172a90e8ea11bd5cf6f6c11fcca0a39c9f</a></p>
+
+<hr/><p/>
+<h2 style=3D"font-size: 14px;font-weight: bold;margin: 4px 0 4px 0">Dzi=C4=
+=99kujemy za zakupy w Instalszop.pl</h2>
+<p/>
+</body>
+</html>
+------=_Part_490_1072040086.1781019250086--

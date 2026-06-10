@@ -64,174 +64,181 @@ const processEmails = async () => {
     let connection;
     try {
         connection = await imaps.connect(config);
-        await connection.openBox('INBOX');
-
-        // Step 1: Search for UNSEEN orders from the last 3 days
-        const daysToLookBack = 3;
-        const targetDate = new Date();
-        targetDate.setDate(targetDate.getDate() - daysToLookBack);
         
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const imapDate = `${targetDate.getDate()}-${months[targetDate.getMonth()]}-${targetDate.getFullYear()}`;
-        
-        // Use UNSEEN to only process emails that haven't been read in the mailbox yet
-        const searchCriteria = [['SINCE', imapDate], 'UNSEEN']; 
-        const fetchOptions = {
-            bodies: ['HEADER'],
-            markSeen: false
-        };
-
-        const messages = await connection.search(searchCriteria, fetchOptions);
-        if (messages.length === 0) {
-            isProcessing = false;
-            return { count: 0, notifications: 0 };
-        }
-
-        console.log(`[Email] Processing ${messages.length} new/unseen emails...`);
-
+        const folders = ['INBOX', 'INBOX.Spam'];
         let newOrdersCount = 0;
         let newNotificationsCount = 0;
 
-        for (const item of messages) {
+        for (const folder of folders) {
             try {
-                const id = item.attributes.uid;
-                const headerPart = item.parts.find(p => p.which === 'HEADER');
-                if (!headerPart || !headerPart.body) continue;
+                console.log(`[Email] Opening folder ${folder}...`);
+                await connection.openBox(folder);
 
-                const subjectHeader = (headerPart.body.subject && headerPart.body.subject[0]) || '';
-                if (!subjectHeader) continue;
-
-                const messageId = ((headerPart.body['message-id'] && headerPart.body['message-id'][0]) || '').trim();
-                const inReplyTo = ((headerPart.body['in-reply-to'] && headerPart.body['in-reply-to'][0]) || '').trim();
-
-                let orderNo = null;
-                let existingOrder = null;
-
-                // 1. Try to find order number in subject
-                // We use a stricter regex to ensure we don't pick up numbers that are part of a slash-separated path like 2025/ZOB/101564
-                // We look for numbers that are preceded by #, nr, or at the end/start, but NOT preceded/followed by a slash
-                const orderNumberMatch = subjectHeader.match(/(?:#|nr|zamówienie|zamówienia)\s*\b(\d{4,7})\b/i) || subjectHeader.match(/\b([A-Z]{9})\b/);
+                // Scan orders from the last 14 days to make sure we don't miss anything due to downtime or spam delay
+                const daysToLookBack = 14;
+                const targetDate = new Date();
+                targetDate.setDate(targetDate.getDate() - daysToLookBack);
                 
-                if (orderNumberMatch) {
-                    const potentialNo = orderNumberMatch[1];
-                    // Double check: ensure it's not part of a date-like or path-like structure (e.g. 2026/06/35003)
-                    const isComplexReference = subjectHeader.includes('/' + potentialNo) || subjectHeader.includes(potentialNo + '/');
-                    
-                    if (!isComplexReference) {
-                        orderNo = potentialNo;
-                        existingOrder = await new Promise((res, rej) => {
-                            db.get('SELECT id, email FROM orders WHERE order_number = ?', [orderNo], (err, row) => {
-                                if (err) rej(err); else res(row);
-                            });
-                        });
-                    }
-                }
-
-                // 2. If not found in subject, try matching via In-Reply-To
-                if (!existingOrder && inReplyTo) {
-                    const sentEmail = await new Promise((res, rej) => {
-                        db.get('SELECT order_id FROM sent_emails WHERE message_id = ?', [inReplyTo], (err, row) => {
-                            if (err) rej(err); else res(row);
-                        });
-                    });
-                    
-                    if (sentEmail) {
-                        existingOrder = await new Promise((res, rej) => {
-                            db.get('SELECT id, email, order_number FROM orders WHERE id = ?', [sentEmail.order_id], (err, row) => {
-                                if (err) rej(err); else res(row);
-                            });
-                        });
-                        if (existingOrder) orderNo = existingOrder.order_number;
-                    }
-                }
-
-                if (existingOrder) {
-                    // Notification for EXISTING order - Proceed with saving
-                    const notificationExists = await new Promise((res, rej) => {
-                        if (messageId) {
-                            db.get('SELECT id FROM order_notifications WHERE message_id = ?', [messageId], (err, row) => {
-                                if (err) rej(err); else res(row);
-                            });
-                        } else {
-                            db.get('SELECT id FROM order_notifications WHERE order_id = ? AND subject = ? AND created_at > datetime("now", "-1 day")', 
-                                [existingOrder.id, subjectHeader], (err, row) => {
-                                if (err) rej(err); else res(row);
-                            });
-                        }
-                    });
-
-                    if (notificationExists) continue;
-
-                    const fullFetchOptions = { bodies: [''], markSeen: true };
-                    const fullResults = await connection.search([['UID', id]], fullFetchOptions);
-                    const fullItem = fullResults[0];
-                    if (!fullItem) continue;
-                    
-                    const all = fullItem.parts.find(part => part.which === '');
-                    const mail = await simpleParser(all.body);
-                    
-                    let type = 'INITIATIVE';
-                    if (inReplyTo) {
-                        const sentEmail = await new Promise((res, rej) => {
-                            db.get('SELECT id FROM sent_emails WHERE message_id = ?', [inReplyTo], (err, row) => {
-                                if (err) rej(err); else res(row);
-                            });
-                        });
-                        if (sentEmail) type = 'REPLY';
-                    }
-
-                    let bodyContent = mail.text;
-                    if (!bodyContent && mail.html) {
-                        bodyContent = mail.html.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
-                    }
-
-                    await new Promise((res, rej) => {
-                        db.run(`INSERT INTO order_notifications (order_id, type, from_email, subject, body, message_id) VALUES (?, ?, ?, ?, ?, ?)`,
-                            [existingOrder.id, type, mail.from?.value[0]?.address || 'Unknown', mail.subject, bodyContent, messageId],
-                            (err) => err ? rej(err) : res()
-                        );
-                    });
-
-                    console.log(`> New Notification [${type}] for Order ${orderNo}`);
-                    newNotificationsCount++;
-                    continue; 
-                } else {
-                    // If order doesn't exist, we only process it as a NEW order if it STRICTLY matches the store's template
-                    const isStoreTemplate = subjectHeader.toLowerCase().includes('nowe zamówienie') || 
-                                           (subjectHeader.toLowerCase().includes('zamówienie') && subjectHeader.toLowerCase().includes('instalszop'));
-                    
-                    if (!isStoreTemplate) {
-                         continue;
-                    }
-                }
-
-                // Try to parse it as a NEW order (Original logic)
-                const fullFetchOptions = {
-                    bodies: [''],
-                    markSeen: true 
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const imapDate = `${targetDate.getDate()}-${months[targetDate.getMonth()]}-${targetDate.getFullYear()}`;
+                
+                // Fetch all emails matching "Zamówienie" in subject since target date (seen or unseen)
+                const searchCriteria = [['SINCE', imapDate], ['SUBJECT', 'Zamówienie']]; 
+                const fetchOptions = {
+                    bodies: ['HEADER'],
+                    markSeen: false
                 };
-                
-                const fullResults = await connection.search([['UID', id]], fullFetchOptions);
-                const fullItem = fullResults[0];
-                if (!fullItem) continue;
-                
-                const all = fullItem.parts.find(part => part.which === '');
-                const mail = await simpleParser(all.body);
-                const { orderData, parsing_status } = parseOrderEmail(mail.text, mail.subject);
 
-                if (orderData && String(orderData.order_number) === String(orderNo)) {
-                    const { isNew, status } = await saveOrderToDb(orderData, parsing_status, mail.text);
-                    if (isNew) {
-                        console.log(`+ New order saved: ${orderData.order_number} | Status: ${status}`);
-                        newOrdersCount++;
-                    }
+                const messages = await connection.search(searchCriteria, fetchOptions);
+                if (messages.length === 0) {
+                    console.log(`[Email] No matching messages found in folder ${folder}`);
+                    continue;
                 }
 
-                // Yield to event loop
-                await new Promise(resolve => setImmediate(resolve));
+                console.log(`[Email] Found ${messages.length} matching emails in folder ${folder}. Processing...`);
 
-            } catch (innerError) {
-                console.error(`Error processing UID ${item.attributes.uid}:`, innerError.message);
+                for (const item of messages) {
+                    try {
+                        const id = item.attributes.uid;
+                        const headerPart = item.parts.find(p => p.which === 'HEADER');
+                        if (!headerPart || !headerPart.body) continue;
+
+                        const subjectHeader = (headerPart.body.subject && headerPart.body.subject[0]) || '';
+                        if (!subjectHeader) continue;
+
+                        const messageId = ((headerPart.body['message-id'] && headerPart.body['message-id'][0]) || '').trim();
+                        const inReplyTo = ((headerPart.body['in-reply-to'] && headerPart.body['in-reply-to'][0]) || '').trim();
+
+                        let orderNo = null;
+                        let existingOrder = null;
+
+                        // 1. Try to find order number in subject
+                        const orderNumberMatch = subjectHeader.match(/(?:#|nr|zamówienie|zamówienia)\s*\b(\d{4,7})\b/i) || subjectHeader.match(/\b([A-Z]{9})\b/);
+                        
+                        if (orderNumberMatch) {
+                            const potentialNo = orderNumberMatch[1];
+                            const isComplexReference = subjectHeader.includes('/' + potentialNo) || subjectHeader.includes(potentialNo + '/');
+                            
+                            if (!isComplexReference) {
+                                orderNo = potentialNo;
+                                existingOrder = await new Promise((res, rej) => {
+                                    db.get('SELECT id, email FROM orders WHERE order_number = ?', [orderNo], (err, row) => {
+                                        if (err) rej(err); else res(row);
+                                    });
+                                });
+                            }
+                        }
+
+                        // 2. If not found in subject, try matching via In-Reply-To
+                        if (!existingOrder && inReplyTo) {
+                            const sentEmail = await new Promise((res, rej) => {
+                                db.get('SELECT order_id FROM sent_emails WHERE message_id = ?', [inReplyTo], (err, row) => {
+                                    if (err) rej(err); else res(row);
+                                });
+                            });
+                            
+                            if (sentEmail) {
+                                existingOrder = await new Promise((res, rej) => {
+                                    db.get('SELECT id, email, order_number FROM orders WHERE id = ?', [sentEmail.order_id], (err, row) => {
+                                        if (err) rej(err); else res(row);
+                                    });
+                                });
+                                if (existingOrder) orderNo = existingOrder.order_number;
+                            }
+                        }
+
+                        if (existingOrder) {
+                            // Notification for EXISTING order - Proceed with saving
+                            const notificationExists = await new Promise((res, rej) => {
+                                if (messageId) {
+                                    db.get('SELECT id FROM order_notifications WHERE message_id = ?', [messageId], (err, row) => {
+                                        if (err) rej(err); else res(row);
+                                    });
+                                } else {
+                                    db.get('SELECT id FROM order_notifications WHERE order_id = ? AND subject = ? AND created_at > datetime("now", "-1 day")', 
+                                        [existingOrder.id, subjectHeader], (err, row) => {
+                                        if (err) rej(err); else res(row);
+                                    });
+                                }
+                            });
+
+                            if (notificationExists) continue;
+
+                            const fullFetchOptions = { bodies: [''], markSeen: true };
+                            const fullResults = await connection.search([['UID', id]], fullFetchOptions);
+                            const fullItem = fullResults[0];
+                            if (!fullItem) continue;
+                            
+                            const all = fullItem.parts.find(part => part.which === '');
+                            const mail = await simpleParser(all.body);
+                            
+                            let type = 'INITIATIVE';
+                            if (inReplyTo) {
+                                const sentEmail = await new Promise((res, rej) => {
+                                    db.get('SELECT id FROM sent_emails WHERE message_id = ?', [inReplyTo], (err, row) => {
+                                        if (err) rej(err); else res(row);
+                                    });
+                                });
+                                if (sentEmail) type = 'REPLY';
+                            }
+
+                            let bodyContent = mail.text;
+                            if (!bodyContent && mail.html) {
+                                bodyContent = mail.html.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
+                            }
+
+                            await new Promise((res, rej) => {
+                                db.run(`INSERT INTO order_notifications (order_id, type, from_email, subject, body, message_id) VALUES (?, ?, ?, ?, ?, ?)`,
+                                    [existingOrder.id, type, mail.from?.value[0]?.address || 'Unknown', mail.subject, bodyContent, messageId],
+                                    (err) => err ? rej(err) : res()
+                                );
+                            });
+
+                            console.log(`> New Notification [${type}] for Order ${orderNo}`);
+                            newNotificationsCount++;
+                            continue; 
+                        } else {
+                            // If order doesn't exist, we only process it as a NEW order if it STRICTLY matches the store's template (not a thread reply)
+                            const cleanSubject = subjectHeader.toLowerCase().trim();
+                            const isReply = /^(?:re|odp|fwd|fw|odp\s*:|re\s*:)\b/i.test(cleanSubject);
+                            const isStoreTemplate = !isReply && /zamówienie\s+nr\s+\d+\s+w\s+sklepie\s+instalszop\.pl/i.test(cleanSubject);
+                            
+                            if (!isStoreTemplate) {
+                                 continue;
+                            }
+                        }
+
+                        // Try to parse it as a NEW order (Original logic)
+                        const fullFetchOptions = {
+                            bodies: [''],
+                            markSeen: true 
+                        };
+                        
+                        const fullResults = await connection.search([['UID', id]], fullFetchOptions);
+                        const fullItem = fullResults[0];
+                        if (!fullItem) continue;
+                        
+                        const all = fullItem.parts.find(part => part.which === '');
+                        const mail = await simpleParser(all.body);
+                        const { orderData, parsing_status } = parseOrderEmail(mail.text, mail.subject);
+
+                        if (orderData && String(orderData.order_number) === String(orderNo)) {
+                            const { isNew, status } = await saveOrderToDb(orderData, parsing_status, mail.text);
+                            if (isNew) {
+                                console.log(`+ New order saved: ${orderData.order_number} | Status: ${status}`);
+                                newOrdersCount++;
+                            }
+                        }
+
+                        // Yield to event loop
+                        await new Promise(resolve => setImmediate(resolve));
+
+                    } catch (innerError) {
+                        console.error(`Error processing UID ${item.attributes.uid} in ${folder}:`, innerError.message);
+                    }
+                }
+            } catch (folderError) {
+                console.error(`Error processing folder ${folder}:`, folderError.message);
             }
         }
         

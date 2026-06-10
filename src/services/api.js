@@ -12,6 +12,8 @@ router.use((req, res, next) => {
 const { db } = require('../models/db');
 const dpdService = require('../services/dpdService');
 const apaczkaService = require('../services/apaczkaService');
+const prestaShopService = require('./prestaShopService');
+const { parseEmailItems } = require('../utils/parser');
 
 const { startEmailListener, processEmails } = require('./emailListener');
 const { syncPrestaShopOrders } = require('./prestaShopListener');
@@ -175,6 +177,69 @@ router.get('/orders/:id', async (req, res) => {
     }
 });
 
+// Get products/items for a specific order
+router.get('/orders/:id/items', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const order = await p.get('SELECT * FROM orders WHERE id = ?', [id]);
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        // 1. If items_json already exists in database, parse and return it
+        if (order.items_json) {
+            try {
+                const items = JSON.parse(order.items_json);
+                if (Array.isArray(items) && items.length > 0) {
+                    return res.json(items);
+                }
+            } catch (parseError) {
+                console.error(`Error parsing items_json for order ${id}:`, parseError.message);
+            }
+        }
+
+        // 2. Otherwise, check source to generate/fetch items
+        let items = [];
+        if (order.source === 'Email') {
+            // Parse from raw_email_body
+            if (order.raw_email_body) {
+                items = parseEmailItems(order.raw_email_body);
+            }
+        } else if (order.source === 'PrestaShop') {
+            // Fetch from PrestaShop API
+            try {
+                const PSDetails = await prestaShopService._get(`orders/${order.order_number}`);
+                const psOrder = PSDetails?.order;
+                const orderRows = psOrder?.associations?.order_rows || [];
+                
+                // Map PrestaShop rows to unified item structures
+                items = orderRows.map(row => {
+                    const price = parseFloat(row.unit_price_tax_incl || row.product_price || row.unit_price_tax_excl || 0);
+                    const qty = parseInt(row.product_quantity || 0);
+                    return {
+                        name: row.product_name || "Nieznany towar",
+                        reference: row.product_reference || "",
+                        price: price,
+                        quantity: qty,
+                        total: price * qty
+                    };
+                });
+            } catch (psError) {
+                console.error(`Failed to fetch items from PrestaShop for order ${order.order_number}:`, psError.message);
+            }
+        }
+
+        // 3. Cache the parsed items back in the database if we found any
+        if (items.length > 0) {
+            await p.run('UPDATE orders SET items_json = ? WHERE id = ?', [JSON.stringify(items), id]);
+        }
+
+        res.json(items);
+    } catch (error) {
+        res.status(550).json({ error: error.message });
+    }
+});
+
 // Get all senders
 router.get('/senders', async (req, res) => {
     try {
@@ -193,12 +258,6 @@ router.post('/generate-label/:orderId', async (req, res) => {
 
     try {
         console.log(`[API] Generating DPD label for order ${orderId}, sender ${finalSenderId}`);
-
-        // Idempotency Check
-        const existingShipment = await p.get('SELECT * FROM shipments WHERE order_id = ? AND provider = ?', [orderId, 'DPD']);
-        if (existingShipment) {
-            return res.status(409).json({ error: 'DPD label already exists for this order.', labelPath: existingShipment.label_path });
-        }
 
         const order = await p.get('SELECT * FROM orders WHERE id = ?', [orderId]);
         // Search sender by ID (standard) or FID (fallback)
@@ -244,12 +303,6 @@ router.post('/generate-apaczka-label/:orderId', async (req, res) => {
     const { senderFid } = req.body;
 
     try {
-        // Idempotency Check: See if an Apaczka shipment already exists
-        const existingShipment = await p.get('SELECT * FROM shipments WHERE order_id = ? AND provider = ?', [orderId, 'APaczka']);
-        if (existingShipment) {
-            return res.status(409).json({ error: 'Apaczka label already exists for this order.', labelPath: existingShipment.label_path });
-        }
-
         const order = await p.get('SELECT * FROM orders WHERE id = ?', [orderId]);
         const sender = await p.get('SELECT * FROM senders WHERE fid = ?', [senderFid]);
 
